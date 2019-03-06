@@ -16,12 +16,12 @@ namespace Proyecto_IA
         List <Terreno> terrenos;
         List <Personaje> personajes;
         string[][] datos;
-        static int CELL_WIDTH = 30;
+        static int CELL_WIDTH = 35;
         ToolTip inform;
         Graphics coordenadas;
         Font fuente;
         SolidBrush pintaloDeBlanco;
-        Brush cInicial;
+        Brush coordenadaIF;
 
         Point coordenadaActual;
         Point coordenada_InicialXY;
@@ -42,7 +42,7 @@ namespace Proyecto_IA
 
             pintaloDeBlanco = new SolidBrush(Color.White);
             fuente = new Font("Consolas", 12.0f, FontStyle.Bold);
-            cInicial = new SolidBrush(Color.Green);
+            coordenadaIF = new SolidBrush(Color.Black);
 
             coordenadaActual = new Point(-1, -1);
             coordenada_InicialXY = new Point(-1, -1);
@@ -152,7 +152,8 @@ namespace Proyecto_IA
         private void panelMapa_Paint(object sender, PaintEventArgs e)
         {
             graficos = panelMapa.CreateGraphics();
-            String I = "I";
+            String Inicial = "I";
+            String Final = "F";
 
             for (int i = 0; i < datos.Length; i++)
             {
@@ -166,19 +167,25 @@ namespace Proyecto_IA
 
                     if (coordenada_InicialXY.X == j && coordenada_InicialXY.Y == i)
                     {
-                        //graficos.FillRectangle(cInicial, coordenada_InicialXY.X * CELL_WIDTH, coordenada_InicialXY.Y * CELL_WIDTH,
+                        //graficos.FillRectangle(coordenadaIF, coordenada_InicialXY.X * CELL_WIDTH, coordenada_InicialXY.Y * CELL_WIDTH,
                         //CELL_WIDTH,CELL_WIDTH);
                         // *DIBUJAR UNA I*
-                        graficos.DrawString(I, fuente, pintaloDeBlanco, coordenada_InicialXY.X * CELL_WIDTH, coordenada_InicialXY.Y * CELL_WIDTH);
+                        graficos.DrawString(Inicial, fuente, coordenadaIF, coordenada_InicialXY.X * CELL_WIDTH, coordenada_InicialXY.Y * CELL_WIDTH);
                     }
 
                     if (coordenada_FinalXY.X == j && coordenada_FinalXY.Y == i)
                     {
-                        graficos.FillRectangle(cInicial, coordenada_FinalXY.X * CELL_WIDTH, coordenada_FinalXY.Y * CELL_WIDTH,
-                            CELL_WIDTH, CELL_WIDTH);
+                        // graficos.FillRectangle(coordenadaIF, coordenada_FinalXY.X * CELL_WIDTH, coordenada_FinalXY.Y * CELL_WIDTH,
+                        //   CELL_WIDTH, CELL_WIDTH);
+                        graficos.DrawString(Final, fuente, coordenadaIF, coordenada_FinalXY.X * CELL_WIDTH, coordenada_FinalXY.Y * CELL_WIDTH);
                     }
 
                 }
+            }
+
+            foreach (Personaje personaje in personajes)
+            {
+                graficos.DrawImage(personaje.Imagen, personaje.CoordenadaX * CELL_WIDTH, personaje.CoordenadaY * CELL_WIDTH, 30,30);
             }
         }
 
@@ -220,6 +227,7 @@ namespace Proyecto_IA
         private void btnCelda_Final_Click(object sender, EventArgs e)
         {
             string nombre = cmbPersonaje.Text;
+            //bool noPersonaje = false;
 
             if (coordenadaActual.X == coordenada_InicialXY.X && coordenadaActual.Y == coordenada_InicialXY.Y)
             {
@@ -259,6 +267,14 @@ namespace Proyecto_IA
         private void Laberinto_FormClosed(object sender, FormClosedEventArgs e)
         {
             Application.Exit();
+        }
+
+        private void btnElegir_Click(object sender, EventArgs e)
+        {
+            cmbPersonaje.Enabled = false;
+
+            btnCelda_Inicial.Enabled = true;
+            btnCelda_Final.Enabled = true;
         }
     }
 }
