@@ -84,7 +84,6 @@ namespace Proyecto_IA
                     return false;
                 }
             }
-
             return true;
         }
 
@@ -118,7 +117,6 @@ namespace Proyecto_IA
 
                 }
             }
-
             return true;
         }
 
@@ -198,7 +196,6 @@ namespace Proyecto_IA
                 lista.Add(i.ToString());
             }
 
-
             DataGridViewComboBoxColumn cmb = dgvPersonaje.Columns[3] as DataGridViewComboBoxColumn;
             cmb.DataSource = lista;
         }
@@ -218,7 +215,6 @@ namespace Proyecto_IA
             {
                 MessageBox.Show(ex.Message);
             }
-
         }
 
         private void btnSel_Click(object sender, EventArgs e)
@@ -276,7 +272,6 @@ namespace Proyecto_IA
                 {
                     cmbCodigo.SelectedIndex += 1;
                     cmbNombre.SelectedIndex += 1;
-
                 }
                 else
                 {
@@ -291,12 +286,8 @@ namespace Proyecto_IA
 
         private void cmbCodigo_SelectedIndexChanged(object sender, EventArgs e)
         {
-            
-            if (terrenos[cmbCodigo.SelectedIndex].Nombre == null)
-            {
-                cmbNombre.SelectedIndex += 1;
-            }
-            else
+
+            if (terrenos[cmbCodigo.SelectedIndex].Nombre != null)
             {
                 cmbNombre.SelectedItem = terrenos[cmbCodigo.SelectedIndex].Nombre;
             }
@@ -327,7 +318,7 @@ namespace Proyecto_IA
             string path = "";
 
             OpenFileDialog openFile = new OpenFileDialog();
-            openFile.Filter = "Images Files (*.png;*.jpg)|*.png;*.jpg*|All Files (*.*)|*.*";
+            openFile.Filter = "Images Files (*.png;*.jpg;)|*.png;*.jpg*|All Files (*.*)|*.*";
             openFile.AutoUpgradeEnabled = false;
             path = Path.Combine(Application.StartupPath, @"..\..\Terrenos");
 
@@ -347,7 +338,7 @@ namespace Proyecto_IA
 
             OpenFileDialog openFile = new OpenFileDialog();
 
-            openFile.Filter = "Images Files (*.png;*.jpg)|*.png;*.jpg*|All Files (*.*)|*.*";
+            openFile.Filter = "Images Files (*.png;*.jpg;*.gif)|*.png;*.jpg;*.gif*|All Files (*.*)|*.*";
             openFile.AutoUpgradeEnabled = false;
             path = Path.Combine(Application.StartupPath, @"..\..\Personajes");
     

@@ -269,6 +269,7 @@
             this.pbPersonaje.Location = new System.Drawing.Point(283, 54);
             this.pbPersonaje.Name = "pbPersonaje";
             this.pbPersonaje.Size = new System.Drawing.Size(100, 100);
+            this.pbPersonaje.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
             this.pbPersonaje.TabIndex = 9;
             this.pbPersonaje.TabStop = false;
             // 
