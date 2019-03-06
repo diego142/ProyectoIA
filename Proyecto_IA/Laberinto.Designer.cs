@@ -33,6 +33,9 @@
             this.panelMapa = new System.Windows.Forms.Panel();
             this.panel1 = new System.Windows.Forms.Panel();
             this.dgvpropiedades = new System.Windows.Forms.DataGridView();
+            this.Terreno = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.codigo = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.Costo = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.label2 = new System.Windows.Forms.Label();
             this.pbPersonaje = new System.Windows.Forms.PictureBox();
             this.cmbPersonaje = new System.Windows.Forms.ComboBox();
@@ -41,9 +44,6 @@
             this.labelY = new System.Windows.Forms.Label();
             this.btnCelda_Inicial = new System.Windows.Forms.Button();
             this.btnCelda_Final = new System.Windows.Forms.Button();
-            this.Terreno = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.codigo = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.Costo = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.panel1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dgvpropiedades)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.pbPersonaje)).BeginInit();
@@ -114,6 +114,24 @@
             this.dgvpropiedades.RowTemplate.DefaultCellStyle.ForeColor = System.Drawing.Color.White;
             this.dgvpropiedades.Size = new System.Drawing.Size(272, 84);
             this.dgvpropiedades.TabIndex = 4;
+            // 
+            // Terreno
+            // 
+            this.Terreno.HeaderText = "Terreno";
+            this.Terreno.Name = "Terreno";
+            this.Terreno.ReadOnly = true;
+            // 
+            // codigo
+            // 
+            this.codigo.HeaderText = "Codigo";
+            this.codigo.Name = "codigo";
+            this.codigo.ReadOnly = true;
+            // 
+            // Costo
+            // 
+            this.Costo.HeaderText = "Costo";
+            this.Costo.Name = "Costo";
+            this.Costo.ReadOnly = true;
             // 
             // label2
             // 
@@ -193,24 +211,6 @@
             this.btnCelda_Final.Text = "Coordenada Final";
             this.btnCelda_Final.UseVisualStyleBackColor = true;
             this.btnCelda_Final.Click += new System.EventHandler(this.btnCelda_Final_Click);
-            // 
-            // Terreno
-            // 
-            this.Terreno.HeaderText = "Terreno";
-            this.Terreno.Name = "Terreno";
-            this.Terreno.ReadOnly = true;
-            // 
-            // codigo
-            // 
-            this.codigo.HeaderText = "Codigo";
-            this.codigo.Name = "codigo";
-            this.codigo.ReadOnly = true;
-            // 
-            // Costo
-            // 
-            this.Costo.HeaderText = "Costo";
-            this.Costo.Name = "Costo";
-            this.Costo.ReadOnly = true;
             // 
             // Laberinto
             // 
