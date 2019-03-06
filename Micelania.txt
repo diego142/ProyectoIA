@@ -1,3 +1,12 @@
 hacer git pull origin Fixed
 o si no:
 hacer git pull https://github.com/diego142/ProyectoIA.git Fixed
+
+git add .
+git commit -m ""
+git push origin Fixed
+
+
+git status
+git checkout Develop
+git merge
