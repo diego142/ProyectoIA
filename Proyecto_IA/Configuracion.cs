@@ -226,7 +226,7 @@ namespace Proyecto_IA
             openFile.Filter = "Text Files (*.txt)|*.txt*|All Files (*.*)|*.*"; //Para filtrar los archivos
             openFile.AutoUpgradeEnabled = false; //Para que funque la ruta predeterminada
 
-            path = Path.Combine(Application.StartupPath, @"..\..\");
+            path = Path.Combine(Application.StartupPath, @"..\..\Recursos");
 
             openFile.InitialDirectory = path;
 
