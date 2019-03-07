@@ -17,7 +17,7 @@ namespace Proyecto_IA
         List <Terreno> terrenos;
         List <Personaje> personajes;
         string[][] datos;
-        static int CELL_WIDTH = 35;
+        static int CELL_WIDTH = 37;
         ToolTip inform;
         Graphics coordenadas;
         Font fuente;
@@ -114,13 +114,25 @@ namespace Proyecto_IA
                 }
 
                 char letra = 'A';
-               
-                letra += (char)(e.X / CELL_WIDTH);
-                String text = letra + ((e.Y / CELL_WIDTH) + 1).ToString();
 
+                letra += (char)(e.X / CELL_WIDTH);//Columnas
+                String text = letra + ((e.Y / CELL_WIDTH) + 1).ToString();//Filas
+
+                foreach (Personaje personaje in personajes)
+                {
+
+                    for (int j = 0; j < terrenos.Count; j++)
+                    {
+                        if (int.Parse(datos[e.Y / CELL_WIDTH][e.X / CELL_WIDTH]) == personaje.Terrenos[j])
+                        {
+                            text += '\n' + terrenos[j].Nombre;
+                        }
+                    }
+                }
+                
                 inform = new ToolTip();
 
-                inform.Show(text, panelMapa, e.X, e.Y - 10, 800);
+                inform.Show(text, panelMapa, e.X, e.Y, 1500);
             }
 
             else if ((e.Button == MouseButtons.Left))
@@ -167,9 +179,8 @@ namespace Proyecto_IA
 
             for (int i = 0; i < datos.Length; i++)
             {
-                int col = datos[0].Length;
 
-                for (int j = 0; j < col; j++)
+                for (int j = 0; j < datos[0].Length; j++)
                 {
                     Terreno terreno = obtenerTerreno(int.Parse(datos[i][j]));
 
