@@ -7,6 +7,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Threading;
+using System.IO;
 using System.Windows.Forms;
 
 namespace Proyecto_IA
@@ -22,6 +23,10 @@ namespace Proyecto_IA
         Font fuente;
         SolidBrush pintaloDeBlanco;
         Brush coordenadaIF;
+        Image banderaIni;
+        Image banderaFin;
+        string rutaI = "";
+        string rutaF = "";
 
         Point coordenadaActual;
         Point coordenada_InicialXY;
@@ -47,6 +52,13 @@ namespace Proyecto_IA
             coordenadaActual = new Point(-1, -1);
             coordenada_InicialXY = new Point(-1, -1);
             coordenada_FinalXY = new Point(-1, -1);
+
+            rutaI = Path.Combine(Application.StartupPath, @"..\..\Recursos\bandera_inicio.png");
+            rutaF = Path.Combine(Application.StartupPath, @"..\..\Recursos\bandera_final.png");
+
+            banderaIni = Image.FromFile(rutaI);
+            banderaFin = Image.FromFile(rutaF);
+
         }
 
         private void Laberinto_Load(object sender, EventArgs e)
@@ -152,8 +164,6 @@ namespace Proyecto_IA
         private void panelMapa_Paint(object sender, PaintEventArgs e)
         {
             graficos = panelMapa.CreateGraphics();
-            String Inicial = "I";
-            String Final = "F";
 
             for (int i = 0; i < datos.Length; i++)
             {
@@ -167,17 +177,12 @@ namespace Proyecto_IA
 
                     if (coordenada_InicialXY.X == j && coordenada_InicialXY.Y == i)
                     {
-                        //graficos.FillRectangle(coordenadaIF, coordenada_InicialXY.X * CELL_WIDTH, coordenada_InicialXY.Y * CELL_WIDTH,
-                        //CELL_WIDTH,CELL_WIDTH);
-                        // *DIBUJAR UNA I*
-                        graficos.DrawString(Inicial, fuente, coordenadaIF, coordenada_InicialXY.X * CELL_WIDTH, coordenada_InicialXY.Y * CELL_WIDTH);
+                        graficos.DrawImage(banderaIni, coordenada_InicialXY.X * CELL_WIDTH, coordenada_InicialXY.Y * CELL_WIDTH, 20,20);
                     }
 
                     if (coordenada_FinalXY.X == j && coordenada_FinalXY.Y == i)
                     {
-                        // graficos.FillRectangle(coordenadaIF, coordenada_FinalXY.X * CELL_WIDTH, coordenada_FinalXY.Y * CELL_WIDTH,
-                        //   CELL_WIDTH, CELL_WIDTH);
-                        graficos.DrawString(Final, fuente, coordenadaIF, coordenada_FinalXY.X * CELL_WIDTH, coordenada_FinalXY.Y * CELL_WIDTH);
+                        graficos.DrawImage(banderaFin, coordenada_FinalXY.X * CELL_WIDTH, coordenada_FinalXY.Y * CELL_WIDTH, 20, 20);
                     }
 
                 }
@@ -227,7 +232,6 @@ namespace Proyecto_IA
         private void btnCelda_Final_Click(object sender, EventArgs e)
         {
             string nombre = cmbPersonaje.Text;
-            //bool noPersonaje = false;
 
             if (coordenadaActual.X == coordenada_InicialXY.X && coordenadaActual.Y == coordenada_InicialXY.Y)
             {

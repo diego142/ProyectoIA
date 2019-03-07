@@ -62,7 +62,7 @@
             // panelMapa
             // 
             this.panelMapa.BackColor = System.Drawing.SystemColors.ActiveCaption;
-            this.panelMapa.Location = new System.Drawing.Point(180, 185);
+            this.panelMapa.Location = new System.Drawing.Point(186, 160);
             this.panelMapa.Name = "panelMapa";
             this.panelMapa.Size = new System.Drawing.Size(504, 307);
             this.panelMapa.TabIndex = 1;
@@ -77,7 +77,7 @@
             this.panel1.Controls.Add(this.pbPersonaje);
             this.panel1.Controls.Add(this.cmbPersonaje);
             this.panel1.Controls.Add(this.label1);
-            this.panel1.Location = new System.Drawing.Point(15, 23);
+            this.panel1.Location = new System.Drawing.Point(15, 12);
             this.panel1.Name = "panel1";
             this.panel1.Size = new System.Drawing.Size(827, 113);
             this.panel1.TabIndex = 2;
@@ -184,7 +184,7 @@
             // label3
             // 
             this.label3.AutoSize = true;
-            this.label3.Location = new System.Drawing.Point(12, 185);
+            this.label3.Location = new System.Drawing.Point(21, 160);
             this.label3.Name = "label3";
             this.label3.Size = new System.Drawing.Size(73, 13);
             this.label3.TabIndex = 3;
@@ -193,7 +193,7 @@
             // labelX
             // 
             this.labelX.AutoSize = true;
-            this.labelX.Location = new System.Drawing.Point(21, 198);
+            this.labelX.Location = new System.Drawing.Point(39, 173);
             this.labelX.Name = "labelX";
             this.labelX.Size = new System.Drawing.Size(14, 13);
             this.labelX.TabIndex = 4;
@@ -202,7 +202,7 @@
             // labelY
             // 
             this.labelY.AutoSize = true;
-            this.labelY.Location = new System.Drawing.Point(41, 198);
+            this.labelY.Location = new System.Drawing.Point(59, 173);
             this.labelY.Name = "labelY";
             this.labelY.Size = new System.Drawing.Size(13, 13);
             this.labelY.TabIndex = 5;
@@ -211,7 +211,7 @@
             // btnCelda_Inicial
             // 
             this.btnCelda_Inicial.Enabled = false;
-            this.btnCelda_Inicial.Location = new System.Drawing.Point(10, 243);
+            this.btnCelda_Inicial.Location = new System.Drawing.Point(10, 203);
             this.btnCelda_Inicial.Name = "btnCelda_Inicial";
             this.btnCelda_Inicial.Size = new System.Drawing.Size(111, 23);
             this.btnCelda_Inicial.TabIndex = 6;
@@ -222,7 +222,7 @@
             // btnCelda_Final
             // 
             this.btnCelda_Final.Enabled = false;
-            this.btnCelda_Final.Location = new System.Drawing.Point(10, 283);
+            this.btnCelda_Final.Location = new System.Drawing.Point(10, 242);
             this.btnCelda_Final.Name = "btnCelda_Final";
             this.btnCelda_Final.Size = new System.Drawing.Size(111, 23);
             this.btnCelda_Final.TabIndex = 7;
@@ -235,7 +235,7 @@
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.DarkSlateGray;
-            this.ClientSize = new System.Drawing.Size(884, 661);
+            this.ClientSize = new System.Drawing.Size(884, 749);
             this.Controls.Add(this.btnCelda_Final);
             this.Controls.Add(this.btnCelda_Inicial);
             this.Controls.Add(this.labelY);
