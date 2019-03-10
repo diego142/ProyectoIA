@@ -109,8 +109,6 @@ namespace Proyecto_IA
                         {
                             if (personaje.Costos[i] == -1)
                             {
-      
-                                MessageBox.Show("N/A");
                                 return false;
                             }
                         }
@@ -132,7 +130,6 @@ namespace Proyecto_IA
                         {
                             if (personaje.Costos[i] == -1)
                             {
-                                MessageBox.Show("N/A");
                                 return false;
                             }
                         }
@@ -156,7 +153,6 @@ namespace Proyecto_IA
                         {
                             if (personaje.Costos[i] == -1)
                             {
-                                MessageBox.Show("N/A");
                                 return false;
                             }
                         }
@@ -178,7 +174,6 @@ namespace Proyecto_IA
                         {
                             if (personaje.Costos[i] == -1)
                             {
-                                MessageBox.Show("N/A");
                                 return false;
                             }
                         }
