@@ -303,15 +303,6 @@ namespace Proyecto_IA
             }
         }
 
-        private void button1_Click(object sender, EventArgs e)
-        {
-            foreach (Personaje personaje in personajes)
-            {
-                //Console.WriteLine(terreno.Codigo + ", " + terreno.Nombre + ", " + terreno.Color + ", " + terreno.Imagen);
-                Console.WriteLine(personaje.Nombre + ", " + personaje.Imagen + ", " + personaje.Terrenos[0] + ", " + personaje.Costos[0]);
-            }
-        }
-
         private void picBox_Click(object sender, EventArgs e)
         {
             string ruta = "";

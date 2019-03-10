@@ -28,7 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle2 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle1 = new System.Windows.Forms.DataGridViewCellStyle();
             this.label1 = new System.Windows.Forms.Label();
             this.panelMapa = new System.Windows.Forms.Panel();
             this.panel1 = new System.Windows.Forms.Panel();
@@ -62,7 +62,7 @@
             // panelMapa
             // 
             this.panelMapa.BackColor = System.Drawing.SystemColors.ActiveCaption;
-            this.panelMapa.Location = new System.Drawing.Point(186, 160);
+            this.panelMapa.Location = new System.Drawing.Point(190, 160);
             this.panelMapa.Name = "panelMapa";
             this.panelMapa.Size = new System.Drawing.Size(504, 307);
             this.panelMapa.TabIndex = 1;
@@ -106,14 +106,14 @@
             this.dgvpropiedades.BackgroundColor = System.Drawing.Color.DarkSlateGray;
             this.dgvpropiedades.BorderStyle = System.Windows.Forms.BorderStyle.None;
             this.dgvpropiedades.ColumnHeadersBorderStyle = System.Windows.Forms.DataGridViewHeaderBorderStyle.Single;
-            dataGridViewCellStyle2.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
-            dataGridViewCellStyle2.BackColor = System.Drawing.Color.Gainsboro;
-            dataGridViewCellStyle2.Font = new System.Drawing.Font("Consolas", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            dataGridViewCellStyle2.ForeColor = System.Drawing.SystemColors.WindowText;
-            dataGridViewCellStyle2.SelectionBackColor = System.Drawing.SystemColors.Highlight;
-            dataGridViewCellStyle2.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
-            dataGridViewCellStyle2.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
-            this.dgvpropiedades.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle2;
+            dataGridViewCellStyle1.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
+            dataGridViewCellStyle1.BackColor = System.Drawing.Color.Gainsboro;
+            dataGridViewCellStyle1.Font = new System.Drawing.Font("Consolas", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            dataGridViewCellStyle1.ForeColor = System.Drawing.SystemColors.WindowText;
+            dataGridViewCellStyle1.SelectionBackColor = System.Drawing.SystemColors.Highlight;
+            dataGridViewCellStyle1.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
+            dataGridViewCellStyle1.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
+            this.dgvpropiedades.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle1;
             this.dgvpropiedades.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.dgvpropiedades.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
             this.Terreno,
@@ -184,50 +184,65 @@
             // label3
             // 
             this.label3.AutoSize = true;
-            this.label3.Location = new System.Drawing.Point(21, 160);
+            this.label3.BackColor = System.Drawing.Color.Transparent;
+            this.label3.Font = new System.Drawing.Font("Consolas", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label3.ForeColor = System.Drawing.Color.White;
+            this.label3.Location = new System.Drawing.Point(20, 154);
             this.label3.Name = "label3";
-            this.label3.Size = new System.Drawing.Size(73, 13);
+            this.label3.Size = new System.Drawing.Size(117, 19);
             this.label3.TabIndex = 3;
             this.label3.Text = "Coordenadas:";
             // 
             // labelX
             // 
             this.labelX.AutoSize = true;
-            this.labelX.Location = new System.Drawing.Point(39, 173);
+            this.labelX.BackColor = System.Drawing.Color.Transparent;
+            this.labelX.Font = new System.Drawing.Font("Consolas", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.labelX.ForeColor = System.Drawing.Color.White;
+            this.labelX.Location = new System.Drawing.Point(49, 174);
             this.labelX.Name = "labelX";
-            this.labelX.Size = new System.Drawing.Size(14, 13);
+            this.labelX.Size = new System.Drawing.Size(18, 19);
             this.labelX.TabIndex = 4;
             this.labelX.Text = "A";
             // 
             // labelY
             // 
             this.labelY.AutoSize = true;
-            this.labelY.Location = new System.Drawing.Point(59, 173);
+            this.labelY.BackColor = System.Drawing.Color.Transparent;
+            this.labelY.Font = new System.Drawing.Font("Consolas", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.labelY.ForeColor = System.Drawing.Color.White;
+            this.labelY.Location = new System.Drawing.Point(77, 174);
             this.labelY.Name = "labelY";
-            this.labelY.Size = new System.Drawing.Size(13, 13);
+            this.labelY.Size = new System.Drawing.Size(18, 19);
             this.labelY.TabIndex = 5;
             this.labelY.Text = "1";
             // 
             // btnCelda_Inicial
             // 
+            this.btnCelda_Inicial.BackColor = System.Drawing.Color.PaleTurquoise;
             this.btnCelda_Inicial.Enabled = false;
-            this.btnCelda_Inicial.Location = new System.Drawing.Point(10, 203);
+            this.btnCelda_Inicial.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.btnCelda_Inicial.Font = new System.Drawing.Font("Consolas", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.btnCelda_Inicial.Location = new System.Drawing.Point(24, 211);
             this.btnCelda_Inicial.Name = "btnCelda_Inicial";
-            this.btnCelda_Inicial.Size = new System.Drawing.Size(111, 23);
+            this.btnCelda_Inicial.Size = new System.Drawing.Size(120, 48);
             this.btnCelda_Inicial.TabIndex = 6;
             this.btnCelda_Inicial.Text = "Coordenada Inicial";
-            this.btnCelda_Inicial.UseVisualStyleBackColor = true;
+            this.btnCelda_Inicial.UseVisualStyleBackColor = false;
             this.btnCelda_Inicial.Click += new System.EventHandler(this.btnCelda_Inicial_Click);
             // 
             // btnCelda_Final
             // 
+            this.btnCelda_Final.BackColor = System.Drawing.Color.PaleTurquoise;
             this.btnCelda_Final.Enabled = false;
-            this.btnCelda_Final.Location = new System.Drawing.Point(10, 242);
+            this.btnCelda_Final.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.btnCelda_Final.Font = new System.Drawing.Font("Consolas", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.btnCelda_Final.Location = new System.Drawing.Point(24, 265);
             this.btnCelda_Final.Name = "btnCelda_Final";
-            this.btnCelda_Final.Size = new System.Drawing.Size(111, 23);
+            this.btnCelda_Final.Size = new System.Drawing.Size(120, 49);
             this.btnCelda_Final.TabIndex = 7;
             this.btnCelda_Final.Text = "Coordenada Final";
-            this.btnCelda_Final.UseVisualStyleBackColor = true;
+            this.btnCelda_Final.UseVisualStyleBackColor = false;
             this.btnCelda_Final.Click += new System.EventHandler(this.btnCelda_Final_Click);
             // 
             // Laberinto
@@ -243,12 +258,14 @@
             this.Controls.Add(this.label3);
             this.Controls.Add(this.panel1);
             this.Controls.Add(this.panelMapa);
+            this.KeyPreview = true;
             this.Name = "Laberinto";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "Laberinto";
             this.FormClosed += new System.Windows.Forms.FormClosedEventHandler(this.Laberinto_FormClosed);
             this.Load += new System.EventHandler(this.Laberinto_Load);
             this.Paint += new System.Windows.Forms.PaintEventHandler(this.Laberinto_Paint);
+            this.KeyDown += new System.Windows.Forms.KeyEventHandler(this.Laberinto_KeyDown);
             this.panel1.ResumeLayout(false);
             this.panel1.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dgvpropiedades)).EndInit();

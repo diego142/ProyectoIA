@@ -42,7 +42,6 @@
             this.btnColor = new System.Windows.Forms.Button();
             this.btnAsignar = new System.Windows.Forms.Button();
             this.label5 = new System.Windows.Forms.Label();
-            this.button1 = new System.Windows.Forms.Button();
             this.panel2 = new System.Windows.Forms.Panel();
             this.txtNombre = new System.Windows.Forms.TextBox();
             this.pbPersonaje = new System.Windows.Forms.PictureBox();
@@ -228,16 +227,6 @@
             this.label5.Size = new System.Drawing.Size(82, 24);
             this.label5.TabIndex = 3;
             this.label5.Text = "Imagen";
-            // 
-            // button1
-            // 
-            this.button1.Location = new System.Drawing.Point(813, 726);
-            this.button1.Name = "button1";
-            this.button1.Size = new System.Drawing.Size(159, 23);
-            this.button1.TabIndex = 5;
-            this.button1.Text = "Verificar";
-            this.button1.UseVisualStyleBackColor = true;
-            this.button1.Click += new System.EventHandler(this.button1_Click);
             // 
             // panel2
             // 
@@ -433,7 +422,6 @@
             this.Controls.Add(this.btnSiguiente);
             this.Controls.Add(this.btnRegresar);
             this.Controls.Add(this.panel2);
-            this.Controls.Add(this.button1);
             this.Controls.Add(this.panel1);
             this.Controls.Add(this.label1);
             this.Controls.Add(this.btnSel);
@@ -464,7 +452,6 @@
         private System.Windows.Forms.Panel panel1;
         private System.Windows.Forms.Button btnAsignar;
         private System.Windows.Forms.Button btnColor;
-        private System.Windows.Forms.Button button1;
         private System.Windows.Forms.PictureBox picBox;
         private System.Windows.Forms.Label label5;
         private System.Windows.Forms.Panel panel2;

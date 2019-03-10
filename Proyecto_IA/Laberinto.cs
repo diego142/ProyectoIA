@@ -82,6 +82,165 @@ namespace Proyecto_IA
             return new Terreno();
         }
 
+        private bool validaMovimiento(string movimiento, Personaje personaje)
+        {
+            int cordX = personaje.CoordenadaX;
+            int cordY = personaje.CoordenadaY;
+
+
+            switch (movimiento)
+            {
+                case "arriba":
+                    cordY -= 1;
+
+                    if (cordY < 0)
+                    {
+                        MessageBox.Show("No puedes moverte fuera del mapa");
+                        return false;
+                    }
+
+                    for (int i = 0; i < terrenos.Count; i++)
+                    {
+                        Console.WriteLine("i:" + i);
+                        Console.WriteLine("personaje.Terrenos[i]: " + personaje.Terrenos[i]);
+                        Console.WriteLine("personaje.Costos[i]: " + personaje.Costos[i]);
+                        Console.WriteLine("datos[cordY][cordX]" + datos[cordY][cordX] + "\n");
+                        if (personaje.Terrenos[i] == int.Parse(datos[cordY][cordX]))
+                        {
+                            if (personaje.Costos[i] == -1)
+                            {
+      
+                                MessageBox.Show("N/A");
+                                return false;
+                            }
+                        }
+                    }
+
+                    break;
+
+                case "derecha":
+                    cordX += 1;
+                    if (cordX > (datos[0].Length-1))
+                    {
+                        MessageBox.Show("No puedes moverte fuera del mapa");
+                        return false;
+                    }
+
+                    for (int i = 0; i < terrenos.Count; i++)
+                    {
+                        if (personaje.Terrenos[i] == int.Parse(datos[cordY][cordX]))
+                        {
+                            if (personaje.Costos[i] == -1)
+                            {
+                                MessageBox.Show("N/A");
+                                return false;
+                            }
+                        }
+                    }
+
+                    break;
+
+                case "abajo":
+
+                    cordY += 1;
+
+                    if (cordY > (datos.Length-1))
+                    {
+                        MessageBox.Show("No puedes moverte fuera del mapa");
+                        return false;
+                    }
+
+                    for (int i = 0; i < terrenos.Count; i++)
+                    {
+                        if (personaje.Terrenos[i] == int.Parse(datos[cordY][cordX]))
+                        {
+                            if (personaje.Costos[i] == -1)
+                            {
+                                MessageBox.Show("N/A");
+                                return false;
+                            }
+                        }
+                    }
+
+                    break;
+
+                case "izquierda":
+                    cordX -= 1;
+                    if (cordX < 0)
+                    {
+                        MessageBox.Show("No puedes moverte fuera del mapa");
+                        return false;
+                    }
+
+                    for (int i = 0; i < terrenos.Count; i++)
+                    {
+                        if (personaje.Terrenos[i] == int.Parse(datos[cordY][cordX]))
+                        {
+                            if (personaje.Costos[i] == -1)
+                            {
+                                MessageBox.Show("N/A");
+                                return false;
+                            }
+                        }
+                    }
+
+                    break;
+            }
+
+            return true;
+        }
+
+        private bool seLlegoAlFinal()
+        {
+            string nombre = cmbPersonaje.Text;
+
+            foreach (Personaje personaje in personajes)
+            {
+                if (personaje.Nombre == nombre)
+                {
+                    if (personaje.CoordenadaX == coordenada_FinalXY.X && personaje.CoordenadaY == coordenada_FinalXY.Y)
+                    {
+                        return true;
+                    }
+                }
+            }
+            return false;
+        }
+
+        private void reiniciar(int opc)
+        {
+            switch (opc)
+            {
+                case 0:
+                    string nombre = cmbPersonaje.Text;
+                    foreach (Personaje personaje in personajes)
+                    {
+                        if (nombre == personaje.Nombre)
+                        {
+                            personaje.CoordenadaX = -1;
+                            personaje.CoordenadaY = -1;
+
+                            coordenada_InicialXY.X = -1;
+                            coordenada_InicialXY.Y = -1;
+
+                            coordenada_FinalXY.X = -1;
+                            coordenada_FinalXY.Y = -1;
+
+                            btnElegir.Enabled = true;
+
+                            cmbPersonaje.Enabled = true;
+                            panelMapa.Refresh();
+                        }
+                    }
+
+                    break;
+                case 1:
+                    Application.Restart();
+                    break;
+            }
+            
+        }
+
         private void cmbPersonaje_SelectedIndexChanged(object sender, EventArgs e)
         {
             dgvpropiedades.Rows.Clear();
@@ -193,15 +352,14 @@ namespace Proyecto_IA
 
                     if (coordenada_FinalXY.X == j && coordenada_FinalXY.Y == i)
                     {
-                        graficos.DrawImage(banderaFin, coordenada_FinalXY.X * CELL_WIDTH, coordenada_FinalXY.Y * CELL_WIDTH, 20, 20);
+                        graficos.DrawImage(banderaFin, coordenada_FinalXY.X * CELL_WIDTH, coordenada_FinalXY.Y * CELL_WIDTH, 20, 20); 
                     }
-
                 }
             }
 
             foreach (Personaje personaje in personajes)
             {
-                graficos.DrawImage(personaje.Imagen, personaje.CoordenadaX * CELL_WIDTH, personaje.CoordenadaY * CELL_WIDTH, 30,30);
+                graficos.DrawImage(personaje.Imagen, personaje.CoordenadaX * CELL_WIDTH, personaje.CoordenadaY * CELL_WIDTH, 30,30);//Posible error
             }
         }
 
@@ -232,7 +390,7 @@ namespace Proyecto_IA
 
                                 MessageBox.Show("Coordenada Inicial Seleccionada!");
                                 panelMapa.Refresh();
-
+                                btnCelda_Inicial.Enabled = false;
                             }
                         }
                     }                   
@@ -270,6 +428,7 @@ namespace Proyecto_IA
 
                                     MessageBox.Show("Coordenada Final Seleccionada!");
                                     panelMapa.Refresh();
+                                    btnCelda_Final.Enabled = false;
                                 }
 
                             }
@@ -290,6 +449,109 @@ namespace Proyecto_IA
 
             btnCelda_Inicial.Enabled = true;
             btnCelda_Final.Enabled = true;
+        }
+
+        private void moverPersonajeArriba()
+        {
+            string personajeNombre = cmbPersonaje.Text;
+
+            foreach (Personaje personaje in personajes)
+            {
+                if (personajeNombre == personaje.Nombre)
+                {
+                    if (validaMovimiento("arriba", personaje))
+                    {
+                        personaje.CoordenadaY -= 1; 
+                        panelMapa.Refresh();
+                    }
+                }
+            }
+        }
+
+        private void moverPersonajeDerecha()
+        {
+            string personajeNombre = cmbPersonaje.Text;
+
+            foreach (Personaje personaje in personajes)
+            {
+                if (personajeNombre == personaje.Nombre)
+                {
+                    if (validaMovimiento("derecha", personaje))
+                    { 
+                        personaje.CoordenadaX += 1;
+                        panelMapa.Refresh();
+                    }
+                }
+            }
+        }
+
+        private void moverPersonajeAbajo()
+        {
+            string personajeNombre = cmbPersonaje.Text;
+
+            foreach (Personaje personaje in personajes)
+            {
+                if (personajeNombre == personaje.Nombre)
+                {
+                    if (validaMovimiento("abajo", personaje))
+                    {
+                        personaje.CoordenadaY += 1;
+                        panelMapa.Refresh();
+                    }
+
+                }
+            }
+        }
+
+        private void moverPersonajeIzquierda()
+        {
+            string personajeNombre = cmbPersonaje.Text;
+
+            foreach (Personaje personaje in personajes)
+            {
+                if (personajeNombre == personaje.Nombre)
+                {
+                    if (validaMovimiento("izquierda", personaje))
+                    {
+                        personaje.CoordenadaX -= 1;
+                        panelMapa.Refresh();
+                    }
+                }
+            }
+        }
+
+        private void Laberinto_KeyDown(object sender, KeyEventArgs e)
+        {
+            switch (e.KeyData)
+            {
+               case Keys.Up:
+                    moverPersonajeArriba();
+                    break;
+                case Keys.Right:
+                    moverPersonajeDerecha();
+                    break;
+                case Keys.Down:
+                    moverPersonajeAbajo();
+                    break;
+                case Keys.Left:
+                    moverPersonajeIzquierda();
+                    break;              
+            }
+
+            if (seLlegoAlFinal())
+            {
+                MessageBox.Show("Llegaste a la meta");
+                DialogResult opc = MessageBox.Show("¿Quieres volver a jugar?", "Juego terminado.", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
+
+                if (opc == DialogResult.Yes)
+                {
+                    reiniciar(0);
+                }
+                else
+                {
+                    reiniciar(1);
+                }
+            }
         }
     }
 }
