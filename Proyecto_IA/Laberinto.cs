@@ -360,10 +360,6 @@ namespace Proyecto_IA
 
             foreach(Coordenada coordenada in lista_pasos)
             {
-                for(int i=0; i < lista_pasos.Count; i++)
-                {
-                    if(coordenada.CoordenadaX == )
-                }
                 graficosImg.DrawString(coordenada.Paso.ToString(), fuente2, pintaloDeRojo, coordenada.CoordenadaX * CELL_WIDTH, coordenada.CoordenadaY * CELL_WIDTH);
             }
         }
