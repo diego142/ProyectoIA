@@ -28,7 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle1 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle2 = new System.Windows.Forms.DataGridViewCellStyle();
             this.label1 = new System.Windows.Forms.Label();
             this.panelMapa = new System.Windows.Forms.Panel();
             this.panel1 = new System.Windows.Forms.Panel();
@@ -45,6 +45,7 @@
             this.labelY = new System.Windows.Forms.Label();
             this.btnCelda_Inicial = new System.Windows.Forms.Button();
             this.btnCelda_Final = new System.Windows.Forms.Button();
+            this.btnModificar = new System.Windows.Forms.Button();
             this.panel1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dgvpropiedades)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.pbPersonaje)).BeginInit();
@@ -71,6 +72,7 @@
             // 
             // panel1
             // 
+            this.panel1.Controls.Add(this.btnModificar);
             this.panel1.Controls.Add(this.btnElegir);
             this.panel1.Controls.Add(this.dgvpropiedades);
             this.panel1.Controls.Add(this.label2);
@@ -79,7 +81,7 @@
             this.panel1.Controls.Add(this.label1);
             this.panel1.Location = new System.Drawing.Point(15, 12);
             this.panel1.Name = "panel1";
-            this.panel1.Size = new System.Drawing.Size(827, 113);
+            this.panel1.Size = new System.Drawing.Size(846, 123);
             this.panel1.TabIndex = 2;
             // 
             // btnElegir
@@ -106,21 +108,21 @@
             this.dgvpropiedades.BackgroundColor = System.Drawing.Color.DarkSlateGray;
             this.dgvpropiedades.BorderStyle = System.Windows.Forms.BorderStyle.None;
             this.dgvpropiedades.ColumnHeadersBorderStyle = System.Windows.Forms.DataGridViewHeaderBorderStyle.Single;
-            dataGridViewCellStyle1.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
-            dataGridViewCellStyle1.BackColor = System.Drawing.Color.Gainsboro;
-            dataGridViewCellStyle1.Font = new System.Drawing.Font("Consolas", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            dataGridViewCellStyle1.ForeColor = System.Drawing.SystemColors.WindowText;
-            dataGridViewCellStyle1.SelectionBackColor = System.Drawing.SystemColors.Highlight;
-            dataGridViewCellStyle1.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
-            dataGridViewCellStyle1.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
-            this.dgvpropiedades.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle1;
+            dataGridViewCellStyle2.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
+            dataGridViewCellStyle2.BackColor = System.Drawing.Color.Gainsboro;
+            dataGridViewCellStyle2.Font = new System.Drawing.Font("Consolas", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            dataGridViewCellStyle2.ForeColor = System.Drawing.SystemColors.WindowText;
+            dataGridViewCellStyle2.SelectionBackColor = System.Drawing.SystemColors.Highlight;
+            dataGridViewCellStyle2.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
+            dataGridViewCellStyle2.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
+            this.dgvpropiedades.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle2;
             this.dgvpropiedades.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.dgvpropiedades.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
             this.Terreno,
             this.codigo,
             this.Costo});
             this.dgvpropiedades.EnableHeadersVisualStyles = false;
-            this.dgvpropiedades.Location = new System.Drawing.Point(492, 18);
+            this.dgvpropiedades.Location = new System.Drawing.Point(512, 30);
             this.dgvpropiedades.Name = "dgvpropiedades";
             this.dgvpropiedades.ReadOnly = true;
             this.dgvpropiedades.RowHeadersVisible = false;
@@ -245,6 +247,20 @@
             this.btnCelda_Final.UseVisualStyleBackColor = false;
             this.btnCelda_Final.Click += new System.EventHandler(this.btnCelda_Final_Click);
             // 
+            // btnModificar
+            // 
+            this.btnModificar.BackColor = System.Drawing.Color.Transparent;
+            this.btnModificar.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.btnModificar.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.btnModificar.Location = new System.Drawing.Point(693, 3);
+            this.btnModificar.Name = "btnModificar";
+            this.btnModificar.Size = new System.Drawing.Size(91, 24);
+            this.btnModificar.TabIndex = 6;
+            this.btnModificar.Text = "Modificar";
+            this.btnModificar.UseVisualStyleBackColor = false;
+            this.btnModificar.Visible = false;
+            this.btnModificar.Click += new System.EventHandler(this.btnModificar_Click);
+            // 
             // Laberinto
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -293,5 +309,6 @@
         private System.Windows.Forms.DataGridViewTextBoxColumn codigo;
         private System.Windows.Forms.DataGridViewTextBoxColumn Costo;
         private System.Windows.Forms.Button btnElegir;
+        private System.Windows.Forms.Button btnModificar;
     }
 }

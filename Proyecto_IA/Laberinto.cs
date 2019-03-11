@@ -14,6 +14,7 @@ namespace Proyecto_IA
 {
     public partial class Laberinto : Form
     {
+        Form frmConfiguracion;
         List <Terreno> terrenos;
         List <Personaje> personajes;
         string[][] datos;
@@ -35,9 +36,10 @@ namespace Proyecto_IA
         Point coordenada_InicialXY;
         Point coordenada_FinalXY;
 
-        public Laberinto(List<Terreno> _terrenos, List<Personaje> _personajes, string[][] _datos)
+        public Laberinto(List<Terreno> _terrenos, List<Personaje> _personajes, string[][] _datos, Form _frm)
         {
             InitializeComponent();
+            frmConfiguracion = _frm;
 
             terrenos = _terrenos;
             personajes = _personajes;
@@ -593,5 +595,13 @@ namespace Proyecto_IA
                 }
             }
         }
+
+
+        private void btnModificar_Click(object sender, EventArgs e)
+        {
+            frmConfiguracion.Show();
+            //this.Close();
+        }
+
     }
 }
