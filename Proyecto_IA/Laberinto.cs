@@ -97,7 +97,7 @@ namespace Proyecto_IA
 
             lista_pasos.Add(new Coordenada(personaje.CoordenadaX, personaje.CoordenadaY, numero_pasos));
         }
-        #region
+        
         private bool validaMovimiento(string movimiento, Personaje personaje)
         {
             int cordX = personaje.CoordenadaX;
@@ -593,6 +593,5 @@ namespace Proyecto_IA
                 }
             }
         }
-        #endregion
     }
 }
