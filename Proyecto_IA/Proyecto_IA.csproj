@@ -55,6 +55,7 @@
     <Compile Include="Configuracion.Designer.cs">
       <DependentUpon>Configuracion.cs</DependentUpon>
     </Compile>
+    <Compile Include="Coordenada.cs" />
     <Compile Include="Creditos.cs">
       <SubType>Form</SubType>
     </Compile>
