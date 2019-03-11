@@ -362,8 +362,9 @@ namespace Proyecto_IA
             {
                 for(int i=0; i < lista_pasos.Count; i++)
                 {
-                    if(coordenada.CoordenadaX == )
+                    //if(coordenada.CoordenadaX == )
                 }
+
                 graficosImg.DrawString(coordenada.Paso.ToString(), fuente2, pintaloDeRojo, coordenada.CoordenadaX * CELL_WIDTH, coordenada.CoordenadaY * CELL_WIDTH);
             }
         }
