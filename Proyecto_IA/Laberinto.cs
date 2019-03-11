@@ -24,7 +24,6 @@ namespace Proyecto_IA
         Graphics coordenadas;
         Graphics graficosImg;
         SolidBrush pintaloDeBlanco;
-        SolidBrush pintaloDeRojo;
         Font fuente;
         Font fuente2;
         Image banderaIni;
@@ -48,9 +47,8 @@ namespace Proyecto_IA
             panelMapa.Height = 0;
 
             pintaloDeBlanco = new SolidBrush(Color.White);
-            pintaloDeRojo = new SolidBrush(Color.Red);
             fuente = new Font("Consolas", 12.0f, FontStyle.Bold);
-            fuente2 = new Font("Consolas", 6.0f, FontStyle.Regular);
+            fuente2 = new Font("Consolas", 8.0f, FontStyle.Regular);
 
             coordenadaActual = new Point(-1, -1);
             coordenada_InicialXY = new Point(-1, -1);
@@ -86,6 +84,20 @@ namespace Proyecto_IA
             return new Terreno();
         }
 
+        private void agrearPasos(Personaje personaje)
+        {
+            foreach (Coordenada cordenada in lista_pasos)
+            {
+                if (cordenada.CoordenadaX == personaje.CoordenadaX && cordenada.CoordenadaY == personaje.CoordenadaY)
+                {
+                    cordenada.pasos.Add(numero_pasos);
+                    return;
+                }
+            }
+
+            lista_pasos.Add(new Coordenada(personaje.CoordenadaX, personaje.CoordenadaY, numero_pasos));
+        }
+        #region
         private bool validaMovimiento(string movimiento, Personaje personaje)
         {
             int cordX = personaje.CoordenadaX;
@@ -224,7 +236,11 @@ namespace Proyecto_IA
                             btnElegir.Enabled = true;
 
                             cmbPersonaje.Enabled = true;
+                            lista_pasos.Clear();
+                            numero_pasos = 1;
+
                             panelMapa.Refresh();
+
                         }
                     }
 
@@ -283,6 +299,16 @@ namespace Proyecto_IA
                         }
                     }
                 }
+               
+                foreach (Coordenada cord in lista_pasos)
+                {
+  
+                    if ((e.X/CELL_WIDTH) == cord.CoordenadaX && (e.Y/CELL_WIDTH) == cord.CoordenadaY)
+                    {
+                        text = text + '\n' + cord.listaFormateada();
+                    }
+                }
+
                 
                 informacion = new ToolTip();
 
@@ -360,12 +386,7 @@ namespace Proyecto_IA
 
             foreach(Coordenada coordenada in lista_pasos)
             {
-                for(int i=0; i < lista_pasos.Count; i++)
-                {
-                    //if(coordenada.CoordenadaX == )
-                }
-
-                graficosImg.DrawString(coordenada.Paso.ToString(), fuente2, pintaloDeRojo, coordenada.CoordenadaX * CELL_WIDTH, coordenada.CoordenadaY * CELL_WIDTH);
+                graficosImg.DrawString(coordenada.listaFormateada(), fuente2, pintaloDeBlanco, coordenada.CoordenadaX * CELL_WIDTH, coordenada.CoordenadaY * CELL_WIDTH);
             }
         }
 
@@ -454,6 +475,7 @@ namespace Proyecto_IA
         private void btnElegir_Click(object sender, EventArgs e)
         {
             cmbPersonaje.Enabled = false;
+            btnElegir.Enabled = false;
 
             btnCelda_Inicial.Enabled = true;
             btnCelda_Final.Enabled = true;
@@ -472,7 +494,7 @@ namespace Proyecto_IA
                         personaje.CoordenadaY -= 1; 
                         panelMapa.Refresh();
                         numero_pasos++;
-                        lista_pasos.Add(new Coordenada(personaje.CoordenadaX, personaje.CoordenadaY, numero_pasos));
+                        agrearPasos(personaje);
                     }
                 }
             }
@@ -491,7 +513,8 @@ namespace Proyecto_IA
                         personaje.CoordenadaX += 1;
                         panelMapa.Refresh();
                         numero_pasos++;
-                        lista_pasos.Add(new Coordenada(personaje.CoordenadaX, personaje.CoordenadaY, numero_pasos));
+                        agrearPasos(personaje);
+
                     }
                 }
             }
@@ -510,7 +533,7 @@ namespace Proyecto_IA
                         personaje.CoordenadaY += 1;
                         panelMapa.Refresh();
                         numero_pasos++;
-                        lista_pasos.Add(new Coordenada(personaje.CoordenadaX, personaje.CoordenadaY, numero_pasos));
+                        agrearPasos(personaje);
                     }
 
                 }
@@ -530,7 +553,8 @@ namespace Proyecto_IA
                         personaje.CoordenadaX -= 1;
                         panelMapa.Refresh();
                         numero_pasos++;
-                        lista_pasos.Add(new Coordenada(personaje.CoordenadaX, personaje.CoordenadaY, numero_pasos));
+                        agrearPasos(personaje);
+
                     }
                 }
             }
@@ -569,5 +593,6 @@ namespace Proyecto_IA
                 }
             }
         }
+        #endregion
     }
 }

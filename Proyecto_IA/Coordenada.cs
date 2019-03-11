@@ -10,24 +10,42 @@ namespace Proyecto_IA
     {
         private int coordenadaX;
         private int coordenadaY;
-        private int paso;
+        public List<int> pasos = new List<int>();
 
         public Coordenada()
         {
             CoordenadaX = -1;
             CoordenadaY = -1;
-            Paso = 0;
         }
 
-        public Coordenada(int _x, int _y, int _pasos)
+        public Coordenada(int _x, int _y, int _paso)
         {
             CoordenadaX = _x;
             CoordenadaY = _y;
-            Paso = _pasos;
+            pasos.Add(_paso);
         }
 
         public int CoordenadaX { get => coordenadaX; set => coordenadaX = value; }
         public int CoordenadaY { get => coordenadaY; set => coordenadaY = value; }
-        public int Paso { get => paso; set => paso = value; }
+
+        public string listaFormateada()
+        {
+            string texto = "";
+            int cont = 1;
+            foreach (int num in pasos)
+            {
+                texto = texto + num.ToString() + ",";
+                if (cont == 2)
+                {
+                    texto += '\n';
+                    cont = 1;
+                }
+                else {
+                    cont++;
+                }
+            }
+            return texto;
+
+        }
     }
 }

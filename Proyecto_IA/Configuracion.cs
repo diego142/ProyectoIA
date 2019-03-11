@@ -268,15 +268,22 @@ namespace Proyecto_IA
                 terrenos[cmbCodigo.SelectedIndex].Color = btnColor.BackColor;
                 terrenos[cmbCodigo.SelectedIndex].Imagen = picBox.Image;
 
-                if (cmbCodigo.SelectedIndex + 1 < cmbCodigo.Items.Count)
+                if (cmbNombre.SelectedIndex + 1 < cmbNombre.Items.Count)
                 {
-                    cmbCodigo.SelectedIndex += 1;
                     cmbNombre.SelectedIndex += 1;
                 }
                 else
                 {
-                    cmbCodigo.SelectedIndex = 0;
                     cmbNombre.SelectedIndex = 0;
+                }
+
+                if (cmbCodigo.SelectedIndex + 1 < cmbCodigo.Items.Count)
+                {
+                    cmbCodigo.SelectedIndex += 1;
+                }
+                else
+                {
+                    cmbCodigo.SelectedIndex = 0;
                 }
 
                 cmbCodigo_SelectedIndexChanged(sender, e);

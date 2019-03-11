@@ -64,7 +64,7 @@
             this.panelMapa.BackColor = System.Drawing.SystemColors.ActiveCaption;
             this.panelMapa.Location = new System.Drawing.Point(190, 160);
             this.panelMapa.Name = "panelMapa";
-            this.panelMapa.Size = new System.Drawing.Size(504, 307);
+            this.panelMapa.Size = new System.Drawing.Size(10, 10);
             this.panelMapa.TabIndex = 1;
             this.panelMapa.Paint += new System.Windows.Forms.PaintEventHandler(this.panelMapa_Paint);
             this.panelMapa.MouseClick += new System.Windows.Forms.MouseEventHandler(this.panelMapa_MouseClick);
