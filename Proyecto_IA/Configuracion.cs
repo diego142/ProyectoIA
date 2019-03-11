@@ -354,7 +354,7 @@ namespace Proyecto_IA
 
         private void btnSiguiente_Click(object sender, EventArgs e)
         {
-            Laberinto lab = new Laberinto(terrenos, personajes, datos);
+            Laberinto lab = new Laberinto(terrenos, personajes, datos, this);
             lab.Show();
             this.Hide();
         }
