@@ -46,10 +46,6 @@
             this.txtNombre = new System.Windows.Forms.TextBox();
             this.pbPersonaje = new System.Windows.Forms.PictureBox();
             this.dgvPersonaje = new System.Windows.Forms.DataGridView();
-            this.terreno = new System.Windows.Forms.DataGridViewImageColumn();
-            this.color = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.nombre = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.costo = new System.Windows.Forms.DataGridViewComboBoxColumn();
             this.btnSelPersonaje = new System.Windows.Forms.Button();
             this.label6 = new System.Windows.Forms.Label();
             this.label9 = new System.Windows.Forms.Label();
@@ -57,6 +53,10 @@
             this.btnRegresar = new System.Windows.Forms.Button();
             this.btnSiguiente = new System.Windows.Forms.Button();
             this.lblListo2 = new System.Windows.Forms.Label();
+            this.terreno = new System.Windows.Forms.DataGridViewImageColumn();
+            this.color = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.nombre = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.costo = new System.Windows.Forms.DataGridViewComboBoxColumn();
             this.panel1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.picBox)).BeginInit();
             this.panel2.SuspendLayout();
@@ -123,7 +123,8 @@
             "Agua",
             "Arena",
             "Bosque",
-            "Lava"});
+            "Lava",
+            "Nieve"});
             this.cmbNombre.Location = new System.Drawing.Point(252, 69);
             this.cmbNombre.Name = "cmbNombre";
             this.cmbNombre.Size = new System.Drawing.Size(184, 42);
@@ -297,36 +298,6 @@
             this.dgvPersonaje.Size = new System.Drawing.Size(456, 166);
             this.dgvPersonaje.TabIndex = 8;
             // 
-            // terreno
-            // 
-            this.terreno.FillWeight = 40F;
-            this.terreno.HeaderText = "Imagen";
-            this.terreno.Name = "terreno";
-            this.terreno.ReadOnly = true;
-            // 
-            // color
-            // 
-            this.color.FillWeight = 30F;
-            this.color.HeaderText = "Color";
-            this.color.Name = "color";
-            this.color.ReadOnly = true;
-            this.color.Resizable = System.Windows.Forms.DataGridViewTriState.False;
-            // 
-            // nombre
-            // 
-            this.nombre.FillWeight = 40F;
-            this.nombre.HeaderText = "Nombre";
-            this.nombre.Name = "nombre";
-            // 
-            // costo
-            // 
-            this.costo.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.Fill;
-            this.costo.FillWeight = 30F;
-            this.costo.HeaderText = "Costo";
-            this.costo.Name = "costo";
-            this.costo.Resizable = System.Windows.Forms.DataGridViewTriState.False;
-            this.costo.ToolTipText = "<Selecionar>";
-            // 
             // btnSelPersonaje
             // 
             this.btnSelPersonaje.BackColor = System.Drawing.Color.PaleTurquoise;
@@ -412,6 +383,36 @@
             this.lblListo2.Text = "<- Listo";
             this.lblListo2.Visible = false;
             // 
+            // terreno
+            // 
+            this.terreno.FillWeight = 40F;
+            this.terreno.HeaderText = "Imagen";
+            this.terreno.Name = "terreno";
+            this.terreno.ReadOnly = true;
+            // 
+            // color
+            // 
+            this.color.FillWeight = 30F;
+            this.color.HeaderText = "Color";
+            this.color.Name = "color";
+            this.color.ReadOnly = true;
+            this.color.Resizable = System.Windows.Forms.DataGridViewTriState.False;
+            // 
+            // nombre
+            // 
+            this.nombre.FillWeight = 40F;
+            this.nombre.HeaderText = "Nombre";
+            this.nombre.Name = "nombre";
+            // 
+            // costo
+            // 
+            this.costo.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.Fill;
+            this.costo.FillWeight = 30F;
+            this.costo.HeaderText = "Costo";
+            this.costo.Name = "costo";
+            this.costo.Resizable = System.Windows.Forms.DataGridViewTriState.False;
+            this.costo.ToolTipText = "<Selecionar>";
+            // 
             // Configuracion
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -465,10 +466,10 @@
         private System.Windows.Forms.PictureBox pbPersonaje;
         private System.Windows.Forms.TextBox txtNombre;
         private System.Windows.Forms.Label label6;
+        private System.Windows.Forms.Label lblListo2;
         private System.Windows.Forms.DataGridViewImageColumn terreno;
         private System.Windows.Forms.DataGridViewTextBoxColumn color;
         private System.Windows.Forms.DataGridViewTextBoxColumn nombre;
         private System.Windows.Forms.DataGridViewComboBoxColumn costo;
-        private System.Windows.Forms.Label lblListo2;
     }
 }

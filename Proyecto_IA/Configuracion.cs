@@ -134,11 +134,18 @@ namespace Proyecto_IA
 
         private void agregarTerrenos(string texto)
         {
+
             int fil = 0;
             int col = 0;
             int cod = 0;
 
             string[] filas = texto.Split('\n');
+
+            if (filas[filas.Length-1].ToString() == "") //No hay nada en la ultima fila
+            {
+                Array.Resize(ref filas, filas.Length - 1); //Se elimina
+            }
+    
             fil = filas.Length;
 
             datos = new string[fil][];
@@ -148,6 +155,7 @@ namespace Proyecto_IA
                 datos[i] = filas[i].Split(',');    
             }
             col = datos[0].Length;
+
 
             if (validarDatos(fil, col))
             {
@@ -163,7 +171,6 @@ namespace Proyecto_IA
                             terreno.Codigo = cod;
                             terrenos.Add(terreno);
                         }
-
                     }
                 }
 
@@ -191,9 +198,10 @@ namespace Proyecto_IA
 
             List<string> lista = new List<string>();
             lista.Add("N/A");
-            for (int i = 0; i < 100; i++)
+            for (decimal i = 0; i < 100;)
             {
                 lista.Add(i.ToString());
+                i = i + 0.01m;
             }
 
             DataGridViewComboBoxColumn cmb = dgvPersonaje.Columns[3] as DataGridViewComboBoxColumn;
@@ -208,6 +216,7 @@ namespace Proyecto_IA
             try
             {
                 string texto = fichero.ReadToEnd();
+
                 fichero.Close();
                 agregarTerrenos(texto);
             }
@@ -386,7 +395,7 @@ namespace Proyecto_IA
                     }
                     else
                     {
-                        personaje.Costos[i] = int.Parse(dgvPersonaje.Rows[i].Cells[3].Value.ToString());
+                       personaje.Costos[i] = decimal.Parse(dgvPersonaje.Rows[i].Cells[3].Value.ToString());
                     }
                     dgvPersonaje.Rows[i].Cells[3].Value = null;
 
