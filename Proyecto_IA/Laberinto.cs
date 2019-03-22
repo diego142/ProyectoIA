@@ -72,7 +72,7 @@ namespace Proyecto_IA
                 cmbPersonaje.Items.Add(personaje.Nombre);
             }
             cmbPersonaje.SelectedIndex = 0;
-        }
+        }   //Cargo los nomnbres de todos los personajes y por default se deja el primero
 
         private Terreno obtenerTerreno(int cod)
         {
@@ -84,7 +84,7 @@ namespace Proyecto_IA
                 }
             }
             return new Terreno();
-        }
+        }       //Se busca el terreno a partir de su codigo asignado
 
         private void agrearPasos(Personaje personaje)
         {
@@ -98,7 +98,7 @@ namespace Proyecto_IA
             }
 
             lista_pasos.Add(new Coordenada(personaje.CoordenadaX, personaje.CoordenadaY, numero_pasos));
-        }
+        } //Se agrega una coordenada a la lista de pasos
         
         private bool validaMovimiento(string movimiento, Personaje personaje)
         {
@@ -197,7 +197,7 @@ namespace Proyecto_IA
             }
 
             return true;
-        }
+        } //Valida si el movimiento que hace el usuario esta permitido
 
         private bool seLlegoAlFinal()
         {
@@ -214,7 +214,7 @@ namespace Proyecto_IA
                 }
             }
             return false;
-        }
+        }   //Verifica si el personaje llego a la coordenada final
 
         private void reiniciar(int opc)
         {
@@ -252,7 +252,7 @@ namespace Proyecto_IA
                     break;
             }
             
-        }
+        }   //Metodo para reinicar juego o reiniciar aplicación
 
         private void cmbPersonaje_SelectedIndexChanged(object sender, EventArgs e)
         {
@@ -272,7 +272,7 @@ namespace Proyecto_IA
                     }
                 }
             }
-        }
+        }   //Se actualizan los datos del personaje escogido en el Dtg y la imagen
 
         private void panelMapa_MouseClick(object sender, MouseEventArgs e)
         {
@@ -285,10 +285,10 @@ namespace Proyecto_IA
                     informacion.Dispose();
                 }
 
-                char letra = 'A';
-
-                letra += (char)(e.X / CELL_WIDTH);//Columnas
-                String text = letra + ((e.Y / CELL_WIDTH) + 1).ToString();//Filas
+                char columnas = 'A';
+                
+                columnas += (char)(e.X / CELL_WIDTH);//Columnas
+                String texto = columnas + ((e.Y / CELL_WIDTH) + 1).ToString();//Filas
 
                 foreach (Personaje personaje in personajes)
                 {
@@ -297,7 +297,7 @@ namespace Proyecto_IA
                     {
                         if (int.Parse(datos[e.Y / CELL_WIDTH][e.X / CELL_WIDTH]) == personaje.Terrenos[j])
                         {
-                            text += '\n' + terrenos[j].Nombre;
+                            texto += '\n' + terrenos[j].Nombre;
                         }
                     }
                 }
@@ -307,14 +307,14 @@ namespace Proyecto_IA
   
                     if ((e.X/CELL_WIDTH) == cord.CoordenadaX && (e.Y/CELL_WIDTH) == cord.CoordenadaY)
                     {
-                        text = text + '\n' + cord.listaFormateada();
+                        texto = texto + '\n' + cord.listaFormateada();
                     }
                 }
 
                 
                 informacion = new ToolTip();
 
-                informacion.Show(text, panelMapa, e.X, e.Y, 1500);
+                informacion.Show(texto, panelMapa, e.X, e.Y, 1500);
             }
 
             else if ((e.Button == MouseButtons.Left))
@@ -322,12 +322,12 @@ namespace Proyecto_IA
                 coordenadaActual.X = e.X / CELL_WIDTH;
                 coordenadaActual.Y = e.Y / CELL_WIDTH;
 
-                char letra = 'A';
-                letra += (char)coordenadaActual.X;
-                labelX.Text = letra.ToString();
+                char columnas = 'A';
+                columnas += (char)coordenadaActual.X;
+                labelX.Text = columnas.ToString();
                 labelY.Text = (coordenadaActual.Y + 1).ToString();
             }
-        }
+        }   //Detecta los clicks que se han hecho en el panel
 
         private void Laberinto_Paint(object sender, PaintEventArgs e)
         {
@@ -342,18 +342,18 @@ namespace Proyecto_IA
             for (int y = 0; y < datos.Length; y++)//Filas
             {
                 string filas = (y + 1).ToString();
-                coordenadas.DrawString(filas, fuente, pintaloDeBlanco, panelMapa.Location.X - CELL_WIDTH - 1, 
-                panelMapa.Location.Y + (y * CELL_WIDTH) + (CELL_WIDTH / 2));
+                coordenadas.DrawString(filas, fuente, pintaloDeBlanco, panelMapa.Location.X - 30, 
+                panelMapa.Location.Y + (y * CELL_WIDTH) + 10);
             }
 
             for (int x = 0; x < datos[0].Length; x++)//Columnas
             {
                 string Dcolumnas = columnas.ToString();
-                coordenadas.DrawString(Dcolumnas, fuente, pintaloDeBlanco, panelMapa.Location.X + (x * CELL_WIDTH),
-                panelMapa.Location.Y - (CELL_WIDTH / 2));
+                coordenadas.DrawString(Dcolumnas, fuente, pintaloDeBlanco, panelMapa.Location.X + (x * CELL_WIDTH) + 10,
+                panelMapa.Location.Y - 20);
                 columnas += (char)1;
             }
-        }
+        }       //Método para dibujar las coordenadas alrededor el panelmapa
 
         private void panelMapa_Paint(object sender, PaintEventArgs e)
         {
@@ -390,7 +390,7 @@ namespace Proyecto_IA
             {
                 graficosImg.DrawString(coordenada.listaFormateada(), fuente2, pintaloDeBlanco, coordenada.CoordenadaX * CELL_WIDTH, coordenada.CoordenadaY * CELL_WIDTH);
             }
-        }
+        }   //Se dibujan los terrenos, personaje, coordenada inicial y final y lista de pasos
 
         private void btnCelda_Inicial_Click(object sender, EventArgs e)
         {
@@ -427,7 +427,7 @@ namespace Proyecto_IA
                     }                   
                 }
             }   
-        }
+        }   //Btn para escoger la coordenada inicial
 
         private void btnCelda_Final_Click(object sender, EventArgs e)
         {
@@ -467,12 +467,12 @@ namespace Proyecto_IA
                     }
                 }
             }
-        }
+        }   ////Btn para escoger la coordenada final
 
         private void Laberinto_FormClosed(object sender, FormClosedEventArgs e)
         {
             Application.Exit();
-        }
+        }   //Salir de la aplicacion
 
         private void btnElegir_Click(object sender, EventArgs e)
         {
@@ -481,7 +481,7 @@ namespace Proyecto_IA
 
             btnCelda_Inicial.Enabled = true;
             btnCelda_Final.Enabled = true;
-        }
+        }   //Desbloqueo los otros botones después de elegir un personaje
 
         private void moverPersonajeArriba()
         {
@@ -594,14 +594,14 @@ namespace Proyecto_IA
                     reiniciar(1);
                 }
             }
-        }
+        }   //Eevento para cuando se presionan las teclas
 
 
         private void btnModificar_Click(object sender, EventArgs e)
         {
             frmConfiguracion.Show();
             //this.Close();
-        }
+        }   //BETA
 
     }
 }

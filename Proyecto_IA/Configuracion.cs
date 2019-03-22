@@ -24,7 +24,7 @@ namespace Proyecto_IA
             inicio = init;
             panel1.Hide();
             panel2.Hide();
-        }
+        } //constructor del Form
 
         private void limpiarPaneles()
         {
@@ -41,7 +41,7 @@ namespace Proyecto_IA
             btnSelPersonaje.Enabled = true;
             btnSiguiente.Enabled = false;
             txtNombre.Enabled = true;
-        }
+        }     //Limpiar paneles
 
         private bool terrenosListos()
         {
@@ -58,7 +58,7 @@ namespace Proyecto_IA
                 }
             }
             return true;
-        }
+        }    // Verifica si se asginaron todos los terrenos
 
         private bool personajesListos()
         {
@@ -85,9 +85,9 @@ namespace Proyecto_IA
                 }
             }
             return true;
-        }
+        } // Valida si se añadieron todos los atributos del personaje
 
-        private bool validarDatos(int fil, int col)
+        private bool validarDatos(int fil, int col) 
         {
             int cod = 0;
 
@@ -118,7 +118,7 @@ namespace Proyecto_IA
                 }
             }
             return true;
-        }
+        }   // Valida los datos del txt
 
         private bool existeTerrenoEnLista(int codigo)
         {
@@ -130,7 +130,7 @@ namespace Proyecto_IA
                 }
             }
             return false;
-        }
+        }   //Valida si un terreno ya existe en la lista
 
         private void agregarTerrenos(string texto)
         {
@@ -181,7 +181,7 @@ namespace Proyecto_IA
                 cmbNombre.SelectedIndex = 0;
                 panel1.Show();                          //Se muestran los paneles
             }
-        }
+        }   //agrega los datos del txt a una matriz e inicializa el panel 1
 
         private void agregarADataGrid()
         {
@@ -198,7 +198,7 @@ namespace Proyecto_IA
 
             List<string> lista = new List<string>();
             lista.Add("N/A");
-            for (decimal i = 0; i < 100;)
+            for (decimal i = 0; i < 50;)
             {
                 lista.Add(i.ToString());
                 i = i + 0.01m;
@@ -206,7 +206,7 @@ namespace Proyecto_IA
 
             DataGridViewComboBoxColumn cmb = dgvPersonaje.Columns[3] as DataGridViewComboBoxColumn;
             cmb.DataSource = lista;
-        }
+        }   //Se inicializa el datagrid del panel 2
 
         private void leerTxt(string ruta)
         {
@@ -224,7 +224,7 @@ namespace Proyecto_IA
             {
                 MessageBox.Show(ex.Message);
             }
-        }
+        }     //Se pasan los datos del archivo a un string se manda por parametro a agregar terrenos
 
         private void btnSel_Click(object sender, EventArgs e)
         {
@@ -247,7 +247,7 @@ namespace Proyecto_IA
                 ruta = openFile.FileName;
                 leerTxt(ruta);
             }
-        }
+        } //Boton para buscar el archivo
 
         private void btnColor_Click(object sender, EventArgs e)
         {
@@ -257,7 +257,7 @@ namespace Proyecto_IA
             {
                 btnColor.BackColor = colorDialog.Color;
             }
-        }
+        } //Boton para el color (beta)
 
         private void btnAsignar_Click(object sender, EventArgs e)
         {
@@ -298,7 +298,7 @@ namespace Proyecto_IA
                 cmbCodigo_SelectedIndexChanged(sender, e);
             }
 
-        }
+        } //Se asignan los datos del terreno
 
         private void cmbCodigo_SelectedIndexChanged(object sender, EventArgs e)
         {
@@ -317,7 +317,7 @@ namespace Proyecto_IA
                 panel2.Show();
                 agregarADataGrid();
             }
-        }
+        } // Se muestran los datos actuales al cambiar el codigo en el cmb
 
         private void picBox_Click(object sender, EventArgs e)
         {
@@ -335,7 +335,7 @@ namespace Proyecto_IA
                 ruta = openFile.FileName;
                 picBox.Image = Image.FromFile(ruta);
             }
-        }
+        } //Elegir imagen del terreno
 
         private void btnSelPersonaje_Click(object sender, EventArgs e)
         {
@@ -359,20 +359,20 @@ namespace Proyecto_IA
                 pbPersonaje.Image = Image.FromFile(ruta);
                 txtNombre.Text = nombre;
             }
-        }
+        } //Elegir personaje
 
         private void btnSiguiente_Click(object sender, EventArgs e)
         {
             Laberinto lab = new Laberinto(terrenos, personajes, datos, this);
             lab.Show();
             this.Hide();
-        }
+        } //Pasar al siguiente Form
 
         private void btnRegresar_Click(object sender, EventArgs e)
         {
             inicio.Show();
             this.Close();
-        }
+        } //Regresar al Form
 
         private void btnAgregarPersonaje_Click(object sender, EventArgs e)
         {
@@ -417,6 +417,6 @@ namespace Proyecto_IA
                 btnSiguiente.Enabled = true;
             }
 
-        }
+        } //Se agrega el prsonaje a la lista
     }
 }
