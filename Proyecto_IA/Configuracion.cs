@@ -17,6 +17,7 @@ namespace Proyecto_IA
         List<Terreno> terrenos = new List<Terreno>();
         List<Personaje> personajes = new List<Personaje>();
         string[][] datos;
+        Laberinto lab;
 
         public Configuracion(Inicio init)
         {
@@ -363,7 +364,7 @@ namespace Proyecto_IA
 
         private void btnSiguiente_Click(object sender, EventArgs e)
         {
-            Laberinto lab = new Laberinto(terrenos, personajes, datos, this);
+            lab = new Laberinto(terrenos, personajes, datos, this);
             lab.Show();
             this.Hide();
         } //Pasar al siguiente Form
@@ -417,6 +418,6 @@ namespace Proyecto_IA
                 btnSiguiente.Enabled = true;
             }
 
-        } //Se agrega el prsonaje a la lista
+        } //Se agrega el personaje a la lista
     }
 }

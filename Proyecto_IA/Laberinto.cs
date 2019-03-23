@@ -236,6 +236,7 @@ namespace Proyecto_IA
                             coordenada_FinalXY.Y = -1;
 
                             btnElegir.Enabled = true;
+                            btnRegresar.Enabled = true;
 
                             cmbPersonaje.Enabled = true;
                             lista_pasos.Clear();
@@ -460,6 +461,7 @@ namespace Proyecto_IA
                                     MessageBox.Show("Coordenada Final Seleccionada!");
                                     panelMapa.Refresh();
                                     btnCelda_Final.Enabled = false;
+                                    btnRegresar.Enabled = false;
                                 }
 
                             }
@@ -603,5 +605,10 @@ namespace Proyecto_IA
             //this.Close();
         }   //BETA
 
+        private void btnRegresar_Click(object sender, EventArgs e)
+        {
+            frmConfiguracion.Show();
+            this.Hide();
+        }
     }
 }
