@@ -199,7 +199,7 @@ namespace Proyecto_IA
 
             List<string> lista = new List<string>();
             lista.Add("N/A");
-            for (decimal i = 0; i < 50;)
+            for (decimal i = 0; i < 20;)
             {
                 lista.Add(i.ToString());
                 i = i + 0.01m;

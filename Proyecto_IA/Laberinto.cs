@@ -15,11 +15,11 @@ namespace Proyecto_IA
     public partial class Laberinto : Form
     {
         Form frmConfiguracion;
-        List <Terreno> terrenos;
-        List <Personaje> personajes;
+        List<Terreno> terrenos;
+        List<Personaje> personajes;
         string[][] datos;
         static int CELL_WIDTH = 37;
-        List<Coordenada> lista_pasos; 
+        List<Coordenada> lista_pasos;
         int numero_pasos;
         ToolTip informacion;
         Graphics coordenadas;
@@ -29,12 +29,16 @@ namespace Proyecto_IA
         Font fuente2;
         Image banderaIni;
         Image banderaFin;
+        Image niebla;
         string rutaI = "";
         string rutaF = "";
+        string rutaNiebla = "";
 
         Point coordenadaActual;
         Point coordenada_InicialXY;
         Point coordenada_FinalXY;
+
+        bool jugando;
 
         public Laberinto(List<Terreno> _terrenos, List<Personaje> _personajes, string[][] _datos, Form _frm)
         {
@@ -58,11 +62,14 @@ namespace Proyecto_IA
 
             rutaI = Path.Combine(Application.StartupPath, @"..\..\Recursos\bandera_inicio.png");
             rutaF = Path.Combine(Application.StartupPath, @"..\..\Recursos\bandera_final.png");
+            rutaNiebla = Path.Combine(Application.StartupPath, @"..\..\Recursos\niebla.png");
 
             banderaIni = Image.FromFile(rutaI);
             banderaFin = Image.FromFile(rutaF);
+            niebla = Image.FromFile(rutaNiebla);
             lista_pasos = new List<Coordenada>();
             numero_pasos = 1;
+            jugando = false;
         }
 
         private void Laberinto_Load(object sender, EventArgs e)
@@ -99,7 +106,7 @@ namespace Proyecto_IA
 
             lista_pasos.Add(new Coordenada(personaje.CoordenadaX, personaje.CoordenadaY, numero_pasos));
         } //Se agrega una coordenada a la lista de pasos
-        
+
         private bool validaMovimiento(string movimiento, Personaje personaje)
         {
             int cordX = personaje.CoordenadaX;
@@ -132,7 +139,7 @@ namespace Proyecto_IA
 
                 case "derecha":
                     cordX += 1;
-                    if (cordX > (datos[0].Length-1))
+                    if (cordX > (datos[0].Length - 1))
                     {
                         MessageBox.Show("No puedes moverte fuera del mapa");
                         return false;
@@ -155,7 +162,7 @@ namespace Proyecto_IA
 
                     cordY += 1;
 
-                    if (cordY > (datos.Length-1))
+                    if (cordY > (datos.Length - 1))
                     {
                         MessageBox.Show("No puedes moverte fuera del mapa");
                         return false;
@@ -241,6 +248,7 @@ namespace Proyecto_IA
                             cmbPersonaje.Enabled = true;
                             lista_pasos.Clear();
                             numero_pasos = 1;
+                            jugando = false;
 
                             panelMapa.Refresh();
 
@@ -252,14 +260,14 @@ namespace Proyecto_IA
                     Application.Restart();
                     break;
             }
-            
+
         }   //Metodo para reinicar juego o reiniciar aplicación
 
         private void cmbPersonaje_SelectedIndexChanged(object sender, EventArgs e)
         {
             dgvpropiedades.Rows.Clear();
             string nombre = cmbPersonaje.Text;
-            
+
 
             foreach (Personaje personaje in personajes)
             {
@@ -287,7 +295,7 @@ namespace Proyecto_IA
                 }
 
                 char columnas = 'A';
-                
+
                 columnas += (char)(e.X / CELL_WIDTH);//Columnas
                 String texto = columnas + ((e.Y / CELL_WIDTH) + 1).ToString();//Filas
 
@@ -302,17 +310,17 @@ namespace Proyecto_IA
                         }
                     }
                 }
-               
+
                 foreach (Coordenada cord in lista_pasos)
                 {
-  
-                    if ((e.X/CELL_WIDTH) == cord.CoordenadaX && (e.Y/CELL_WIDTH) == cord.CoordenadaY)
+
+                    if ((e.X / CELL_WIDTH) == cord.CoordenadaX && (e.Y / CELL_WIDTH) == cord.CoordenadaY)
                     {
                         texto = texto + '\n' + cord.listaFormateada();
                     }
                 }
 
-                
+
                 informacion = new ToolTip();
 
                 informacion.Show(texto, panelMapa, e.X, e.Y, 1500);
@@ -338,12 +346,12 @@ namespace Proyecto_IA
             char columnas = 'A';
 
             coordenadas = this.CreateGraphics();
-           
-     
+
+
             for (int y = 0; y < datos.Length; y++)//Filas
             {
                 string filas = (y + 1).ToString();
-                coordenadas.DrawString(filas, fuente, pintaloDeBlanco, panelMapa.Location.X - 30, 
+                coordenadas.DrawString(filas, fuente, pintaloDeBlanco, panelMapa.Location.X - 30,
                 panelMapa.Location.Y + (y * CELL_WIDTH) + 10);
             }
 
@@ -362,25 +370,27 @@ namespace Proyecto_IA
 
             for (int i = 0; i < datos.Length; i++)
             {
-
                 for (int j = 0; j < datos[0].Length; j++)
                 {
-                    Terreno terreno = obtenerTerreno(int.Parse(datos[i][j]));
-
-                    graficosImg.DrawImage(terreno.Imagen, j * CELL_WIDTH, i * CELL_WIDTH);
-
-                    if (coordenada_InicialXY.X == j && coordenada_InicialXY.Y == i)
+                    if (jugando)
                     {
-                        graficosImg.DrawImage(banderaIni, coordenada_InicialXY.X * CELL_WIDTH, coordenada_InicialXY.Y * CELL_WIDTH, 20,20);
+                        graficosImg.DrawImage(niebla, j * CELL_WIDTH, i * CELL_WIDTH);
                     }
-
-                    if (coordenada_FinalXY.X == j && coordenada_FinalXY.Y == i)
+                    else
                     {
-                        graficosImg.DrawImage(banderaFin, coordenada_FinalXY.X * CELL_WIDTH, coordenada_FinalXY.Y * CELL_WIDTH, 20, 20); 
-                    }
+                        Terreno terreno = obtenerTerreno(int.Parse(datos[i][j]));
 
+                        graficosImg.DrawImage(terreno.Imagen, j * CELL_WIDTH, i * CELL_WIDTH);
+                    }
                 }
             }
+            if (jugando)
+            {
+                desenmascarar();
+            }
+            graficosImg.DrawImage(banderaIni, coordenada_InicialXY.X * CELL_WIDTH, coordenada_InicialXY.Y * CELL_WIDTH, 20, 20);
+            graficosImg.DrawImage(banderaFin, coordenada_FinalXY.X * CELL_WIDTH, coordenada_FinalXY.Y * CELL_WIDTH, 20, 20);
+
 
             foreach (Personaje personaje in personajes)
             {
@@ -391,43 +401,52 @@ namespace Proyecto_IA
             {
                 graficosImg.DrawString(coordenada.listaFormateada(), fuente2, pintaloDeBlanco, coordenada.CoordenadaX * CELL_WIDTH, coordenada.CoordenadaY * CELL_WIDTH);
             }
+
         }   //Se dibujan los terrenos, personaje, coordenada inicial y final y lista de pasos
 
         private void btnCelda_Inicial_Click(object sender, EventArgs e)
         {
-            string nombre = cmbPersonaje.Text;
-
-            foreach (Personaje personaje in personajes)
+            if (coordenadaActual.X == -1 || coordenadaActual.Y == -1)
             {
-                if (nombre == personaje.Nombre)
+                MessageBox.Show("Por favor elija una coordenada <3");
+            }
+            else
+            {
+                string nombre = cmbPersonaje.Text;
+
+                foreach (Personaje personaje in personajes)
                 {
-                    for(int i=0; i < terrenos.Count; i++)
+                    if (nombre == personaje.Nombre)
                     {
-                        if (int.Parse(datos[coordenadaActual.Y][coordenadaActual.X]) == personaje.Terrenos[i])
+                        for (int i = 0; i < terrenos.Count; i++)
                         {
-                           
-                            if (personaje.Costos[i] == -1)
+                            if (int.Parse(datos[coordenadaActual.Y][coordenadaActual.X]) == personaje.Terrenos[i])
                             {
-                                MessageBox.Show("No se puede inicializar ahí!");
-                            }
-                            else
-                            {
-                                coordenada_InicialXY.X = coordenadaActual.X;
-                                coordenada_InicialXY.Y = coordenadaActual.Y;
 
-                                personaje.CoordenadaX = coordenadaActual.X;
-                                personaje.CoordenadaY = coordenadaActual.Y;
+                                if (personaje.Costos[i] == -1)
+                                {
+                                    MessageBox.Show("No se puede inicializar ahí!");
+                                }
+                                else
+                                {
+                                    coordenada_InicialXY.X = coordenadaActual.X;
+                                    coordenada_InicialXY.Y = coordenadaActual.Y;
 
-                                lista_pasos.Add(new Coordenada(personaje.CoordenadaX, personaje.CoordenadaY, numero_pasos));
+                                    personaje.CoordenadaX = coordenadaActual.X;
+                                    personaje.CoordenadaY = coordenadaActual.Y;
 
-                                MessageBox.Show("Coordenada Inicial Seleccionada!");
-                                panelMapa.Refresh();
-                                btnCelda_Inicial.Enabled = false;
+                                    lista_pasos.Add(new Coordenada(personaje.CoordenadaX, personaje.CoordenadaY, numero_pasos));
+
+                                    MessageBox.Show("Coordenada Inicial Seleccionada!");
+                                    panelMapa.Refresh();
+                                    btnCelda_Inicial.Enabled = false;
+                                }
                             }
                         }
-                    }                   
+                    }
                 }
-            }   
+                btnCelda_Final.Enabled = true;
+            }
         }   //Btn para escoger la coordenada inicial
 
         private void btnCelda_Final_Click(object sender, EventArgs e)
@@ -459,6 +478,7 @@ namespace Proyecto_IA
                                     coordenada_FinalXY.Y = coordenadaActual.Y;
 
                                     MessageBox.Show("Coordenada Final Seleccionada!");
+                                    jugando = true;
                                     panelMapa.Refresh();
                                     btnCelda_Final.Enabled = false;
                                     btnRegresar.Enabled = false;
@@ -482,7 +502,6 @@ namespace Proyecto_IA
             btnElegir.Enabled = false;
 
             btnCelda_Inicial.Enabled = true;
-            btnCelda_Final.Enabled = true;
         }   //Desbloqueo los otros botones después de elegir un personaje
 
         private void moverPersonajeArriba()
@@ -496,9 +515,9 @@ namespace Proyecto_IA
                     if (validaMovimiento("arriba", personaje))
                     {
                         personaje.CoordenadaY -= 1; 
-                        panelMapa.Refresh();
                         numero_pasos++;
                         agrearPasos(personaje);
+                        panelMapa.Refresh();
                     }
                 }
             }
@@ -515,9 +534,9 @@ namespace Proyecto_IA
                     if (validaMovimiento("derecha", personaje))
                     { 
                         personaje.CoordenadaX += 1;
-                        panelMapa.Refresh();
                         numero_pasos++;
                         agrearPasos(personaje);
+                        panelMapa.Refresh();
 
                     }
                 }
@@ -535,9 +554,9 @@ namespace Proyecto_IA
                     if (validaMovimiento("abajo", personaje))
                     {
                         personaje.CoordenadaY += 1;
-                        panelMapa.Refresh();
                         numero_pasos++;
                         agrearPasos(personaje);
+                        panelMapa.Refresh();
                     }
 
                 }
@@ -555,9 +574,9 @@ namespace Proyecto_IA
                     if (validaMovimiento("izquierda", personaje))
                     {
                         personaje.CoordenadaX -= 1;
-                        panelMapa.Refresh();
                         numero_pasos++;
                         agrearPasos(personaje);
+                        panelMapa.Refresh();
 
                     }
                 }
@@ -581,7 +600,6 @@ namespace Proyecto_IA
                     moverPersonajeIzquierda();
                     break;              
             }
-
             if (seLlegoAlFinal())
             {
                 MessageBox.Show("Llegaste a la meta");
@@ -598,7 +616,6 @@ namespace Proyecto_IA
             }
         }   //Eevento para cuando se presionan las teclas
 
-
         private void btnModificar_Click(object sender, EventArgs e)
         {
             frmConfiguracion.Show();
@@ -609,6 +626,53 @@ namespace Proyecto_IA
         {
             frmConfiguracion.Show();
             this.Hide();
+        }
+
+        private void desenmascarar()
+        {
+            string nombre = cmbPersonaje.Text;
+            foreach (Personaje personaje in personajes)
+            {
+                //Personaje a = personajes.Find(personaje_x => personaje_x.Nombre == "elNombre");
+
+                if (nombre == personaje.Nombre)
+                {
+                    foreach (Coordenada coordenada in lista_pasos)
+                    {
+
+                        int cordX = coordenada.CoordenadaX;
+                        int cordY = coordenada.CoordenadaY;
+
+                        Terreno terrenoC = obtenerTerreno(int.Parse(datos[cordY][cordX]));
+                        graficosImg.DrawImage(terrenoC.Imagen, cordX * CELL_WIDTH, cordY * CELL_WIDTH, CELL_WIDTH, CELL_WIDTH);
+
+
+                        if (cordX + 1 < datos[0].Length)
+                        {
+                            Terreno terrenoD = obtenerTerreno(int.Parse(datos[cordY][cordX + 1]));
+                            graficosImg.DrawImage(terrenoD.Imagen, (cordX + 1) * CELL_WIDTH, cordY * CELL_WIDTH, CELL_WIDTH, CELL_WIDTH);
+
+                        }
+                        if (cordX - 1 >= 0) //izquierda
+                        {
+                            Terreno terrenoI = obtenerTerreno(int.Parse(datos[cordY][cordX - 1]));
+                            graficosImg.DrawImage(terrenoI.Imagen, (cordX - 1) * CELL_WIDTH, cordY * CELL_WIDTH, CELL_WIDTH, CELL_WIDTH);
+                        }
+                        if (cordY + 1 < datos.Length)
+                        {
+                            Terreno terrenoAb = obtenerTerreno(int.Parse(datos[cordY + 1][cordX]));
+                            graficosImg.DrawImage(terrenoAb.Imagen, cordX * CELL_WIDTH, (cordY + 1) * CELL_WIDTH, CELL_WIDTH, CELL_WIDTH);
+
+                        }
+                        if (cordY - 1 >= 0) //arriba
+                        {
+                            Terreno terrenoAr = obtenerTerreno(int.Parse(datos[cordY - 1][cordX]));
+                            graficosImg.DrawImage(terrenoAr.Imagen, cordX * CELL_WIDTH, (cordY - 1) * CELL_WIDTH, CELL_WIDTH, CELL_WIDTH);
+
+                        }
+                    }
+                }
+            }
         }
     }
 }
