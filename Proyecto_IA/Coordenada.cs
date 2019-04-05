@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Proyecto_IA
 {
-    class Coordenada
+    public class Coordenada
     {
         private int coordenadaX;
         private int coordenadaY;

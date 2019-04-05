@@ -20,6 +20,7 @@ namespace Proyecto_IA
         string[][] datos;
         static int CELL_WIDTH = 37;
         List<Coordenada> lista_pasos;
+        List<Nodo> nodos;
         int numero_pasos;
         ToolTip informacion;
         Graphics coordenadas;
@@ -68,6 +69,7 @@ namespace Proyecto_IA
             banderaFin = Image.FromFile(rutaF);
             niebla = Image.FromFile(rutaNiebla);
             lista_pasos = new List<Coordenada>();
+            nodos = new List<Nodo>();
             numero_pasos = 1;
             jugando = false;
         }
@@ -92,6 +94,18 @@ namespace Proyecto_IA
             }
             return new Terreno();
         }       //Se busca el terreno a partir de su codigo asignado
+
+        private int obtenerCosto(int cod)
+        {
+            for (int i = 0; i < terrenos.Count; i++)
+            {
+                if (terrenos[i].Codigo == cod)
+                {
+                    return i;
+                }
+            }
+            return -1;
+        }
 
         private void agrearPasos(Personaje personaje)
         {
@@ -214,6 +228,8 @@ namespace Proyecto_IA
 
             if (personaje.CoordenadaX == coordenada_FinalXY.X && personaje.CoordenadaY == coordenada_FinalXY.Y)
             {
+               // Arbol arbol = new Arbol(lista_pasos);
+               // arbol.Show();
                 return true;
             }
             
@@ -244,6 +260,7 @@ namespace Proyecto_IA
 
                             cmbPersonaje.Enabled = true;
                             lista_pasos.Clear();
+                            nodos.Clear();
                             numero_pasos = 1;
                             jugando = false;
 
@@ -430,6 +447,9 @@ namespace Proyecto_IA
                             personaje.CoordenadaY = coordenadaActual.Y;
 
                             lista_pasos.Add(new Coordenada(personaje.CoordenadaX, personaje.CoordenadaY, numero_pasos));
+                            nodos.Add(new Nodo("", personaje.CoordenadaX, personaje.CoordenadaY, 0, true, false));
+                            nodos.Last().visitas.Add(numero_pasos);
+
 
                             MessageBox.Show("Coordenada Inicial Seleccionada!");
                             panelMapa.Refresh();
@@ -569,6 +589,14 @@ namespace Proyecto_IA
                     moverPersonajeIzquierda();
                     break;              
             }
+            Personaje personaje = personajes.Find(personaje_x => personaje_x.Nombre == cmbPersonaje.Text);
+            int cordx = personaje.CoordenadaX;
+            int cordy = personaje.CoordenadaY;
+
+            Nodo nodoAux = nodos.Last();
+            nodos.Add(new Nodo(nodos.Last().nombre, personaje.CoordenadaX, personaje.CoordenadaY, personaje.Costos[obtenerCosto(int.Parse(datos[cordy][cordx]))], false, false));
+            nodoAux.hijos.Add(nodos.Last().nombre);
+            nodos.Last().visitas.Add(numero_pasos);
             if (seLlegoAlFinal())
             {
                 MessageBox.Show("Llegaste a la meta");
@@ -639,6 +667,28 @@ namespace Proyecto_IA
 
                 }
             
+            }
+        }
+
+        private void button1_Click(object sender, EventArgs e)
+        {
+            foreach (Nodo nodo in nodos)
+            {
+                Console.WriteLine("Padre: " + nodo.padre + " Nombre: " + nodo.nombre + " X: " + nodo.cX + " Y: " + nodo.cY + " Costo: " + nodo.costo + " Inicial: " + nodo.inicial + " Final: " + nodo.final);
+
+                Console.WriteLine("Vistas: ");
+                for (int i = 0; i < nodo.visitas.Count; i++)
+                {
+                    Console.WriteLine(nodo.visitas[i] + ", ");
+                }
+
+                Console.WriteLine("Hijos: ");
+
+                for (int i = 0; i < nodo.hijos.Count; i++)
+                {
+                    Console.WriteLine(nodo.hijos[i] + ", ");
+                }
+
             }
         }
     }
