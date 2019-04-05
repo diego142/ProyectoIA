@@ -20,6 +20,7 @@ namespace Proyecto_IA
         string[][] datos;
         static int CELL_WIDTH = 37;
         List<Coordenada> lista_pasos;
+        List<Nodo> nodos;
         int numero_pasos;
         ToolTip informacion;
         Graphics coordenadas;
@@ -68,6 +69,7 @@ namespace Proyecto_IA
             banderaFin = Image.FromFile(rutaF);
             niebla = Image.FromFile(rutaNiebla);
             lista_pasos = new List<Coordenada>();
+            nodos = new List<Nodo>();
             numero_pasos = 1;
             jugando = false;
         }
@@ -92,6 +94,18 @@ namespace Proyecto_IA
             }
             return new Terreno();
         }       //Se busca el terreno a partir de su codigo asignado
+
+        private int obtenerCosto(int cod)
+        {
+            for (int i = 0; i < terrenos.Count; i++)
+            {
+                if (terrenos[i].Codigo == cod)
+                {
+                    return i;
+                }
+            }
+            return -1;
+        }
 
         private void agrearPasos(Personaje personaje)
         {
@@ -210,16 +224,15 @@ namespace Proyecto_IA
         {
             string nombre = cmbPersonaje.Text;
 
-            foreach (Personaje personaje in personajes)
+            Personaje personaje = personajes.Find(personaje_x => personaje_x.Nombre == nombre);
+
+            if (personaje.CoordenadaX == coordenada_FinalXY.X && personaje.CoordenadaY == coordenada_FinalXY.Y)
             {
-                if (personaje.Nombre == nombre)
-                {
-                    if (personaje.CoordenadaX == coordenada_FinalXY.X && personaje.CoordenadaY == coordenada_FinalXY.Y)
-                    {
-                        return true;
-                    }
-                }
+               // Arbol arbol = new Arbol(lista_pasos);
+               // arbol.Show();
+                return true;
             }
+            
             return false;
         }   //Verifica si el personaje llego a la coordenada final
 
@@ -247,6 +260,7 @@ namespace Proyecto_IA
 
                             cmbPersonaje.Enabled = true;
                             lista_pasos.Clear();
+                            nodos.Clear();
                             numero_pasos = 1;
                             jugando = false;
 
@@ -413,38 +427,37 @@ namespace Proyecto_IA
             else
             {
                 string nombre = cmbPersonaje.Text;
+                Personaje personaje = personajes.Find(personaje_x => personaje_x.Nombre == nombre);
 
-                foreach (Personaje personaje in personajes)
+                for (int i = 0; i < terrenos.Count; i++)
                 {
-                    if (nombre == personaje.Nombre)
+                    if (int.Parse(datos[coordenadaActual.Y][coordenadaActual.X]) == personaje.Terrenos[i])
                     {
-                        for (int i = 0; i < terrenos.Count; i++)
+
+                        if (personaje.Costos[i] == -1)
                         {
-                            if (int.Parse(datos[coordenadaActual.Y][coordenadaActual.X]) == personaje.Terrenos[i])
-                            {
+                            MessageBox.Show("No se puede inicializar ahí!");
+                        }
+                        else
+                        {
+                            coordenada_InicialXY.X = coordenadaActual.X;
+                            coordenada_InicialXY.Y = coordenadaActual.Y;
 
-                                if (personaje.Costos[i] == -1)
-                                {
-                                    MessageBox.Show("No se puede inicializar ahí!");
-                                }
-                                else
-                                {
-                                    coordenada_InicialXY.X = coordenadaActual.X;
-                                    coordenada_InicialXY.Y = coordenadaActual.Y;
+                            personaje.CoordenadaX = coordenadaActual.X;
+                            personaje.CoordenadaY = coordenadaActual.Y;
 
-                                    personaje.CoordenadaX = coordenadaActual.X;
-                                    personaje.CoordenadaY = coordenadaActual.Y;
+                            lista_pasos.Add(new Coordenada(personaje.CoordenadaX, personaje.CoordenadaY, numero_pasos));
+                            nodos.Add(new Nodo("", personaje.CoordenadaX, personaje.CoordenadaY, 0, true, false));
+                            nodos.Last().visitas.Add(numero_pasos);
 
-                                    lista_pasos.Add(new Coordenada(personaje.CoordenadaX, personaje.CoordenadaY, numero_pasos));
 
-                                    MessageBox.Show("Coordenada Inicial Seleccionada!");
-                                    panelMapa.Refresh();
-                                    btnCelda_Inicial.Enabled = false;
-                                }
-                            }
+                            MessageBox.Show("Coordenada Inicial Seleccionada!");
+                            panelMapa.Refresh();
+                            btnCelda_Inicial.Enabled = false;
                         }
                     }
                 }
+
                 btnCelda_Final.Enabled = true;
             }
         }   //Btn para escoger la coordenada inicial
@@ -459,35 +472,32 @@ namespace Proyecto_IA
             }
             else
             {
-                foreach (Personaje personaje in personajes)
+                Personaje personaje = personajes.Find(personaje_x => personaje_x.Nombre == nombre);
+
+                for (int i = 0; i < terrenos.Count; i++)
                 {
-                    if (nombre == personaje.Nombre)
+                    if (int.Parse(datos[coordenadaActual.Y][coordenadaActual.X]) == personaje.Terrenos[i])
                     {
-                        for (int i = 0; i < terrenos.Count; i++)
+
+                        if (personaje.Costos[i] == -1)
                         {
-                            if (int.Parse(datos[coordenadaActual.Y][coordenadaActual.X]) == personaje.Terrenos[i])
-                            {
-
-                                if (personaje.Costos[i] == -1)
-                                {
-                                    MessageBox.Show("No se puede inicializar ahí!");
-                                }
-                                else
-                                {
-                                    coordenada_FinalXY.X = coordenadaActual.X;
-                                    coordenada_FinalXY.Y = coordenadaActual.Y;
-
-                                    MessageBox.Show("Coordenada Final Seleccionada!");
-                                    jugando = true;
-                                    panelMapa.Refresh();
-                                    btnCelda_Final.Enabled = false;
-                                    btnRegresar.Enabled = false;
-                                }
-
-                            }
+                            MessageBox.Show("No se puede inicializar ahí!");
                         }
+                        else
+                        {
+                            coordenada_FinalXY.X = coordenadaActual.X;
+                            coordenada_FinalXY.Y = coordenadaActual.Y;
+
+                            MessageBox.Show("Coordenada Final Seleccionada!");
+                            jugando = true;
+                            panelMapa.Refresh();
+                            btnCelda_Final.Enabled = false;
+                            btnRegresar.Enabled = false;
+                        }
+
                     }
                 }
+
             }
         }   ////Btn para escoger la coordenada final
 
@@ -507,79 +517,58 @@ namespace Proyecto_IA
         private void moverPersonajeArriba()
         {
             string personajeNombre = cmbPersonaje.Text;
+            Personaje personaje = personajes.Find(personaje_x => personaje_x.Nombre == personajeNombre);
 
-            foreach (Personaje personaje in personajes)
+            if (validaMovimiento("arriba", personaje))
             {
-                if (personajeNombre == personaje.Nombre)
-                {
-                    if (validaMovimiento("arriba", personaje))
-                    {
-                        personaje.CoordenadaY -= 1; 
-                        numero_pasos++;
-                        agrearPasos(personaje);
-                        panelMapa.Refresh();
-                    }
-                }
-            }
+                personaje.CoordenadaY -= 1; 
+                numero_pasos++;
+                agrearPasos(personaje);
+                panelMapa.Refresh();
+            }       
         }
 
         private void moverPersonajeDerecha()
         {
             string personajeNombre = cmbPersonaje.Text;
+            Personaje personaje = personajes.Find(personaje_x => personaje_x.Nombre == personajeNombre);
 
-            foreach (Personaje personaje in personajes)
-            {
-                if (personajeNombre == personaje.Nombre)
-                {
-                    if (validaMovimiento("derecha", personaje))
-                    { 
-                        personaje.CoordenadaX += 1;
-                        numero_pasos++;
-                        agrearPasos(personaje);
-                        panelMapa.Refresh();
+            if (validaMovimiento("derecha", personaje))
+            { 
+                personaje.CoordenadaX += 1;
+                numero_pasos++;
+                agrearPasos(personaje);
+                panelMapa.Refresh();
 
-                    }
-                }
             }
         }
 
         private void moverPersonajeAbajo()
         {
             string personajeNombre = cmbPersonaje.Text;
+            Personaje personaje = personajes.Find(personaje_x => personaje_x.Nombre == personajeNombre);
 
-            foreach (Personaje personaje in personajes)
+            if (validaMovimiento("abajo", personaje))
             {
-                if (personajeNombre == personaje.Nombre)
-                {
-                    if (validaMovimiento("abajo", personaje))
-                    {
-                        personaje.CoordenadaY += 1;
-                        numero_pasos++;
-                        agrearPasos(personaje);
-                        panelMapa.Refresh();
-                    }
-
-                }
+                personaje.CoordenadaY += 1;
+                numero_pasos++;
+                agrearPasos(personaje);
+                panelMapa.Refresh();
             }
         }
 
         private void moverPersonajeIzquierda()
         {
             string personajeNombre = cmbPersonaje.Text;
+            Personaje personaje = personajes.Find(personaje_x => personaje_x.Nombre == personajeNombre);
 
-            foreach (Personaje personaje in personajes)
+            if (validaMovimiento("izquierda", personaje))
             {
-                if (personajeNombre == personaje.Nombre)
-                {
-                    if (validaMovimiento("izquierda", personaje))
-                    {
-                        personaje.CoordenadaX -= 1;
-                        numero_pasos++;
-                        agrearPasos(personaje);
-                        panelMapa.Refresh();
+                personaje.CoordenadaX -= 1;
+                numero_pasos++;
+                agrearPasos(personaje);
+                panelMapa.Refresh();
 
-                    }
-                }
             }
         }
 
@@ -600,6 +589,14 @@ namespace Proyecto_IA
                     moverPersonajeIzquierda();
                     break;              
             }
+            Personaje personaje = personajes.Find(personaje_x => personaje_x.Nombre == cmbPersonaje.Text);
+            int cordx = personaje.CoordenadaX;
+            int cordy = personaje.CoordenadaY;
+
+            Nodo nodoAux = nodos.Last();
+            nodos.Add(new Nodo(nodos.Last().nombre, personaje.CoordenadaX, personaje.CoordenadaY, personaje.Costos[obtenerCosto(int.Parse(datos[cordy][cordx]))], false, false));
+            nodoAux.hijos.Add(nodos.Last().nombre);
+            nodos.Last().visitas.Add(numero_pasos);
             if (seLlegoAlFinal())
             {
                 MessageBox.Show("Llegaste a la meta");
@@ -631,47 +628,67 @@ namespace Proyecto_IA
         private void desenmascarar()
         {
             string nombre = cmbPersonaje.Text;
-            foreach (Personaje personaje in personajes)
+
+            Personaje personaje = personajes.Find(personaje_x => personaje_x.Nombre == nombre);
+
+            if (nombre == personaje.Nombre)
             {
-                //Personaje a = personajes.Find(personaje_x => personaje_x.Nombre == "elNombre");
-
-                if (nombre == personaje.Nombre)
+                foreach (Coordenada coordenada in lista_pasos)
                 {
-                    foreach (Coordenada coordenada in lista_pasos)
+
+                    int cordX = coordenada.CoordenadaX;
+                    int cordY = coordenada.CoordenadaY;
+
+                    Terreno terrenoC = obtenerTerreno(int.Parse(datos[cordY][cordX]));
+                    graficosImg.DrawImage(terrenoC.Imagen, cordX * CELL_WIDTH, cordY * CELL_WIDTH, CELL_WIDTH, CELL_WIDTH);
+
+
+                    if (cordX + 1 < datos[0].Length)
                     {
-
-                        int cordX = coordenada.CoordenadaX;
-                        int cordY = coordenada.CoordenadaY;
-
-                        Terreno terrenoC = obtenerTerreno(int.Parse(datos[cordY][cordX]));
-                        graficosImg.DrawImage(terrenoC.Imagen, cordX * CELL_WIDTH, cordY * CELL_WIDTH, CELL_WIDTH, CELL_WIDTH);
-
-
-                        if (cordX + 1 < datos[0].Length)
-                        {
-                            Terreno terrenoD = obtenerTerreno(int.Parse(datos[cordY][cordX + 1]));
-                            graficosImg.DrawImage(terrenoD.Imagen, (cordX + 1) * CELL_WIDTH, cordY * CELL_WIDTH, CELL_WIDTH, CELL_WIDTH);
-
-                        }
-                        if (cordX - 1 >= 0) //izquierda
-                        {
-                            Terreno terrenoI = obtenerTerreno(int.Parse(datos[cordY][cordX - 1]));
-                            graficosImg.DrawImage(terrenoI.Imagen, (cordX - 1) * CELL_WIDTH, cordY * CELL_WIDTH, CELL_WIDTH, CELL_WIDTH);
-                        }
-                        if (cordY + 1 < datos.Length)
-                        {
-                            Terreno terrenoAb = obtenerTerreno(int.Parse(datos[cordY + 1][cordX]));
-                            graficosImg.DrawImage(terrenoAb.Imagen, cordX * CELL_WIDTH, (cordY + 1) * CELL_WIDTH, CELL_WIDTH, CELL_WIDTH);
-
-                        }
-                        if (cordY - 1 >= 0) //arriba
-                        {
-                            Terreno terrenoAr = obtenerTerreno(int.Parse(datos[cordY - 1][cordX]));
-                            graficosImg.DrawImage(terrenoAr.Imagen, cordX * CELL_WIDTH, (cordY - 1) * CELL_WIDTH, CELL_WIDTH, CELL_WIDTH);
-
-                        }
+                        Terreno terrenoD = obtenerTerreno(int.Parse(datos[cordY][cordX + 1]));
+                        graficosImg.DrawImage(terrenoD.Imagen, (cordX + 1) * CELL_WIDTH, cordY * CELL_WIDTH, CELL_WIDTH, CELL_WIDTH);
                     }
+                    if (cordX - 1 >= 0) //izquierda
+                    {
+                        Terreno terrenoI = obtenerTerreno(int.Parse(datos[cordY][cordX - 1]));
+                        graficosImg.DrawImage(terrenoI.Imagen, (cordX - 1) * CELL_WIDTH, cordY * CELL_WIDTH, CELL_WIDTH, CELL_WIDTH);
+                    }
+                    if (cordY + 1 < datos.Length)
+                    {
+                        Terreno terrenoAb = obtenerTerreno(int.Parse(datos[cordY + 1][cordX]));
+                        graficosImg.DrawImage(terrenoAb.Imagen, cordX * CELL_WIDTH, (cordY + 1) * CELL_WIDTH, CELL_WIDTH, CELL_WIDTH);
+
+                    }
+                    if (cordY - 1 >= 0) //arriba
+                    {
+                        Terreno terrenoAr = obtenerTerreno(int.Parse(datos[cordY - 1][cordX]));
+                        graficosImg.DrawImage(terrenoAr.Imagen, cordX * CELL_WIDTH, (cordY - 1) * CELL_WIDTH, CELL_WIDTH, CELL_WIDTH);
+                    }
+
                 }
+            
+            }
+        }
+
+        private void button1_Click(object sender, EventArgs e)
+        {
+            foreach (Nodo nodo in nodos)
+            {
+                Console.WriteLine("Padre: " + nodo.padre + " Nombre: " + nodo.nombre + " X: " + nodo.cX + " Y: " + nodo.cY + " Costo: " + nodo.costo + " Inicial: " + nodo.inicial + " Final: " + nodo.final);
+
+                Console.WriteLine("Vistas: ");
+                for (int i = 0; i < nodo.visitas.Count; i++)
+                {
+                    Console.WriteLine(nodo.visitas[i] + ", ");
+                }
+
+                Console.WriteLine("Hijos: ");
+
+                for (int i = 0; i < nodo.hijos.Count; i++)
+                {
+                    Console.WriteLine(nodo.hijos[i] + ", ");
+                }
+
             }
         }
     }
