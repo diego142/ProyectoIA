@@ -578,25 +578,22 @@ namespace Proyecto_IA
             {
                case Keys.Up:
                     moverPersonajeArriba();
+                    agregarNodo();
                     break;
                 case Keys.Right:
                     moverPersonajeDerecha();
+                    agregarNodo();
                     break;
                 case Keys.Down:
                     moverPersonajeAbajo();
+                    agregarNodo();
                     break;
                 case Keys.Left:
                     moverPersonajeIzquierda();
+                    agregarNodo();
                     break;              
             }
-            Personaje personaje = personajes.Find(personaje_x => personaje_x.Nombre == cmbPersonaje.Text);
-            int cordx = personaje.CoordenadaX;
-            int cordy = personaje.CoordenadaY;
-
-            Nodo nodoAux = nodos.Last();
-            nodos.Add(new Nodo(nodos.Last().nombre, personaje.CoordenadaX, personaje.CoordenadaY, personaje.Costos[obtenerCosto(int.Parse(datos[cordy][cordx]))], false, false));
-            nodoAux.hijos.Add(nodos.Last().nombre);
-            nodos.Last().visitas.Add(numero_pasos);
+           
             if (seLlegoAlFinal())
             {
                 MessageBox.Show("Llegaste a la meta");
@@ -668,6 +665,80 @@ namespace Proyecto_IA
                 }
             
             }
+        }
+
+        private void agregarHijos(string padre)
+        {
+            Nodo nodoActual = nodos.Last();
+            int cX = nodoActual.cX;
+            int cY = nodoActual.cY;
+
+            if (cX + 1 < datos[0].Length)
+            {
+                if (generarNombre((cX + 1), cY) != padre)
+                {
+                    if (obtenerCosto(int.Parse(datos[cY][cX + 1])) != -1) { nodos.Last().hijos.Add(generarNombre((cX + 1), cY)); }
+                }
+                    
+            }
+            if (cX - 1 >= 0) //izquierda
+            {
+                if (generarNombre((cX-1), cY) != padre)
+                {
+                    if (obtenerCosto(int.Parse(datos[cY][cX - 1])) != -1) { nodos.Last().hijos.Add(generarNombre((cX - 1), cY)); }
+                }
+                   
+            }
+            if (cY + 1 < datos.Length)
+            {
+                if (generarNombre(cX, (cY + 1)) != padre)
+                {
+                    if (obtenerCosto(int.Parse(datos[cY + 1][cX])) != -1) { nodos.Last().hijos.Add(generarNombre(cX, (cY + 1))); }
+                }
+                    
+            }
+            if (cY - 1 >= 0) //arriba
+            {
+                
+                if (obtenerCosto(int.Parse(datos[cY - 1][cX])) != -1)
+                {
+                    if (generarNombre(cX, (cY - 1)) != padre)
+                    {
+                        nodos.Last().hijos.Add(generarNombre(cX, (cY - 1)));
+                    }
+                    
+                }
+            }
+            
+        }
+
+        private string generarNombre(int cX, int cY)
+        {
+            string coord = "";
+            char col = 'A';
+
+            col += (char)cX;
+            coord = col + (cY + 1).ToString();
+            return coord;
+        }
+
+        private void agregarNodo()
+        {
+            Personaje personaje = personajes.Find(personaje_x => personaje_x.Nombre == cmbPersonaje.Text);
+            int cordx = personaje.CoordenadaX;
+            int cordy = personaje.CoordenadaY;
+
+            if (nodos.Count == 1)
+            {
+                agregarHijos("");
+            }
+            else
+            {
+                agregarHijos(nodos[nodos.Count - 2].nombre);
+            }
+            nodos.Add(new Nodo(nodos.Last().nombre, personaje.CoordenadaX, personaje.CoordenadaY, personaje.Costos[obtenerCosto(int.Parse(datos[cordy][cordx]))], false, false));
+
+            nodos.Last().visitas.Add(numero_pasos);
         }
 
         private void button1_Click(object sender, EventArgs e)

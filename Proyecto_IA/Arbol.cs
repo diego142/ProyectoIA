@@ -34,7 +34,7 @@ namespace Proyecto_IA
             return coord;
         }
 
-        private bool esAdyacente(Coordenada actual, Coordenada ady)
+        /*private bool esAdyacente(Coordenada actual, Coordenada ady)
         {
             if ((actual.CoordenadaX + 1) == ady.CoordenadaX && actual.CoordenadaY == ady.CoordenadaY ) { return true; }
             if (actual.CoordenadaX == ady.CoordenadaX && (actual.CoordenadaY + 1) == ady.CoordenadaY ) { return true; }
@@ -42,7 +42,7 @@ namespace Proyecto_IA
             if (actual.CoordenadaX == ady.CoordenadaX && (actual.CoordenadaY -1) == ady.CoordenadaY ) { return true; }
 
             return false;
-        }
+        }*/
 
         /*private void generarArbol()
         {

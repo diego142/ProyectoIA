@@ -89,3 +89,4 @@ C:\Users\sekay\Desktop\ProyectoIA\Proyecto_IA\obj\Debug\Proyecto_IA.csproj.CoreC
 C:\Users\sekay\Desktop\ProyectoIA\Proyecto_IA\obj\Debug\Proyecto_IA.exe
 C:\Users\sekay\Desktop\ProyectoIA\Proyecto_IA\obj\Debug\Proyecto_IA.pdb
 C:\Users\mega-\source\repos\Proyecto_IA\Proyecto_IA\obj\Debug\Proyecto_IA.Arbol.resources
+C:\Users\sekay\Desktop\ProyectoIA\Proyecto_IA\obj\Debug\Proyecto_IA.Arbol.resources
