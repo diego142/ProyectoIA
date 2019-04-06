@@ -28,6 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(Inicio));
             this.btnInicio = new System.Windows.Forms.Button();
             this.btnCreditos = new System.Windows.Forms.Button();
             this.btnSalir = new System.Windows.Forms.Button();
@@ -84,6 +85,7 @@
             this.Controls.Add(this.btnSalir);
             this.Controls.Add(this.btnCreditos);
             this.Controls.Add(this.btnInicio);
+            this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.Name = "Inicio";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "Inicio";

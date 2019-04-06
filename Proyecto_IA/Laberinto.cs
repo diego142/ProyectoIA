@@ -9,6 +9,7 @@ using System.Threading.Tasks;
 using System.Threading;
 using System.IO;
 using System.Windows.Forms;
+using System.Media;
 
 namespace Proyecto_IA
 {
@@ -34,10 +35,14 @@ namespace Proyecto_IA
         string rutaI = "";
         string rutaF = "";
         string rutaNiebla = "";
+        string rutaMusica = "";
+        string rutaMovimiento = "";
 
         Point coordenadaActual;
         Point coordenada_InicialXY;
         Point coordenada_FinalXY;
+        SoundPlayer sound;
+        SoundPlayer soundMove;
 
         bool jugando;
 
@@ -64,6 +69,8 @@ namespace Proyecto_IA
             rutaI = Path.Combine(Application.StartupPath, @"..\..\Recursos\bandera_inicio.png");
             rutaF = Path.Combine(Application.StartupPath, @"..\..\Recursos\bandera_final.png");
             rutaNiebla = Path.Combine(Application.StartupPath, @"..\..\Recursos\niebla.png");
+            rutaMusica = Path.Combine(Application.StartupPath, @"..\..\Recursos\song_laberinto.wav");
+            rutaMovimiento = Path.Combine(Application.StartupPath, @"..\..\Recursos\movimiento.wav");
 
             banderaIni = Image.FromFile(rutaI);
             banderaFin = Image.FromFile(rutaF);
@@ -72,6 +79,9 @@ namespace Proyecto_IA
             nodos = new List<Nodo>();
             numero_pasos = 1;
             jugando = false;
+
+            sound = new SoundPlayer(rutaMusica);
+            soundMove = new SoundPlayer(rutaMovimiento);
         }
 
         private void Laberinto_Load(object sender, EventArgs e)
@@ -228,8 +238,6 @@ namespace Proyecto_IA
 
             if (personaje.CoordenadaX == coordenada_FinalXY.X && personaje.CoordenadaY == coordenada_FinalXY.Y)
             {
-               // Arbol arbol = new Arbol(lista_pasos);
-               // arbol.Show();
                 return true;
             }
             
@@ -499,6 +507,7 @@ namespace Proyecto_IA
                 }
 
             }
+            panelMapa.Focus();
         }   ////Btn para escoger la coordenada final
 
         private void Laberinto_FormClosed(object sender, FormClosedEventArgs e)
@@ -574,6 +583,7 @@ namespace Proyecto_IA
 
         private void Laberinto_KeyDown(object sender, KeyEventArgs e)
         {
+            reproductorSonido();
             switch (e.KeyData)
             {
                case Keys.Up:
@@ -597,8 +607,9 @@ namespace Proyecto_IA
             if (seLlegoAlFinal())
             {
                 MessageBox.Show("Llegaste a la meta");
+                Arbol arbol = new Arbol(nodos);
+                arbol.ShowDialog();
                 DialogResult opc = MessageBox.Show("¿Quieres volver a jugar?", "Juego terminado.", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
-
                 if (opc == DialogResult.Yes)
                 {
                     reiniciar(0);
@@ -676,42 +687,49 @@ namespace Proyecto_IA
 
             if (cX + 1 < datos[0].Length)//derecha
             {
-                Console.WriteLine(personaje.Costos[obtenerCosto(int.Parse(datos[cY][cX + 1]))]);
                 if (personaje.Costos[obtenerCosto(int.Parse(datos[cY][cX + 1]))] != -1)
                 {
-                    if (generarNombre((cX + 1), cY) != padre) { nodos.Last().hijos.Add(generarNombre((cX + 1), cY)); }
-                }
-                    
+                    if (generarNombre((cX + 1), cY) != padre)
+                    {
+                        nodos.Last().hijos.Add(generarNombre((cX + 1), cY));
+                        nodos.Last().hijosVisitados.Add(false);
+                    }
+                }   
             }
-            if (cX - 1 >= 0) //izquierda
-            {
-                Console.WriteLine(obtenerCosto(int.Parse(datos[cY][cX - 1])));
-                if (personaje.Costos[obtenerCosto(int.Parse(datos[cY][cX - 1]))] != -1) 
-                {
-                    if (generarNombre((cX-1), cY) != padre) { nodos.Last().hijos.Add(generarNombre((cX - 1), cY)); }
-                }
-                   
-            }
+
             if (cY + 1 < datos.Length)//abajo
             {
-                Console.WriteLine(obtenerCosto(int.Parse(datos[cY+1][cX])));
                 if (personaje.Costos[obtenerCosto(int.Parse(datos[cY + 1][cX]))] != -1) 
                 {
-                    if (generarNombre(cX, (cY + 1)) != padre) { nodos.Last().hijos.Add(generarNombre(cX, (cY + 1))); }
-                }
-                    
+                    if (generarNombre(cX, (cY + 1)) != padre)
+                    {
+                        nodos.Last().hijos.Add(generarNombre(cX, (cY + 1)));
+                        nodos.Last().hijosVisitados.Add(false);
+                    }
+                }                
             }
-            if (cY - 1 >= 0) //arriba
+
+            if (cX - 1 >= 0) //izquierda
             {
-                
-                Console.WriteLine(obtenerCosto(int.Parse(datos[cY-1][cX])));
+                if (personaje.Costos[obtenerCosto(int.Parse(datos[cY][cX - 1]))] != -1) 
+                {
+                    if (generarNombre((cX-1), cY) != padre)
+                    {
+                        nodos.Last().hijos.Add(generarNombre((cX - 1), cY));
+                        nodos.Last().hijosVisitados.Add(false);
+                    }
+                }  
+            }
+
+            if (cY - 1 >= 0) //arriba
+            {        
                 if (personaje.Costos[obtenerCosto(int.Parse(datos[cY - 1][cX]))] != -1)
                 {
                     if (generarNombre(cX, (cY - 1)) != padre)
                     {
                         nodos.Last().hijos.Add(generarNombre(cX, (cY - 1)));
+                        nodos.Last().hijosVisitados.Add(false);
                     }
-                    
                 }
             }   
         }
@@ -754,31 +772,38 @@ namespace Proyecto_IA
             {
                 agregarHijos(nodos[nodos.Count - 2].nombre);
             }
-            nodos.Add(new Nodo(nodos.Last().nombre, personaje.CoordenadaX, personaje.CoordenadaY, personaje.Costos[obtenerCosto(int.Parse(datos[cordy][cordx]))], false, false));
 
-            agregarVisitas();
-        }
-
-        private void button1_Click(object sender, EventArgs e)
-        {
-            foreach (Nodo nodo in nodos)
+            if (seLlegoAlFinal())
             {
-                Console.WriteLine("Padre: " + nodo.padre + " Nombre: " + nodo.nombre + " X: " + nodo.cX + " Y: " + nodo.cY + " Costo: " + nodo.costo + " Inicial: " + nodo.inicial + " Final: " + nodo.final);
-
-                Console.WriteLine("Vistas: ");
-                for (int i = 0; i < nodo.visitas.Count; i++)
-                {
-                    Console.WriteLine(nodo.visitas[i] + ", ");
-                }
-
-                Console.WriteLine("Hijos: ");
-
-                for (int i = 0; i < nodo.hijos.Count; i++)
-                {
-                    Console.WriteLine(nodo.hijos[i] + ", ");
-                }
-
+                nodos.Add(new Nodo(nodos.Last().nombre, personaje.CoordenadaX, personaje.CoordenadaY, personaje.Costos[obtenerCosto(int.Parse(datos[cordy][cordx]))], false, true));
+                agregarVisitas();
             }
+            else
+            {
+                nodos.Add(new Nodo(nodos.Last().nombre, personaje.CoordenadaX, personaje.CoordenadaY, personaje.Costos[obtenerCosto(int.Parse(datos[cordy][cordx]))], false, false));
+                agregarVisitas();
+            }
+
         }
+
+        /*private void reproductor(string accion)
+        {
+            switch (accion)
+            {
+                case "playMusic":
+                    sound.Play();
+                    break;
+
+                case "stopMusic":
+                    sound.Stop();
+                    break;
+            }
+        }*/
+
+        private void reproductorSonido()
+        {
+            soundMove.Play();
+        }
+
     }
 }

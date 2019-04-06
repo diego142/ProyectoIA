@@ -29,6 +29,7 @@
         private void InitializeComponent()
         {
             System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle1 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(Laberinto));
             this.label1 = new System.Windows.Forms.Label();
             this.panelMapa = new System.Windows.Forms.Panel();
             this.panel1 = new System.Windows.Forms.Panel();
@@ -47,7 +48,6 @@
             this.btnCelda_Inicial = new System.Windows.Forms.Button();
             this.btnCelda_Final = new System.Windows.Forms.Button();
             this.btnRegresar = new System.Windows.Forms.Button();
-            this.button1 = new System.Windows.Forms.Button();
             this.panel1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dgvpropiedades)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.pbPersonaje)).BeginInit();
@@ -279,23 +279,12 @@
             this.btnRegresar.UseVisualStyleBackColor = false;
             this.btnRegresar.Click += new System.EventHandler(this.btnRegresar_Click);
             // 
-            // button1
-            // 
-            this.button1.Location = new System.Drawing.Point(35, 363);
-            this.button1.Name = "button1";
-            this.button1.Size = new System.Drawing.Size(75, 23);
-            this.button1.TabIndex = 9;
-            this.button1.Text = "button1";
-            this.button1.UseVisualStyleBackColor = true;
-            this.button1.Click += new System.EventHandler(this.button1_Click);
-            // 
             // Laberinto
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.DarkSlateGray;
             this.ClientSize = new System.Drawing.Size(884, 749);
-            this.Controls.Add(this.button1);
             this.Controls.Add(this.btnRegresar);
             this.Controls.Add(this.btnCelda_Final);
             this.Controls.Add(this.btnCelda_Inicial);
@@ -304,6 +293,7 @@
             this.Controls.Add(this.label3);
             this.Controls.Add(this.panel1);
             this.Controls.Add(this.panelMapa);
+            this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.KeyPreview = true;
             this.Name = "Laberinto";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
@@ -341,6 +331,5 @@
         private System.Windows.Forms.Button btnElegir;
         private System.Windows.Forms.Button btnModificar;
         private System.Windows.Forms.Button btnRegresar;
-        private System.Windows.Forms.Button button1;
     }
 }

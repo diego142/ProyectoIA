@@ -28,17 +28,24 @@
         /// </summary>
         private void InitializeComponent()
         {
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(Arbol));
             this.VistaArbol = new System.Windows.Forms.TreeView();
             this.SuspendLayout();
             // 
             // VistaArbol
             // 
-            this.VistaArbol.BorderStyle = System.Windows.Forms.BorderStyle.None;
+            this.VistaArbol.BackColor = System.Drawing.Color.DarkSlateGray;
+            this.VistaArbol.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.VistaArbol.Cursor = System.Windows.Forms.Cursors.Arrow;
+            this.VistaArbol.Dock = System.Windows.Forms.DockStyle.Fill;
             this.VistaArbol.Font = new System.Drawing.Font("Consolas", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.VistaArbol.Location = new System.Drawing.Point(211, 86);
+            this.VistaArbol.ForeColor = System.Drawing.Color.White;
+            this.VistaArbol.Indent = 40;
+            this.VistaArbol.ItemHeight = 30;
+            this.VistaArbol.LineColor = System.Drawing.Color.Gold;
+            this.VistaArbol.Location = new System.Drawing.Point(0, 0);
             this.VistaArbol.Name = "VistaArbol";
-            this.VistaArbol.Size = new System.Drawing.Size(350, 367);
+            this.VistaArbol.Size = new System.Drawing.Size(1084, 561);
             this.VistaArbol.TabIndex = 0;
             // 
             // Arbol
@@ -46,8 +53,10 @@
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.DarkSlateGray;
-            this.ClientSize = new System.Drawing.Size(770, 548);
+            this.ClientSize = new System.Drawing.Size(1084, 561);
             this.Controls.Add(this.VistaArbol);
+            this.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.Name = "Arbol";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "Arbol";

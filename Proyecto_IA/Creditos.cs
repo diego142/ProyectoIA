@@ -16,6 +16,5 @@ namespace Proyecto_IA
         {
             InitializeComponent();
         }
-
     }
 }

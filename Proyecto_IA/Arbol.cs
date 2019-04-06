@@ -12,16 +12,56 @@ namespace Proyecto_IA
 {
     public partial class Arbol : Form
     {
-        List<Coordenada> lista_pasos;
-        public Arbol(List<Coordenada> _lista)
+        List<Nodo> nodos;
+        public Arbol(List<Nodo> _nodos)
         {
             InitializeComponent();
-            lista_pasos = _lista;
+            nodos = _nodos;
         }
 
         private void Arbol_Load(object sender, EventArgs e)
         {
-            //generarArbol();
+            depurarLista();
+            marcarVisitados();
+            generarArbol();
+        }
+
+        private bool existeEnLista(string nombre)
+        {
+            foreach (Nodo nodo in nodos)
+            {
+                if (nodo.nombre == nombre)
+                {
+                    return true;
+                }
+            }
+
+            return false;
+        }
+
+        private void marcarVisitados()
+        {
+            foreach (Nodo nodoActual in nodos)
+            {
+                foreach (Nodo padre in nodos)
+                {
+                    if (nodoActual.padre == padre.nombre)
+                    {
+                        for (int i = 0; i < padre.hijos.Count; i++)
+                        {
+                            if (nodoActual.nombre == padre.hijos[i])
+                            {
+                                padre.hijosVisitados[i] = true;
+                            }
+                        }
+                    }
+                }
+            }
+        }
+
+        private bool esPadre(string padre, string hijoP)
+        {
+            return true;
         }
 
         private string formatearCoord(int x, int y)
@@ -34,46 +74,51 @@ namespace Proyecto_IA
             return coord;
         }
 
-        /*private bool esAdyacente(Coordenada actual, Coordenada ady)
+        private void depurarLista()
         {
-            if ((actual.CoordenadaX + 1) == ady.CoordenadaX && actual.CoordenadaY == ady.CoordenadaY ) { return true; }
-            if (actual.CoordenadaX == ady.CoordenadaX && (actual.CoordenadaY + 1) == ady.CoordenadaY ) { return true; }
-            if ((actual.CoordenadaX - 1) == ady.CoordenadaX && actual.CoordenadaY == ady.CoordenadaY ) { return true; }
-            if (actual.CoordenadaX == ady.CoordenadaX && (actual.CoordenadaY -1) == ady.CoordenadaY ) { return true; }
-
-            return false;
-        }*/
-
-        /*private void generarArbol()
-        {
-            string previo = "";
-            string nombreNodo = "";
-            string raiz;
-           
-            raiz = formatearCoord(lista_pasos[0].CoordenadaX, lista_pasos[0].CoordenadaY);
-            VistaArbol.Nodes.Add(raiz, raiz);
-
-            foreach (Coordenada nodoActual in lista_pasos)
+            for(int i = 0; i < nodos.Count; i++)
             {
-                previo = formatearCoord(nodoActual.CoordenadaX, nodoActual.CoordenadaY);
-                Console.WriteLine("previo: "+previo);
-
-                foreach (Coordenada nodo in lista_pasos)
+                if (nodos[i].visitas.Count == 0)
                 {
-                    nombreNodo = formatearCoord(nodo.CoordenadaX, nodo.CoordenadaY);
-
-                    if (esAdyacente(nodoActual, nodo) && previo != nombreNodo)
-                    {
-                        TreeNode[] result = VistaArbol.Nodes.Find(previo, true);
-
-                        VistaArbol.SelectedNode = result[0];
-                        VistaArbol.SelectedNode.Nodes.Add(nombreNodo, nombreNodo);
-                        Console.WriteLine("nombreNodo: " + nombreNodo);
-                        //Console.WriteLine("index: " + VistaArbol.n);
-                        
-                    }
+                    nodos.Remove(nodos[i]);
                 }
             }
-        }*/
+        }
+
+        private int obtenerPos(string nombreNodo)
+        {
+            for (int i = 0; i < nodos.Count; i++)
+            {
+                if (nodos[i].nombre == nombreNodo)
+                {
+                    return i;
+                }
+            }
+            return -1;
+        }
+
+        private void generarArbol()
+        {
+            TreeNode nodoActual = VistaArbol.Nodes.Add(nodos[0].infoNodo());
+            generarArbol(nodoActual, 0);
+
+        }
+
+        private void generarArbol(TreeNode nodoActual, int pos)
+        {
+            int posAux;
+            TreeNode nodoAux;
+            for (int i = 0; i < nodos[pos].hijos.Count; i++)
+            { 
+                if (nodos[pos].hijosVisitados[i])
+                {
+                    nodoAux = nodoActual.Nodes.Add(nodos[obtenerPos(nodos[pos].hijos[i])].infoNodo());
+                    posAux = obtenerPos(nodos[pos].hijos[i]);
+                    generarArbol(nodoAux, posAux);
+                }
+            }
+            return;
+
+        }
     }
 }

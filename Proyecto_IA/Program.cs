@@ -16,19 +16,7 @@ namespace Proyecto_IA
         {
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
-
-            /*List<Coordenada> lista = new List<Coordenada>();
-            lista.Add(new Coordenada(1, 1, 1));
-            lista.Add(new Coordenada(1, 0, 1));
-            lista.Add(new Coordenada(1, 1, 1));
-            lista.Add(new Coordenada(0, 1, 1));
-            lista.Add(new Coordenada(1, 2, 1));
-            lista.Add(new Coordenada(2, 1, 1));
-
-
-            Application.Run(new Arbol(lista));*/
-            //Application.Run(new Inicio());
-            Application.Run(new Configuracion(new Inicio()));
+            Application.Run(new Inicio());
         }
     }
 }
