@@ -533,6 +533,7 @@ namespace Proyecto_IA
                 personaje.CoordenadaY -= 1; 
                 numero_pasos++;
                 agrearPasos(personaje);
+                agregarNodo();
                 panelMapa.Refresh();
             }       
         }
@@ -547,6 +548,7 @@ namespace Proyecto_IA
                 personaje.CoordenadaX += 1;
                 numero_pasos++;
                 agrearPasos(personaje);
+                agregarNodo();
                 panelMapa.Refresh();
 
             }
@@ -562,6 +564,7 @@ namespace Proyecto_IA
                 personaje.CoordenadaY += 1;
                 numero_pasos++;
                 agrearPasos(personaje);
+                agregarNodo();
                 panelMapa.Refresh();
             }
         }
@@ -576,8 +579,8 @@ namespace Proyecto_IA
                 personaje.CoordenadaX -= 1;
                 numero_pasos++;
                 agrearPasos(personaje);
+                agregarNodo();
                 panelMapa.Refresh();
-
             }
         }
 
@@ -588,19 +591,15 @@ namespace Proyecto_IA
             {
                case Keys.Up:
                     moverPersonajeArriba();
-                    agregarNodo();
                     break;
                 case Keys.Right:
                     moverPersonajeDerecha();
-                    agregarNodo();
                     break;
                 case Keys.Down:
                     moverPersonajeAbajo();
-                    agregarNodo();
                     break;
                 case Keys.Left:
                     moverPersonajeIzquierda();
-                    agregarNodo();
                     break;              
             }
            

@@ -26,19 +26,6 @@ namespace Proyecto_IA
             generarArbol();
         }
 
-        private bool existeEnLista(string nombre)
-        {
-            foreach (Nodo nodo in nodos)
-            {
-                if (nodo.nombre == nombre)
-                {
-                    return true;
-                }
-            }
-
-            return false;
-        }
-
         private void marcarVisitados()
         {
             foreach (Nodo nodoActual in nodos)
@@ -62,16 +49,6 @@ namespace Proyecto_IA
         private bool esPadre(string padre, string hijoP)
         {
             return true;
-        }
-
-        private string formatearCoord(int x, int y)
-        {
-            string coord = "";
-            char col = 'A';
-
-            col += (char)x;
-            coord = col + y.ToString();
-            return coord;
         }
 
         private void depurarLista()
@@ -101,7 +78,6 @@ namespace Proyecto_IA
         {
             TreeNode nodoActual = VistaArbol.Nodes.Add(nodos[0].infoNodo());
             generarArbol(nodoActual, 0);
-
         }
 
         private void generarArbol(TreeNode nodoActual, int pos)
