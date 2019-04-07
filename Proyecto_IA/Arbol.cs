@@ -24,6 +24,7 @@ namespace Proyecto_IA
             depurarLista();
             marcarVisitados();
             generarArbol();
+            VistaArbol.Nodes[0].ExpandAll();
         }
 
         private void marcarVisitados()
