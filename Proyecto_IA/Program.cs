@@ -17,6 +17,7 @@ namespace Proyecto_IA
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
             Application.Run(new Inicio());
+
         }
     }
 }

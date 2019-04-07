@@ -37,7 +37,7 @@ namespace Proyecto_IA
         string rutaNiebla = "";
         string rutaMovimiento = "";
         string rutaMusicaLink = "";
-        string rutaHarder = "";
+        string rutaFinal = "";
         string rutaMusicaKirby = "";
         string rutaMarco = "";
         string rutaMario = "";
@@ -77,12 +77,12 @@ namespace Proyecto_IA
             rutaNiebla = Path.Combine(Application.StartupPath, @"..\..\Recursos\niebla.png");
             rutaMusicaLink = Path.Combine(Application.StartupPath, @"..\..\Sonidos\song_link.wav");
             rutaMovimiento = Path.Combine(Application.StartupPath, @"..\..\Sonidos\movimiento.wav");
-            rutaHarder = Path.Combine(Application.StartupPath, @"..\..\Sonidos\harder.wav");
             rutaMusicaKirby = Path.Combine(Application.StartupPath, @"..\..\Sonidos\song_kirby.wav");
             rutaMarco = Path.Combine(Application.StartupPath, @"..\..\Sonidos\marco.wav");
             rutaMario = Path.Combine(Application.StartupPath, @"..\..\Sonidos\mario.wav");
             rutaPikachu = Path.Combine(Application.StartupPath, @"..\..\Sonidos\pikachu.wav");
             rutaYoshi = Path.Combine(Application.StartupPath, @"..\..\Sonidos\yoshi.wav");
+            rutaFinal = Path.Combine(Application.StartupPath, @"..\..\Sonidos\final.wav");
 
             banderaIni = Image.FromFile(rutaI);
             banderaFin = Image.FromFile(rutaF);
@@ -597,13 +597,10 @@ namespace Proyecto_IA
         private void Laberinto_KeyDown(object sender, KeyEventArgs e)
         {
             string nombre = "";
+
             nombre = pbPersonaje.Image.Tag.ToString();
-            Console.WriteLine(nombre);
-            if(nombre != "kirby")
-            {
-                reproductor("playMovimiento");
-            }
-            else if(nombre != "link")
+            
+            if(nombre != "kirby" && nombre != "link")
             {
                 reproductor("playMovimiento");
             }
@@ -626,8 +623,8 @@ namespace Proyecto_IA
            
             if (seLlegoAlFinal())
             {
+                reproductor("final");
                 MessageBox.Show("Llegaste a la meta");
-                reproductor("stopMusic");
                 Arbol arbol = new Arbol(nodos);
                 arbol.ShowDialog();
                 DialogResult opc = MessageBox.Show("¿Quieres volver a jugar?", "Juego terminado.", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
@@ -825,11 +822,6 @@ namespace Proyecto_IA
                     sounds.Play();
                     break;
 
-                case "playHarder":
-                    sounds = new SoundPlayer(rutaHarder);
-                    sounds.Play();
-                    break;
-
                 case "marco":
                     sounds = new SoundPlayer(rutaMarco);
                     sounds.Play();
@@ -852,6 +844,11 @@ namespace Proyecto_IA
 
                 case "playMovimiento":
                     sounds = new SoundPlayer(rutaMovimiento);
+                    sounds.Play();
+                    break;
+
+                case "final":
+                    sounds = new SoundPlayer(rutaFinal);
                     sounds.Play();
                     break;
             }
