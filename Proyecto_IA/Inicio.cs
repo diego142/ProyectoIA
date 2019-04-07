@@ -43,5 +43,10 @@ namespace Proyecto_IA
             SoundPlayer sounds = new SoundPlayer(rutaHarder);
             sounds.Play();
         }
+
+        private void Inicio_FormClosed(object sender, FormClosedEventArgs e)
+        {
+            Application.Exit();
+        }
     }
 }
