@@ -359,6 +359,7 @@ namespace Proyecto_IA
 
                 pbPersonaje.Image = Image.FromFile(ruta);
                 txtNombre.Text = nombre;
+                pbPersonaje.Image.Tag = nombre;
             }
         } //Elegir personaje
 

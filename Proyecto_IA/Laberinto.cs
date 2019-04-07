@@ -35,14 +35,20 @@ namespace Proyecto_IA
         string rutaI = "";
         string rutaF = "";
         string rutaNiebla = "";
-        string rutaMusica = "";
         string rutaMovimiento = "";
+        string rutaMusicaLink = "";
+        string rutaHarder = "";
+        string rutaMusicaKirby = "";
+        string rutaMarco = "";
+        string rutaMario = "";
+        string rutaPikachu = "";
+        string rutaYoshi = "";
+
 
         Point coordenadaActual;
         Point coordenada_InicialXY;
         Point coordenada_FinalXY;
-        SoundPlayer sound;
-        SoundPlayer soundMove;
+        SoundPlayer sounds;
 
         bool jugando;
 
@@ -69,8 +75,14 @@ namespace Proyecto_IA
             rutaI = Path.Combine(Application.StartupPath, @"..\..\Recursos\bandera_inicio.png");
             rutaF = Path.Combine(Application.StartupPath, @"..\..\Recursos\bandera_final.png");
             rutaNiebla = Path.Combine(Application.StartupPath, @"..\..\Recursos\niebla.png");
-            rutaMusica = Path.Combine(Application.StartupPath, @"..\..\Recursos\song_laberinto.wav");
-            rutaMovimiento = Path.Combine(Application.StartupPath, @"..\..\Recursos\movimiento.wav");
+            rutaMusicaLink = Path.Combine(Application.StartupPath, @"..\..\Sonidos\song_link.wav");
+            rutaMovimiento = Path.Combine(Application.StartupPath, @"..\..\Sonidos\movimiento.wav");
+            rutaHarder = Path.Combine(Application.StartupPath, @"..\..\Sonidos\harder.wav");
+            rutaMusicaKirby = Path.Combine(Application.StartupPath, @"..\..\Sonidos\song_kirby.wav");
+            rutaMarco = Path.Combine(Application.StartupPath, @"..\..\Sonidos\marco.wav");
+            rutaMario = Path.Combine(Application.StartupPath, @"..\..\Sonidos\mario.wav");
+            rutaPikachu = Path.Combine(Application.StartupPath, @"..\..\Sonidos\pikachu.wav");
+            rutaYoshi = Path.Combine(Application.StartupPath, @"..\..\Sonidos\yoshi.wav");
 
             banderaIni = Image.FromFile(rutaI);
             banderaFin = Image.FromFile(rutaF);
@@ -80,8 +92,6 @@ namespace Proyecto_IA
             numero_pasos = 1;
             jugando = false;
 
-            sound = new SoundPlayer(rutaMusica);
-            soundMove = new SoundPlayer(rutaMovimiento);
         }
 
         private void Laberinto_Load(object sender, EventArgs e)
@@ -517,9 +527,9 @@ namespace Proyecto_IA
 
         private void btnElegir_Click(object sender, EventArgs e)
         {
+            reproductor(pbPersonaje.Image.Tag.ToString());
             cmbPersonaje.Enabled = false;
             btnElegir.Enabled = false;
-
             btnCelda_Inicial.Enabled = true;
         }   //Desbloqueo los otros botones después de elegir un personaje
 
@@ -586,7 +596,18 @@ namespace Proyecto_IA
 
         private void Laberinto_KeyDown(object sender, KeyEventArgs e)
         {
-            reproductorSonido();
+            string nombre = "";
+            nombre = pbPersonaje.Image.Tag.ToString();
+            Console.WriteLine(nombre);
+            if(nombre != "kirby")
+            {
+                reproductor("playMovimiento");
+            }
+            else if(nombre != "link")
+            {
+                reproductor("playMovimiento");
+            }
+
             switch (e.KeyData)
             {
                case Keys.Up:
@@ -606,6 +627,7 @@ namespace Proyecto_IA
             if (seLlegoAlFinal())
             {
                 MessageBox.Show("Llegaste a la meta");
+                reproductor("stopMusic");
                 Arbol arbol = new Arbol(nodos);
                 arbol.ShowDialog();
                 DialogResult opc = MessageBox.Show("¿Quieres volver a jugar?", "Juego terminado.", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
@@ -785,23 +807,54 @@ namespace Proyecto_IA
 
         }
 
-        /*private void reproductor(string accion)
+        private void reproductor(string accion)
         {
             switch (accion)
             {
-                case "playMusic":
-                    sound.Play();
+                case "link":
+                    sounds = new SoundPlayer(rutaMusicaLink);
+                    sounds.Play();
                     break;
 
                 case "stopMusic":
-                    sound.Stop();
+                    sounds.Stop();
+                    break;
+
+                case "kirby":
+                    sounds = new SoundPlayer(rutaMusicaKirby);
+                    sounds.Play();
+                    break;
+
+                case "playHarder":
+                    sounds = new SoundPlayer(rutaHarder);
+                    sounds.Play();
+                    break;
+
+                case "marco":
+                    sounds = new SoundPlayer(rutaMarco);
+                    sounds.Play();
+                    break;
+
+                case "mario":
+                    sounds = new SoundPlayer(rutaMario);
+                    sounds.Play();
+                    break;
+
+                case "pikachu":
+                    sounds = new SoundPlayer(rutaPikachu);
+                    sounds.Play();
+                    break;
+
+                case "yoshi":
+                    sounds = new SoundPlayer(rutaYoshi);
+                    sounds.Play();
+                    break;
+
+                case "playMovimiento":
+                    sounds = new SoundPlayer(rutaMovimiento);
+                    sounds.Play();
                     break;
             }
-        }*/
-
-        private void reproductorSonido()
-        {
-            soundMove.Play();
         }
 
     }
