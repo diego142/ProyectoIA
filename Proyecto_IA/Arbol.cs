@@ -86,13 +86,17 @@ namespace Proyecto_IA
             int posAux;
             TreeNode nodoAux;
             for (int i = 0; i < nodos[pos].hijos.Count; i++)
-            { 
+            {
                 if (nodos[pos].hijosVisitados[i])
                 {
                     nodoAux = nodoActual.Nodes.Add(nodos[obtenerPos(nodos[pos].hijos[i])].infoNodo());
                     posAux = obtenerPos(nodos[pos].hijos[i]);
                     generarArbol(nodoAux, posAux);
                 }
+                /*else
+                {
+                    nodoActual.Nodes.Add(nodos[pos].hijos[i] + " | No visitado");
+                }*/
             }
             return;
 

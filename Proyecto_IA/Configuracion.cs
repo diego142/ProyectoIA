@@ -420,5 +420,10 @@ namespace Proyecto_IA
             }
 
         } //Se agrega el personaje a la lista
+
+        private void Configuracion_FormClosed(object sender, FormClosedEventArgs e)
+        {
+            Application.Exit();
+        }
     }
 }
