@@ -90,3 +90,17 @@ C:\Users\sekay\Desktop\ProyectoIA\Proyecto_IA\obj\Debug\Proyecto_IA.exe
 C:\Users\sekay\Desktop\ProyectoIA\Proyecto_IA\obj\Debug\Proyecto_IA.pdb
 C:\Users\mega-\source\repos\Proyecto_IA\Proyecto_IA\obj\Debug\Proyecto_IA.Arbol.resources
 C:\Users\sekay\Desktop\ProyectoIA\Proyecto_IA\obj\Debug\Proyecto_IA.Arbol.resources
+C:\Users\sekay\Desktop\Escritorio\ProyectoIA\Proyecto_IA\bin\Debug\Proyecto_IA.exe.config
+C:\Users\sekay\Desktop\Escritorio\ProyectoIA\Proyecto_IA\bin\Debug\Proyecto_IA.exe
+C:\Users\sekay\Desktop\Escritorio\ProyectoIA\Proyecto_IA\bin\Debug\Proyecto_IA.pdb
+C:\Users\sekay\Desktop\Escritorio\ProyectoIA\Proyecto_IA\obj\Debug\Proyecto_IA.csprojAssemblyReference.cache
+C:\Users\sekay\Desktop\Escritorio\ProyectoIA\Proyecto_IA\obj\Debug\Proyecto_IA.Arbol.resources
+C:\Users\sekay\Desktop\Escritorio\ProyectoIA\Proyecto_IA\obj\Debug\Proyecto_IA.Configuracion.resources
+C:\Users\sekay\Desktop\Escritorio\ProyectoIA\Proyecto_IA\obj\Debug\Proyecto_IA.Creditos.resources
+C:\Users\sekay\Desktop\Escritorio\ProyectoIA\Proyecto_IA\obj\Debug\Proyecto_IA.Inicio.resources
+C:\Users\sekay\Desktop\Escritorio\ProyectoIA\Proyecto_IA\obj\Debug\Proyecto_IA.Laberinto.resources
+C:\Users\sekay\Desktop\Escritorio\ProyectoIA\Proyecto_IA\obj\Debug\Proyecto_IA.Properties.Resources.resources
+C:\Users\sekay\Desktop\Escritorio\ProyectoIA\Proyecto_IA\obj\Debug\Proyecto_IA.csproj.GenerateResource.cache
+C:\Users\sekay\Desktop\Escritorio\ProyectoIA\Proyecto_IA\obj\Debug\Proyecto_IA.csproj.CoreCompileInputs.cache
+C:\Users\sekay\Desktop\Escritorio\ProyectoIA\Proyecto_IA\obj\Debug\Proyecto_IA.exe
+C:\Users\sekay\Desktop\Escritorio\ProyectoIA\Proyecto_IA\obj\Debug\Proyecto_IA.pdb

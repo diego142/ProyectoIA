@@ -93,10 +93,10 @@ namespace Proyecto_IA
                     posAux = obtenerPos(nodos[pos].hijos[i]);
                     generarArbol(nodoAux, posAux);
                 }
-                /*else
+                else
                 {
                     nodoActual.Nodes.Add(nodos[pos].hijos[i] + " | No visitado");
-                }*/
+                }
             }
             return;
 

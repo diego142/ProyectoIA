@@ -48,6 +48,9 @@
             this.btnCelda_Inicial = new System.Windows.Forms.Button();
             this.btnCelda_Final = new System.Windows.Forms.Button();
             this.btnRegresar = new System.Windows.Forms.Button();
+            this.listBoxOrdenExpansion = new System.Windows.Forms.ListBox();
+            this.btnArriba = new System.Windows.Forms.Button();
+            this.btnAbajo = new System.Windows.Forms.Button();
             this.panel1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dgvpropiedades)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.pbPersonaje)).BeginInit();
@@ -279,12 +282,48 @@
             this.btnRegresar.UseVisualStyleBackColor = false;
             this.btnRegresar.Click += new System.EventHandler(this.btnRegresar_Click);
             // 
+            // listBoxOrdenExpansion
+            // 
+            this.listBoxOrdenExpansion.FormattingEnabled = true;
+            this.listBoxOrdenExpansion.Items.AddRange(new object[] {
+            "Arriba",
+            "Derecha",
+            "Abajo",
+            "Izquierda"});
+            this.listBoxOrdenExpansion.Location = new System.Drawing.Point(73, 320);
+            this.listBoxOrdenExpansion.Name = "listBoxOrdenExpansion";
+            this.listBoxOrdenExpansion.Size = new System.Drawing.Size(71, 69);
+            this.listBoxOrdenExpansion.TabIndex = 9;
+            // 
+            // btnArriba
+            // 
+            this.btnArriba.Location = new System.Drawing.Point(4, 330);
+            this.btnArriba.Name = "btnArriba";
+            this.btnArriba.Size = new System.Drawing.Size(63, 23);
+            this.btnArriba.TabIndex = 10;
+            this.btnArriba.Text = "Arriba";
+            this.btnArriba.UseVisualStyleBackColor = true;
+            this.btnArriba.Click += new System.EventHandler(this.btnArriba_Click);
+            // 
+            // btnAbajo
+            // 
+            this.btnAbajo.Location = new System.Drawing.Point(4, 359);
+            this.btnAbajo.Name = "btnAbajo";
+            this.btnAbajo.Size = new System.Drawing.Size(63, 23);
+            this.btnAbajo.TabIndex = 11;
+            this.btnAbajo.Text = "Abajo";
+            this.btnAbajo.UseVisualStyleBackColor = true;
+            this.btnAbajo.Click += new System.EventHandler(this.btnAbajo_Click);
+            // 
             // Laberinto
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.DarkSlateGray;
-            this.ClientSize = new System.Drawing.Size(884, 749);
+            this.ClientSize = new System.Drawing.Size(889, 749);
+            this.Controls.Add(this.btnAbajo);
+            this.Controls.Add(this.btnArriba);
+            this.Controls.Add(this.listBoxOrdenExpansion);
             this.Controls.Add(this.btnRegresar);
             this.Controls.Add(this.btnCelda_Final);
             this.Controls.Add(this.btnCelda_Inicial);
@@ -331,5 +370,8 @@
         private System.Windows.Forms.Button btnElegir;
         private System.Windows.Forms.Button btnModificar;
         private System.Windows.Forms.Button btnRegresar;
+        private System.Windows.Forms.ListBox listBoxOrdenExpansion;
+        private System.Windows.Forms.Button btnArriba;
+        private System.Windows.Forms.Button btnAbajo;
     }
 }

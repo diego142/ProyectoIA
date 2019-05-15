@@ -854,5 +854,39 @@ namespace Proyecto_IA
             }
         }
 
+        private void btnArriba_Click(object sender, EventArgs e)
+        {
+            if (listBoxOrdenExpansion.SelectedItem == null || listBoxOrdenExpansion.SelectedIndex < 0)
+                return; 
+
+            int newIndex = listBoxOrdenExpansion.SelectedIndex - 1;
+
+            if (newIndex < 0 || newIndex >= listBoxOrdenExpansion.Items.Count)
+                return; 
+
+            object selected = listBoxOrdenExpansion.SelectedItem;
+
+            listBoxOrdenExpansion.Items.Remove(selected);
+            listBoxOrdenExpansion.Items.Insert(newIndex, selected);
+            listBoxOrdenExpansion.SetSelected(newIndex, true);
+        }
+
+        private void btnAbajo_Click(object sender, EventArgs e)
+        {
+            
+            if (listBoxOrdenExpansion.SelectedItem == null || listBoxOrdenExpansion.SelectedIndex < 0)
+                return; 
+
+            int newIndex = listBoxOrdenExpansion.SelectedIndex + 1;
+
+            if (newIndex < 0 || newIndex >= listBoxOrdenExpansion.Items.Count)
+                return; 
+
+            object selected = listBoxOrdenExpansion.SelectedItem;
+
+            listBoxOrdenExpansion.Items.Remove(selected);
+            listBoxOrdenExpansion.Items.Insert(newIndex, selected);
+            listBoxOrdenExpansion.SetSelected(newIndex, true);
+        }
     }
 }
