@@ -15,6 +15,7 @@ namespace Proyecto_IA
 {
     public partial class Laberinto : Form
     {
+        bool finalAlg;
         Form frmConfiguracion;
         List<Terreno> terrenos;
         List<Personaje> personajes;
@@ -43,6 +44,8 @@ namespace Proyecto_IA
         string rutaMario = "";
         string rutaPikachu = "";
         string rutaYoshi = "";
+        List<string> ordenDeExp = new List<string>();
+        List<Nodo> nodosCerrados = new List<Nodo>();
 
 
         Point coordenadaActual;
@@ -91,6 +94,7 @@ namespace Proyecto_IA
             nodos = new List<Nodo>();
             numero_pasos = 1;
             jugando = false;
+            finalAlg = false;
 
         }
 
@@ -281,12 +285,13 @@ namespace Proyecto_IA
                             nodos.Clear();
                             numero_pasos = 1;
                             jugando = false;
+                            finalAlg = false;
 
                             panelMapa.Refresh();
+                            nodosCerrados.Clear();
 
                         }
                     }
-
                     break;
                 case 1:
                     Application.Restart();
@@ -464,10 +469,16 @@ namespace Proyecto_IA
                             personaje.CoordenadaX = coordenadaActual.X;
                             personaje.CoordenadaY = coordenadaActual.Y;
 
+                            for (int l = 0; l < listBoxOrdenExpansion.Items.Count; l++)
+                            {
+                                ordenDeExp.Add(listBoxOrdenExpansion.Items[l].ToString());
+                            }
+                            
                             lista_pasos.Add(new Coordenada(personaje.CoordenadaX, personaje.CoordenadaY, numero_pasos));
                             nodos.Add(new Nodo("", personaje.CoordenadaX, personaje.CoordenadaY, 0, true, false));
-                            nodos.Last().visitas.Add(numero_pasos);
+                            agregarHijos("");
 
+                            nodos.Last().visitas.Add(numero_pasos);
 
                             MessageBox.Show("Coordenada Inicial Seleccionada!");
                             panelMapa.Refresh();
@@ -511,12 +522,14 @@ namespace Proyecto_IA
                             panelMapa.Refresh();
                             btnCelda_Final.Enabled = false;
                             btnRegresar.Enabled = false;
+
                         }
 
                     }
                 }
 
             }
+            backTracking();
             panelMapa.Focus();
         }   ////Btn para escoger la coordenada final
 
@@ -533,7 +546,7 @@ namespace Proyecto_IA
             btnCelda_Inicial.Enabled = true;
         }   //Desbloqueo los otros botones después de elegir un personaje
 
-        private void moverPersonajeArriba()
+        private bool moverPersonajeArriba()
         {
             string personajeNombre = cmbPersonaje.Text;
             Personaje personaje = personajes.Find(personaje_x => personaje_x.Nombre == personajeNombre);
@@ -545,10 +558,12 @@ namespace Proyecto_IA
                 agrearPasos(personaje);
                 agregarNodo();
                 panelMapa.Refresh();
-            }       
+                return true;
+            }
+            return false;
         }
 
-        private void moverPersonajeDerecha()
+        private bool moverPersonajeDerecha()
         {
             string personajeNombre = cmbPersonaje.Text;
             Personaje personaje = personajes.Find(personaje_x => personaje_x.Nombre == personajeNombre);
@@ -560,11 +575,13 @@ namespace Proyecto_IA
                 agrearPasos(personaje);
                 agregarNodo();
                 panelMapa.Refresh();
+                return true;
 
             }
+            return false;
         }
 
-        private void moverPersonajeAbajo()
+        private bool moverPersonajeAbajo()
         {
             string personajeNombre = cmbPersonaje.Text;
             Personaje personaje = personajes.Find(personaje_x => personaje_x.Nombre == personajeNombre);
@@ -576,10 +593,12 @@ namespace Proyecto_IA
                 agrearPasos(personaje);
                 agregarNodo();
                 panelMapa.Refresh();
+                return true;
             }
+            return false;
         }
 
-        private void moverPersonajeIzquierda()
+        private bool moverPersonajeIzquierda()
         {
             string personajeNombre = cmbPersonaje.Text;
             Personaje personaje = personajes.Find(personaje_x => personaje_x.Nombre == personajeNombre);
@@ -591,7 +610,9 @@ namespace Proyecto_IA
                 agrearPasos(personaje);
                 agregarNodo();
                 panelMapa.Refresh();
+                return true;
             }
+            return false;
         }
 
         private void Laberinto_KeyDown(object sender, KeyEventArgs e)
@@ -703,53 +724,67 @@ namespace Proyecto_IA
             int cX = nodoActual.cX;
             int cY = nodoActual.cY;
 
-            if (cX + 1 < datos[0].Length)//derecha
+            for (int i = 0; i < ordenDeExp.Count; i++)
             {
-                if (personaje.Costos[obtenerCosto(int.Parse(datos[cY][cX + 1]))] != -1)
+                string opc = ordenDeExp[i];
+                switch (opc)
                 {
-                    if (generarNombre((cX + 1), cY) != padre)
-                    {
-                        nodos.Last().hijos.Add(generarNombre((cX + 1), cY));
-                        nodos.Last().hijosVisitados.Add(false);
-                    }
-                }   
-            }
+                    case "Arriba":
+                        if (cY - 1 >= 0) //arriba
+                        {
+                            if (personaje.Costos[obtenerCosto(int.Parse(datos[cY - 1][cX]))] != -1)
+                            {
+                                if (generarNombre(cX, (cY - 1)) != padre)
+                                {
+                                    nodos.Last().hijos.Add(generarNombre(cX, (cY - 1)));
+                                    nodos.Last().hijosVisitados.Add(false);
+                                }
+                            }
+                        }
+                        break;
+                    case "Derecha":
+                        if (cX + 1 < datos[0].Length)//derecha
+                        {
+                            if (personaje.Costos[obtenerCosto(int.Parse(datos[cY][cX + 1]))] != -1)
+                            {
+                                if (generarNombre((cX + 1), cY) != padre)
+                                {
+                                    nodos.Last().hijos.Add(generarNombre((cX + 1), cY));
+                                    nodos.Last().hijosVisitados.Add(false);
+                                }
+                            }
+                        }
+                        break;
+                    case "Abajo":
+                        if (cY + 1 < datos.Length)//abajo
+                        {
+                            if (personaje.Costos[obtenerCosto(int.Parse(datos[cY + 1][cX]))] != -1)
+                            {
+                                if (generarNombre(cX, (cY + 1)) != padre)
+                                {
+                                    nodos.Last().hijos.Add(generarNombre(cX, (cY + 1)));
+                                    nodos.Last().hijosVisitados.Add(false);
+                                }
+                            }
+                        }
+                        break;
+                    case "Izquierda":
 
-            if (cY + 1 < datos.Length)//abajo
-            {
-                if (personaje.Costos[obtenerCosto(int.Parse(datos[cY + 1][cX]))] != -1) 
-                {
-                    if (generarNombre(cX, (cY + 1)) != padre)
-                    {
-                        nodos.Last().hijos.Add(generarNombre(cX, (cY + 1)));
-                        nodos.Last().hijosVisitados.Add(false);
-                    }
-                }                
-            }
-
-            if (cX - 1 >= 0) //izquierda
-            {
-                if (personaje.Costos[obtenerCosto(int.Parse(datos[cY][cX - 1]))] != -1) 
-                {
-                    if (generarNombre((cX-1), cY) != padre)
-                    {
-                        nodos.Last().hijos.Add(generarNombre((cX - 1), cY));
-                        nodos.Last().hijosVisitados.Add(false);
-                    }
-                }  
-            }
-
-            if (cY - 1 >= 0) //arriba
-            {        
-                if (personaje.Costos[obtenerCosto(int.Parse(datos[cY - 1][cX]))] != -1)
-                {
-                    if (generarNombre(cX, (cY - 1)) != padre)
-                    {
-                        nodos.Last().hijos.Add(generarNombre(cX, (cY - 1)));
-                        nodos.Last().hijosVisitados.Add(false);
-                    }
+                        if (cX - 1 >= 0) //izquierda
+                        {
+                            if (personaje.Costos[obtenerCosto(int.Parse(datos[cY][cX - 1]))] != -1)
+                            {
+                                if (generarNombre((cX - 1), cY) != padre)
+                                {
+                                    nodos.Last().hijos.Add(generarNombre((cX - 1), cY));
+                                    nodos.Last().hijosVisitados.Add(false);
+                                }
+                            }
+                        }
+                        break;
                 }
-            }   
+            }
+        
         }
 
         private string generarNombre(int cX, int cY)
@@ -782,14 +817,14 @@ namespace Proyecto_IA
             int cordx = personaje.CoordenadaX;
             int cordy = personaje.CoordenadaY;
 
-            if (nodos.Count == 1)
+            /*if (nodos.Count == 1)
             {
                 agregarHijos("");
             }
             else
             {
-                agregarHijos(nodos[nodos.Count - 2].nombre);
-            }
+            agregarHijos(nodos[nodos.Count - 2].nombre);
+            }*/
 
             if (seLlegoAlFinal())
             {
@@ -799,6 +834,7 @@ namespace Proyecto_IA
             else
             {
                 nodos.Add(new Nodo(nodos.Last().nombre, personaje.CoordenadaX, personaje.CoordenadaY, personaje.Costos[obtenerCosto(int.Parse(datos[cordy][cordx]))], false, false));
+                agregarHijos(nodos[nodos.Count - 2].nombre);
                 agregarVisitas();
             }
 
@@ -887,6 +923,168 @@ namespace Proyecto_IA
             listBoxOrdenExpansion.Items.Remove(selected);
             listBoxOrdenExpansion.Items.Insert(newIndex, selected);
             listBoxOrdenExpansion.SetSelected(newIndex, true);
+        }
+
+        private void backTracking()
+        {
+            Thread.Sleep(500);
+
+            backTracking(nodos[0]);
+        }
+
+        private void backTracking(Nodo nodoActual)
+        {
+            if (seLlegoAlFinal())
+            {
+                finalAlg = true;
+                reproductor("final");
+                MessageBox.Show("Llegaste a la meta");
+                Arbol arbol = new Arbol(nodos);
+                arbol.ShowDialog();
+                DialogResult opc = MessageBox.Show("¿Quieres volver a jugar?", "Juego terminado.", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
+                if (opc == DialogResult.Yes)
+                {
+                    reiniciar(0);
+                }
+                else
+                {
+                    reiniciar(1);
+                }
+                return;
+            }
+            else
+            {
+
+
+                for (int i = 0; i < ordenDeExp.Count; i++)
+                {
+                    if (seLlegoAlFinal()) { return; }
+
+                    string personajeNombre = cmbPersonaje.Text;
+                    Personaje p = personajes.Find(personaje_x => personaje_x.Nombre == personajeNombre);
+
+                    string opc = ordenDeExp[i];
+
+                    switch (opc)
+                    {
+                        case "Arriba":
+                            if (esHijoValido(nodoActual, generarNombre(p.CoordenadaX, p.CoordenadaY - 1)))
+                            {
+                                if (estaCerrado(nodos.Last().nombre) == false)
+                                {
+                                    if (moverPersonajeArriba())
+                                    {
+                                        Thread.Sleep(500);
+
+                                        nodoActual = nodos.Last();
+                                        backTracking(nodoActual);
+                                        if (finalAlg) { return; }
+
+                                        moverPersonajeAbajo();
+                                        nodoActual = nodos.Last();
+                                        Thread.Sleep(500);
+                                    }
+
+                                }
+                            }
+
+                            break;
+                        case "Derecha":
+                            if (esHijoValido(nodoActual, generarNombre(p.CoordenadaX + 1, p.CoordenadaY)))
+                            {
+                                if (estaCerrado(nodos.Last().nombre) == false)
+                                {
+                                    if (moverPersonajeDerecha())
+                                    {
+                                        Thread.Sleep(500);
+
+                                        nodoActual = nodos.Last();
+                                        backTracking(nodoActual);
+                                        if (finalAlg) { return; }
+
+                                        moverPersonajeIzquierda();
+                                        nodoActual = nodos.Last();
+                                        Thread.Sleep(500);
+                                    }
+
+                                }
+                            }
+
+
+                            break;
+                        case "Abajo":
+                            if (esHijoValido(nodoActual, generarNombre(p.CoordenadaX, p.CoordenadaY + 1)))
+                            {
+                                if (estaCerrado(nodos.Last().nombre) == false)
+                                {
+                                    if (moverPersonajeAbajo())
+                                    {
+                                        Thread.Sleep(500);
+
+                                        nodoActual = nodos.Last();
+                                        backTracking(nodoActual);
+                                        if (finalAlg) { return; }
+
+                                        moverPersonajeArriba();
+                                        nodoActual = nodos.Last();
+                                        Thread.Sleep(500);
+                                    }
+
+                                }
+                            }
+                            break;
+                        case "Izquierda":
+                            if (esHijoValido(nodoActual, generarNombre(p.CoordenadaX - 1, p.CoordenadaY)))
+                            {
+                                if (estaCerrado(nodos.Last().nombre) == false)
+                                {
+                                    if (moverPersonajeIzquierda())
+                                    {
+
+                                        Thread.Sleep(500);
+
+                                        nodoActual = nodos.Last();
+                                        backTracking(nodoActual);
+                                        if (finalAlg) { return; }
+
+                                        moverPersonajeDerecha();
+                                        nodoActual = nodos.Last();
+                                        Thread.Sleep(500);
+                                    }
+
+                                }
+                            }
+
+                            break;
+                    }
+                }
+                nodosCerrados.Add(nodoActual);
+            }
+
+        }
+
+        private bool estaCerrado(string nombre)
+        {
+            foreach (Nodo nodo in nodosCerrados)
+            {
+                if (nodo.nombre == nombre)
+                {
+                    return true;
+                }
+            }
+            return false;
+        }
+
+        private bool esHijoValido(Nodo nodoActual, string mov)
+        {
+            foreach (string hijo in nodoActual.hijos )
+            {
+                if (hijo == mov)
+                {
+                    return true;
+                }
+            }
+            return false;
         }
     }
 }

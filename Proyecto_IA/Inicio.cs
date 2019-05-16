@@ -40,8 +40,8 @@ namespace Proyecto_IA
         private void Inicio_Load(object sender, EventArgs e)
         {
             string rutaHarder = Path.Combine(Application.StartupPath, @"..\..\Sonidos\harder.wav");
-            SoundPlayer sounds = new SoundPlayer(rutaHarder);
-            sounds.Play();
+           // SoundPlayer sounds = new SoundPlayer(rutaHarder);
+            //sounds.Play();
         }
 
         private void Inicio_FormClosed(object sender, FormClosedEventArgs e)

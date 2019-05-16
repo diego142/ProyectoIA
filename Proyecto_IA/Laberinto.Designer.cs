@@ -130,7 +130,7 @@
             this.dgvpropiedades.ColumnHeadersBorderStyle = System.Windows.Forms.DataGridViewHeaderBorderStyle.Single;
             dataGridViewCellStyle1.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
             dataGridViewCellStyle1.BackColor = System.Drawing.Color.Gainsboro;
-            dataGridViewCellStyle1.Font = new System.Drawing.Font("Consolas", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            dataGridViewCellStyle1.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             dataGridViewCellStyle1.ForeColor = System.Drawing.SystemColors.WindowText;
             dataGridViewCellStyle1.SelectionBackColor = System.Drawing.SystemColors.Highlight;
             dataGridViewCellStyle1.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
@@ -246,7 +246,7 @@
             this.btnCelda_Inicial.Enabled = false;
             this.btnCelda_Inicial.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.btnCelda_Inicial.Font = new System.Drawing.Font("Consolas", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.btnCelda_Inicial.Location = new System.Drawing.Point(24, 211);
+            this.btnCelda_Inicial.Location = new System.Drawing.Point(19, 210);
             this.btnCelda_Inicial.Name = "btnCelda_Inicial";
             this.btnCelda_Inicial.Size = new System.Drawing.Size(120, 48);
             this.btnCelda_Inicial.TabIndex = 6;
@@ -261,7 +261,7 @@
             this.btnCelda_Final.Enabled = false;
             this.btnCelda_Final.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.btnCelda_Final.Font = new System.Drawing.Font("Consolas", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.btnCelda_Final.Location = new System.Drawing.Point(24, 265);
+            this.btnCelda_Final.Location = new System.Drawing.Point(19, 264);
             this.btnCelda_Final.Name = "btnCelda_Final";
             this.btnCelda_Final.Size = new System.Drawing.Size(120, 49);
             this.btnCelda_Final.TabIndex = 7;
@@ -284,35 +284,47 @@
             // 
             // listBoxOrdenExpansion
             // 
+            this.listBoxOrdenExpansion.BackColor = System.Drawing.Color.MediumTurquoise;
+            this.listBoxOrdenExpansion.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.listBoxOrdenExpansion.Font = new System.Drawing.Font("Consolas", 12.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.listBoxOrdenExpansion.FormattingEnabled = true;
+            this.listBoxOrdenExpansion.ItemHeight = 20;
             this.listBoxOrdenExpansion.Items.AddRange(new object[] {
             "Arriba",
             "Derecha",
             "Abajo",
             "Izquierda"});
-            this.listBoxOrdenExpansion.Location = new System.Drawing.Point(73, 320);
+            this.listBoxOrdenExpansion.Location = new System.Drawing.Point(53, 320);
             this.listBoxOrdenExpansion.Name = "listBoxOrdenExpansion";
-            this.listBoxOrdenExpansion.Size = new System.Drawing.Size(71, 69);
+            this.listBoxOrdenExpansion.Size = new System.Drawing.Size(91, 82);
             this.listBoxOrdenExpansion.TabIndex = 9;
             // 
             // btnArriba
             // 
-            this.btnArriba.Location = new System.Drawing.Point(4, 330);
+            this.btnArriba.BackColor = System.Drawing.Color.DarkCyan;
+            this.btnArriba.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.btnArriba.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.btnArriba.Font = new System.Drawing.Font("Microsoft Sans Serif", 15.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.btnArriba.Location = new System.Drawing.Point(15, 319);
             this.btnArriba.Name = "btnArriba";
-            this.btnArriba.Size = new System.Drawing.Size(63, 23);
+            this.btnArriba.Size = new System.Drawing.Size(32, 40);
             this.btnArriba.TabIndex = 10;
-            this.btnArriba.Text = "Arriba";
-            this.btnArriba.UseVisualStyleBackColor = true;
+            this.btnArriba.Text = "↑";
+            this.btnArriba.UseVisualStyleBackColor = false;
             this.btnArriba.Click += new System.EventHandler(this.btnArriba_Click);
             // 
             // btnAbajo
             // 
-            this.btnAbajo.Location = new System.Drawing.Point(4, 359);
+            this.btnAbajo.BackColor = System.Drawing.Color.DarkCyan;
+            this.btnAbajo.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.btnAbajo.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.btnAbajo.Font = new System.Drawing.Font("Microsoft Sans Serif", 15.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.btnAbajo.Location = new System.Drawing.Point(15, 365);
             this.btnAbajo.Name = "btnAbajo";
-            this.btnAbajo.Size = new System.Drawing.Size(63, 23);
+            this.btnAbajo.Size = new System.Drawing.Size(32, 40);
             this.btnAbajo.TabIndex = 11;
-            this.btnAbajo.Text = "Abajo";
-            this.btnAbajo.UseVisualStyleBackColor = true;
+            this.btnAbajo.Text = "↓";
+            this.btnAbajo.UseVisualStyleBackColor = false;
             this.btnAbajo.Click += new System.EventHandler(this.btnAbajo_Click);
             // 
             // Laberinto
@@ -320,7 +332,7 @@
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.DarkSlateGray;
-            this.ClientSize = new System.Drawing.Size(889, 749);
+            this.ClientSize = new System.Drawing.Size(889, 734);
             this.Controls.Add(this.btnAbajo);
             this.Controls.Add(this.btnArriba);
             this.Controls.Add(this.listBoxOrdenExpansion);
