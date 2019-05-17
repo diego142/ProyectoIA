@@ -82,7 +82,7 @@
             this.label4.Name = "label4";
             this.label4.Size = new System.Drawing.Size(335, 34);
             this.label4.TabIndex = 1;
-            this.label4.Text = "Laberinto - Parte 2.\r\n";
+            this.label4.Text = "Laberinto - Parte 3.\r\n";
             // 
             // label5
             // 

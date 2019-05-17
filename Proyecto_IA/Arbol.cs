@@ -16,6 +16,7 @@ namespace Proyecto_IA
         public Arbol(List<Nodo> _nodos)
         {
             InitializeComponent();
+
             nodos = _nodos;
         }
 

@@ -51,9 +51,14 @@
             this.listBoxOrdenExpansion = new System.Windows.Forms.ListBox();
             this.btnArriba = new System.Windows.Forms.Button();
             this.btnAbajo = new System.Windows.Forms.Button();
+            this.btnJugar = new System.Windows.Forms.Button();
+            this.cbBT = new System.Windows.Forms.CheckBox();
+            this.cbAS = new System.Windows.Forms.CheckBox();
+            this.panel2 = new System.Windows.Forms.Panel();
             this.panel1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dgvpropiedades)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.pbPersonaje)).BeginInit();
+            this.panel2.SuspendLayout();
             this.SuspendLayout();
             // 
             // label1
@@ -274,9 +279,9 @@
             this.btnRegresar.BackColor = System.Drawing.Color.Teal;
             this.btnRegresar.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.btnRegresar.Font = new System.Drawing.Font("Consolas", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.btnRegresar.Location = new System.Drawing.Point(24, 684);
+            this.btnRegresar.Location = new System.Drawing.Point(20, 691);
             this.btnRegresar.Name = "btnRegresar";
-            this.btnRegresar.Size = new System.Drawing.Size(120, 31);
+            this.btnRegresar.Size = new System.Drawing.Size(116, 31);
             this.btnRegresar.TabIndex = 8;
             this.btnRegresar.Text = "Regresar";
             this.btnRegresar.UseVisualStyleBackColor = false;
@@ -327,16 +332,69 @@
             this.btnAbajo.UseVisualStyleBackColor = false;
             this.btnAbajo.Click += new System.EventHandler(this.btnAbajo_Click);
             // 
+            // btnJugar
+            // 
+            this.btnJugar.BackColor = System.Drawing.Color.Purple;
+            this.btnJugar.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.btnJugar.Enabled = false;
+            this.btnJugar.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.btnJugar.Font = new System.Drawing.Font("Consolas", 18F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.btnJugar.ForeColor = System.Drawing.SystemColors.ButtonHighlight;
+            this.btnJugar.Location = new System.Drawing.Point(15, 523);
+            this.btnJugar.Name = "btnJugar";
+            this.btnJugar.Size = new System.Drawing.Size(120, 49);
+            this.btnJugar.TabIndex = 7;
+            this.btnJugar.Text = "¡Jugar!";
+            this.btnJugar.UseVisualStyleBackColor = false;
+            this.btnJugar.Click += new System.EventHandler(this.btnJugar_Click);
+            // 
+            // cbBT
+            // 
+            this.cbBT.AutoSize = true;
+            this.cbBT.Font = new System.Drawing.Font("Consolas", 11.25F, ((System.Drawing.FontStyle)((System.Drawing.FontStyle.Bold | System.Drawing.FontStyle.Italic))), System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.cbBT.Location = new System.Drawing.Point(3, 12);
+            this.cbBT.Name = "cbBT";
+            this.cbBT.Size = new System.Drawing.Size(123, 22);
+            this.cbBT.TabIndex = 12;
+            this.cbBT.Text = "BackTracking";
+            this.cbBT.UseVisualStyleBackColor = true;
+            this.cbBT.CheckedChanged += new System.EventHandler(this.cbBT_CheckedChanged);
+            // 
+            // cbAS
+            // 
+            this.cbAS.AutoSize = true;
+            this.cbAS.Enabled = false;
+            this.cbAS.Font = new System.Drawing.Font("Consolas", 12F, ((System.Drawing.FontStyle)((System.Drawing.FontStyle.Bold | System.Drawing.FontStyle.Italic))), System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.cbAS.Location = new System.Drawing.Point(3, 36);
+            this.cbAS.Name = "cbAS";
+            this.cbAS.Size = new System.Drawing.Size(48, 23);
+            this.cbAS.TabIndex = 13;
+            this.cbAS.Text = "A★";
+            this.cbAS.UseVisualStyleBackColor = true;
+            this.cbAS.CheckedChanged += new System.EventHandler(this.cbAS_CheckedChanged);
+            // 
+            // panel2
+            // 
+            this.panel2.BackColor = System.Drawing.Color.MediumTurquoise;
+            this.panel2.Controls.Add(this.cbAS);
+            this.panel2.Controls.Add(this.cbBT);
+            this.panel2.Location = new System.Drawing.Point(15, 411);
+            this.panel2.Name = "panel2";
+            this.panel2.Size = new System.Drawing.Size(129, 63);
+            this.panel2.TabIndex = 14;
+            // 
             // Laberinto
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.DarkSlateGray;
             this.ClientSize = new System.Drawing.Size(889, 734);
+            this.Controls.Add(this.panel2);
             this.Controls.Add(this.btnAbajo);
             this.Controls.Add(this.btnArriba);
             this.Controls.Add(this.listBoxOrdenExpansion);
             this.Controls.Add(this.btnRegresar);
+            this.Controls.Add(this.btnJugar);
             this.Controls.Add(this.btnCelda_Final);
             this.Controls.Add(this.btnCelda_Inicial);
             this.Controls.Add(this.labelY);
@@ -357,6 +415,8 @@
             this.panel1.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dgvpropiedades)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.pbPersonaje)).EndInit();
+            this.panel2.ResumeLayout(false);
+            this.panel2.PerformLayout();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -385,5 +445,9 @@
         private System.Windows.Forms.ListBox listBoxOrdenExpansion;
         private System.Windows.Forms.Button btnArriba;
         private System.Windows.Forms.Button btnAbajo;
+        private System.Windows.Forms.Button btnJugar;
+        private System.Windows.Forms.CheckBox cbBT;
+        private System.Windows.Forms.CheckBox cbAS;
+        private System.Windows.Forms.Panel panel2;
     }
 }

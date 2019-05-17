@@ -280,15 +280,17 @@ namespace Proyecto_IA
                             btnElegir.Enabled = true;
                             btnRegresar.Enabled = true;
 
+                            btnArriba.Enabled = true;
+                            btnAbajo.Enabled = true;
+
                             cmbPersonaje.Enabled = true;
                             lista_pasos.Clear();
                             nodos.Clear();
                             numero_pasos = 1;
                             jugando = false;
-                            finalAlg = false;
-
-                            panelMapa.Refresh();
+                            ordenDeExp.Clear();
                             nodosCerrados.Clear();
+                            panelMapa.Refresh();
 
                         }
                     }
@@ -469,17 +471,6 @@ namespace Proyecto_IA
                             personaje.CoordenadaX = coordenadaActual.X;
                             personaje.CoordenadaY = coordenadaActual.Y;
 
-                            for (int l = 0; l < listBoxOrdenExpansion.Items.Count; l++)
-                            {
-                                ordenDeExp.Add(listBoxOrdenExpansion.Items[l].ToString());
-                            }
-                            
-                            lista_pasos.Add(new Coordenada(personaje.CoordenadaX, personaje.CoordenadaY, numero_pasos));
-                            nodos.Add(new Nodo("", personaje.CoordenadaX, personaje.CoordenadaY, 0, true, false));
-                            agregarHijos("");
-
-                            nodos.Last().visitas.Add(numero_pasos);
-
                             MessageBox.Show("Coordenada Inicial Seleccionada!");
                             panelMapa.Refresh();
                             btnCelda_Inicial.Enabled = false;
@@ -518,18 +509,17 @@ namespace Proyecto_IA
                             coordenada_FinalXY.Y = coordenadaActual.Y;
 
                             MessageBox.Show("Coordenada Final Seleccionada!");
-                            jugando = true;
                             panelMapa.Refresh();
                             btnCelda_Final.Enabled = false;
                             btnRegresar.Enabled = false;
+                            cbBT.Enabled = true;
+                            cbAS.Enabled = true;
 
                         }
-
                     }
                 }
 
             }
-            backTracking();
             panelMapa.Focus();
         }   ////Btn para escoger la coordenada final
 
@@ -544,6 +534,7 @@ namespace Proyecto_IA
             cmbPersonaje.Enabled = false;
             btnElegir.Enabled = false;
             btnCelda_Inicial.Enabled = true;
+
         }   //Desbloqueo los otros botones después de elegir un personaje
 
         private bool moverPersonajeArriba()
@@ -553,10 +544,12 @@ namespace Proyecto_IA
 
             if (validaMovimiento("arriba", personaje))
             {
+                string padre = generarNombre(personaje.CoordenadaX, personaje.CoordenadaY);
+
                 personaje.CoordenadaY -= 1; 
                 numero_pasos++;
                 agrearPasos(personaje);
-                agregarNodo();
+                agregarNodo(padre);
                 panelMapa.Refresh();
                 return true;
             }
@@ -569,11 +562,12 @@ namespace Proyecto_IA
             Personaje personaje = personajes.Find(personaje_x => personaje_x.Nombre == personajeNombre);
 
             if (validaMovimiento("derecha", personaje))
-            { 
+            {
+                string padre = generarNombre(personaje.CoordenadaX, personaje.CoordenadaY);
                 personaje.CoordenadaX += 1;
                 numero_pasos++;
                 agrearPasos(personaje);
-                agregarNodo();
+                agregarNodo(padre);
                 panelMapa.Refresh();
                 return true;
 
@@ -588,10 +582,12 @@ namespace Proyecto_IA
 
             if (validaMovimiento("abajo", personaje))
             {
+                string padre = generarNombre(personaje.CoordenadaX, personaje.CoordenadaY);
+
                 personaje.CoordenadaY += 1;
                 numero_pasos++;
                 agrearPasos(personaje);
-                agregarNodo();
+                agregarNodo(padre);
                 panelMapa.Refresh();
                 return true;
             }
@@ -605,10 +601,12 @@ namespace Proyecto_IA
 
             if (validaMovimiento("izquierda", personaje))
             {
+                string padre = generarNombre(personaje.CoordenadaX, personaje.CoordenadaY);
+
                 personaje.CoordenadaX -= 1;
                 numero_pasos++;
                 agrearPasos(personaje);
-                agregarNodo();
+                agregarNodo(padre);
                 panelMapa.Refresh();
                 return true;
             }
@@ -642,7 +640,7 @@ namespace Proyecto_IA
                     break;              
             }
            
-            if (seLlegoAlFinal())
+            /*if (seLlegoAlFinal())
             {
                 reproductor("final");
                 MessageBox.Show("Llegaste a la meta");
@@ -657,7 +655,7 @@ namespace Proyecto_IA
                 {
                     reiniciar(1);
                 }
-            }
+            }*/
         }   //Eevento para cuando se presionan las teclas
 
         private void btnModificar_Click(object sender, EventArgs e)
@@ -811,33 +809,23 @@ namespace Proyecto_IA
             }
         }
 
-        private void agregarNodo()
+        private void agregarNodo(string padreNombre)
         {
             Personaje personaje = personajes.Find(personaje_x => personaje_x.Nombre == cmbPersonaje.Text);
             int cordx = personaje.CoordenadaX;
             int cordy = personaje.CoordenadaY;
 
-            /*if (nodos.Count == 1)
-            {
-                agregarHijos("");
-            }
-            else
-            {
-            agregarHijos(nodos[nodos.Count - 2].nombre);
-            }*/
-
             if (seLlegoAlFinal())
             {
-                nodos.Add(new Nodo(nodos.Last().nombre, personaje.CoordenadaX, personaje.CoordenadaY, personaje.Costos[obtenerCosto(int.Parse(datos[cordy][cordx]))], false, true));
+                nodos.Add(new Nodo(padreNombre, personaje.CoordenadaX, personaje.CoordenadaY, personaje.Costos[obtenerCosto(int.Parse(datos[cordy][cordx]))], false, true));
                 agregarVisitas();
             }
             else
             {
-                nodos.Add(new Nodo(nodos.Last().nombre, personaje.CoordenadaX, personaje.CoordenadaY, personaje.Costos[obtenerCosto(int.Parse(datos[cordy][cordx]))], false, false));
-                agregarHijos(nodos[nodos.Count - 2].nombre);
+                nodos.Add(new Nodo(padreNombre, personaje.CoordenadaX, personaje.CoordenadaY, personaje.Costos[obtenerCosto(int.Parse(datos[cordy][cordx]))], false, false));
+                agregarHijos(padreNombre);
                 agregarVisitas();
             }
-
         }
 
         private void reproductor(string accion)
@@ -928,12 +916,15 @@ namespace Proyecto_IA
         private void backTracking()
         {
             Thread.Sleep(500);
+            finalAlg = false;
 
             backTracking(nodos[0]);
         }
 
         private void backTracking(Nodo nodoActual)
         {
+            Nodo aux = nodoActual;
+
             if (seLlegoAlFinal())
             {
                 finalAlg = true;
@@ -942,6 +933,7 @@ namespace Proyecto_IA
                 Arbol arbol = new Arbol(nodos);
                 arbol.ShowDialog();
                 DialogResult opc = MessageBox.Show("¿Quieres volver a jugar?", "Juego terminado.", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
+                arbol.Close();
                 if (opc == DialogResult.Yes)
                 {
                     reiniciar(0);
@@ -954,11 +946,9 @@ namespace Proyecto_IA
             }
             else
             {
-
-
                 for (int i = 0; i < ordenDeExp.Count; i++)
                 {
-                    if (seLlegoAlFinal()) { return; }
+                    if (finalAlg) { return; }
 
                     string personajeNombre = cmbPersonaje.Text;
                     Personaje p = personajes.Find(personaje_x => personaje_x.Nombre == personajeNombre);
@@ -968,11 +958,11 @@ namespace Proyecto_IA
                     switch (opc)
                     {
                         case "Arriba":
-                            if (esHijoValido(nodoActual, generarNombre(p.CoordenadaX, p.CoordenadaY - 1)))
+                            if (esHijoValido(nodoActual, generarNombre(nodoActual.cX, nodoActual.cY - 1)) == true)
                             {
-                                if (estaCerrado(nodos.Last().nombre) == false)
+                                if (estaCerrado(generarNombre(nodoActual.cX, nodoActual.cY - 1)) == false)
                                 {
-                                    if (moverPersonajeArriba())
+                                        if (moverPersonajeArriba())
                                     {
                                         Thread.Sleep(500);
 
@@ -980,8 +970,8 @@ namespace Proyecto_IA
                                         backTracking(nodoActual);
                                         if (finalAlg) { return; }
 
-                                        moverPersonajeAbajo();
-                                        nodoActual = nodos.Last();
+                                        regresar(nodoActual.cX, (nodoActual.cY + 1));
+                                        nodoActual = aux;
                                         Thread.Sleep(500);
                                     }
 
@@ -990,9 +980,9 @@ namespace Proyecto_IA
 
                             break;
                         case "Derecha":
-                            if (esHijoValido(nodoActual, generarNombre(p.CoordenadaX + 1, p.CoordenadaY)))
+                            if (esHijoValido(nodoActual, generarNombre(nodoActual.cX + 1, nodoActual.cY)) == true)
                             {
-                                if (estaCerrado(nodos.Last().nombre) == false)
+                                if (estaCerrado(generarNombre(nodoActual.cX + 1, nodoActual.cY)) == false)
                                 {
                                     if (moverPersonajeDerecha())
                                     {
@@ -1002,31 +992,34 @@ namespace Proyecto_IA
                                         backTracking(nodoActual);
                                         if (finalAlg) { return; }
 
-                                        moverPersonajeIzquierda();
-                                        nodoActual = nodos.Last();
+                                        regresar((nodoActual.cX - 1), nodoActual.cY);
+                                        nodoActual = aux;
+
                                         Thread.Sleep(500);
                                     }
 
                                 }
                             }
 
-
                             break;
                         case "Abajo":
-                            if (esHijoValido(nodoActual, generarNombre(p.CoordenadaX, p.CoordenadaY + 1)))
+                            if (esHijoValido(nodoActual, generarNombre(nodoActual.cX, nodoActual.cY + 1)) == true)
                             {
-                                if (estaCerrado(nodos.Last().nombre) == false)
+                                Console.WriteLine(nodoActual.nombre + " es hijo valido: " + generarNombre(nodoActual.cX, nodoActual.cY + 1));
+                                if (estaCerrado(generarNombre(nodoActual.cX, nodoActual.cY + 1)) == false)
+
                                 {
                                     if (moverPersonajeAbajo())
                                     {
                                         Thread.Sleep(500);
 
                                         nodoActual = nodos.Last();
+
                                         backTracking(nodoActual);
                                         if (finalAlg) { return; }
 
-                                        moverPersonajeArriba();
-                                        nodoActual = nodos.Last();
+                                        regresar(nodoActual.cX, (nodoActual.cY - 1));
+                                        nodoActual = aux;
                                         Thread.Sleep(500);
                                     }
 
@@ -1034,9 +1027,9 @@ namespace Proyecto_IA
                             }
                             break;
                         case "Izquierda":
-                            if (esHijoValido(nodoActual, generarNombre(p.CoordenadaX - 1, p.CoordenadaY)))
+                            if (esHijoValido(nodoActual, generarNombre(nodoActual.cX - 1, nodoActual.cY)) == true)
                             {
-                                if (estaCerrado(nodos.Last().nombre) == false)
+                                if (estaCerrado(generarNombre(nodoActual.cX - 1, nodoActual.cY)) == false)
                                 {
                                     if (moverPersonajeIzquierda())
                                     {
@@ -1047,8 +1040,8 @@ namespace Proyecto_IA
                                         backTracking(nodoActual);
                                         if (finalAlg) { return; }
 
-                                        moverPersonajeDerecha();
-                                        nodoActual = nodos.Last();
+                                        regresar((nodoActual.cX + 1), nodoActual.cY);
+                                        nodoActual = aux;
                                         Thread.Sleep(500);
                                     }
 
@@ -1077,7 +1070,7 @@ namespace Proyecto_IA
 
         private bool esHijoValido(Nodo nodoActual, string mov)
         {
-            foreach (string hijo in nodoActual.hijos )
+            foreach (string hijo in nodoActual.hijos)
             {
                 if (hijo == mov)
                 {
@@ -1085,6 +1078,79 @@ namespace Proyecto_IA
                 }
             }
             return false;
+        }
+
+        private void btnJugar_Click(object sender, EventArgs e)
+        {
+            for (int l = 0; l < listBoxOrdenExpansion.Items.Count; l++)
+            {
+                ordenDeExp.Add(listBoxOrdenExpansion.Items[l].ToString());
+            }
+
+            string nombre = cmbPersonaje.Text;
+            Personaje personaje = personajes.Find(personaje_x => personaje_x.Nombre == nombre);
+
+            lista_pasos.Add(new Coordenada(personaje.CoordenadaX, personaje.CoordenadaY, numero_pasos));
+            nodos.Add(new Nodo("", personaje.CoordenadaX, personaje.CoordenadaY, 0, true, false));
+            agregarHijos("");
+
+            nodos.Last().visitas.Add(numero_pasos);
+
+            btnArriba.Enabled = false;
+            btnAbajo.Enabled = false;
+            btnJugar.Enabled = false;
+            cbBT.Enabled = false;
+            cbAS.Enabled = false;
+            jugando = true;
+
+            if (cbBT.Checked == true)
+            {
+                backTracking();
+            }
+            else
+            {
+                //A estrella
+            }
+
+        }
+
+        private void cbBT_CheckedChanged(object sender, EventArgs e)
+        {
+            btnJugar.Enabled = true;
+
+            if (cbAS.Checked == true)
+            {
+                cbAS.Checked = false;
+            }
+            else{
+
+                cbBT.Checked = true;
+            }
+        }
+
+        private void cbAS_CheckedChanged(object sender, EventArgs e)
+        {
+            btnJugar.Enabled = true;
+
+            if (cbBT.Checked == true)
+            {
+                cbBT.Checked = false;
+            }
+            else {
+                cbAS.Checked = true;
+            }
+        }
+
+        private void regresar(int x, int y)
+        {
+            string personajeNombre = cmbPersonaje.Text;
+            Personaje personaje = personajes.Find(personaje_x => personaje_x.Nombre == personajeNombre);
+
+            personaje.CoordenadaX = x;
+            personaje.CoordenadaY = y;
+            numero_pasos++;
+            agrearPasos(personaje);
+            panelMapa.Refresh();
         }
     }
 }
