@@ -351,6 +351,7 @@
             // cbBT
             // 
             this.cbBT.AutoSize = true;
+            this.cbBT.Enabled = false;
             this.cbBT.Font = new System.Drawing.Font("Consolas", 11.25F, ((System.Drawing.FontStyle)((System.Drawing.FontStyle.Bold | System.Drawing.FontStyle.Italic))), System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.cbBT.Location = new System.Drawing.Point(3, 12);
             this.cbBT.Name = "cbBT";

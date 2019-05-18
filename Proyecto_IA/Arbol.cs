@@ -13,17 +13,21 @@ namespace Proyecto_IA
     public partial class Arbol : Form
     {
         List<Nodo> nodos;
-        public Arbol(List<Nodo> _nodos)
+        List<Nodo> nodosCerrados;
+
+        public Arbol(List<Nodo> _nodos, List<Nodo> _nodosCerrados)
         {
             InitializeComponent();
 
             nodos = _nodos;
+            nodosCerrados = _nodosCerrados;
         }
 
         private void Arbol_Load(object sender, EventArgs e)
         {
             depurarLista();
             marcarVisitados();
+            trazarRuta();
             generarArbol();
             VistaArbol.Nodes[0].ExpandAll();
         }
@@ -102,5 +106,54 @@ namespace Proyecto_IA
             return;
 
         }
+
+        private void trazarRuta()
+        { 
+            lblRuta.Text += nodos.First().nombre + "->";
+
+            foreach (Nodo nodo in nodos)
+            {
+                for (int i = 0; i < nodo.hijos.Count; i++)
+                {
+                    //si el hijo no se encuentra en los nodos cerrados
+                    if (!estaCerrado(nodo.hijos[i]) && nodo.hijosVisitados[i])
+                    {
+                        lblRuta.Text += nodo.hijos[i];
+                        if (!esNodoFinal(nodo.hijos[i]))
+                        {
+                            lblRuta.Text += "->";
+                        }
+                    }
+                }
+            }
+        }
+
+        private bool estaCerrado(string nodo)
+        {
+            foreach (Nodo nodoC in nodosCerrados)
+            {
+                if (nodoC.nombre == nodo)
+                {
+                    return true;
+                }
+            }
+            return false;
+        }
+
+        private bool esNodoFinal(string nodo)
+        {
+            foreach (Nodo n in nodos)
+            {
+                if (n.final)
+                {
+                    if (n.nombre == nodo)
+                    {
+                        return true;
+                    }
+                }
+            }
+            return false;
+        }
+
     }
 }

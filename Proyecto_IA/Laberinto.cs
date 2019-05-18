@@ -282,6 +282,9 @@ namespace Proyecto_IA
 
                             btnArriba.Enabled = true;
                             btnAbajo.Enabled = true;
+                            btnJugar.Enabled = false;
+                            cbAS.Checked = false;
+                            cbBT.Checked = false;
 
                             cmbPersonaje.Enabled = true;
                             lista_pasos.Clear();
@@ -930,7 +933,7 @@ namespace Proyecto_IA
                 finalAlg = true;
                 reproductor("final");
                 MessageBox.Show("Llegaste a la meta");
-                Arbol arbol = new Arbol(nodos);
+                Arbol arbol = new Arbol(nodos, nodosCerrados);
                 arbol.ShowDialog();
                 DialogResult opc = MessageBox.Show("¿Quieres volver a jugar?", "Juego terminado.", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
                 arbol.Close();
@@ -1005,7 +1008,6 @@ namespace Proyecto_IA
                         case "Abajo":
                             if (esHijoValido(nodoActual, generarNombre(nodoActual.cX, nodoActual.cY + 1)) == true)
                             {
-                                Console.WriteLine(nodoActual.nombre + " es hijo valido: " + generarNombre(nodoActual.cX, nodoActual.cY + 1));
                                 if (estaCerrado(generarNombre(nodoActual.cX, nodoActual.cY + 1)) == false)
 
                                 {
