@@ -359,7 +359,7 @@
             this.cbBT.TabIndex = 12;
             this.cbBT.Text = "BackTracking";
             this.cbBT.UseVisualStyleBackColor = true;
-            this.cbBT.CheckedChanged += new System.EventHandler(this.cbBT_CheckedChanged);
+            this.cbBT.Click += new System.EventHandler(this.cbBT_Click);
             // 
             // cbAS
             // 
@@ -372,7 +372,7 @@
             this.cbAS.TabIndex = 13;
             this.cbAS.Text = "A★";
             this.cbAS.UseVisualStyleBackColor = true;
-            this.cbAS.CheckedChanged += new System.EventHandler(this.cbAS_CheckedChanged);
+            this.cbAS.Click += new System.EventHandler(this.cbAS_Click);
             // 
             // panel2
             // 

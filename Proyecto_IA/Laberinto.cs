@@ -282,7 +282,6 @@ namespace Proyecto_IA
 
                             btnArriba.Enabled = true;
                             btnAbajo.Enabled = true;
-                            btnJugar.Enabled = false;
                             cbAS.Checked = false;
                             cbBT.Checked = false;
 
@@ -1116,33 +1115,6 @@ namespace Proyecto_IA
 
         }
 
-        private void cbBT_CheckedChanged(object sender, EventArgs e)
-        {
-            btnJugar.Enabled = true;
-
-            if (cbAS.Checked == true)
-            {
-                cbAS.Checked = false;
-            }
-            else{
-
-                cbBT.Checked = true;
-            }
-        }
-
-        private void cbAS_CheckedChanged(object sender, EventArgs e)
-        {
-            btnJugar.Enabled = true;
-
-            if (cbBT.Checked == true)
-            {
-                cbBT.Checked = false;
-            }
-            else {
-                cbAS.Checked = true;
-            }
-        }
-
         private void regresar(int x, int y)
         {
             string personajeNombre = cmbPersonaje.Text;
@@ -1153,6 +1125,35 @@ namespace Proyecto_IA
             numero_pasos++;
             agrearPasos(personaje);
             panelMapa.Refresh();
+        }
+
+        private void cbBT_Click(object sender, EventArgs e)
+        {
+            btnJugar.Enabled = true;
+
+            if (cbAS.Checked == true)
+            {
+                cbAS.Checked = false;
+            }
+            else
+            {
+
+                cbBT.Checked = true;
+            }
+        }
+
+        private void cbAS_Click(object sender, EventArgs e)
+        {
+            btnJugar.Enabled = true;
+
+            if (cbBT.Checked == true)
+            {
+                cbBT.Checked = false;
+            }
+            else
+            {
+                cbAS.Checked = true;
+            }
         }
     }
 }
