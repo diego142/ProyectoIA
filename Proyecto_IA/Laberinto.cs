@@ -46,6 +46,7 @@ namespace Proyecto_IA
         string rutaYoshi = "";
         List<string> ordenDeExp = new List<string>();
         List<Nodo> nodosCerrados = new List<Nodo>();
+        List<Nodo> listaAbierta = new List<Nodo>();
 
 
         Point coordenadaActual;
@@ -105,6 +106,7 @@ namespace Proyecto_IA
                 cmbPersonaje.Items.Add(personaje.Nombre);
             }
             cmbPersonaje.SelectedIndex = 0;
+
         }   //Cargo los nomnbres de todos los personajes y por default se deja el primero
 
         private Terreno obtenerTerreno(int cod)
@@ -522,7 +524,7 @@ namespace Proyecto_IA
                 }
 
             }
-            panelMapa.Focus();
+            //panelMapa.Focus();
         }   ////Btn para escoger la coordenada final
 
         private void Laberinto_FormClosed(object sender, FormClosedEventArgs e)
@@ -642,11 +644,11 @@ namespace Proyecto_IA
                     break;              
             }
            
-            /*if (seLlegoAlFinal())
+            if (seLlegoAlFinal())
             {
                 reproductor("final");
                 MessageBox.Show("Llegaste a la meta");
-                Arbol arbol = new Arbol(nodos);
+                Arbol arbol = new Arbol(nodos, nodosCerrados);
                 arbol.ShowDialog();
                 DialogResult opc = MessageBox.Show("¿Quieres volver a jugar?", "Juego terminado.", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
                 if (opc == DialogResult.Yes)
@@ -657,7 +659,7 @@ namespace Proyecto_IA
                 {
                     reiniciar(1);
                 }
-            }*/
+            }
         }   //Eevento para cuando se presionan las teclas
 
         private void btnModificar_Click(object sender, EventArgs e)
@@ -1155,5 +1157,54 @@ namespace Proyecto_IA
                 cbAS.Checked = true;
             }
         }
+
+        private int distanciaManhatan (int x1, int x2, int y1, int y2)
+        {
+            int distancia = 0;
+
+            distancia = Math.Abs(x1 - x2) + Math.Abs(y1 - y2);
+            return distancia;
+        }
+
+        private string selectBestFn ()
+        {
+            decimal fn = 0;
+            decimal gn = 0;
+            decimal hn = 0;
+
+
+            
+        }
+        
+
+        private void Astar()
+        {
+            Nodo nodoActual = nodos.First();
+
+            if (nodoActual.final == true)
+            {
+                return;
+            }
+            else
+            {
+
+            }
+        }
+
+        private int charToInt(string coor)
+        {
+            string abc = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
+
+            for(int i=0; i<abc.Count(); i++)
+            {
+                if(abc[i].ToString() == coor)
+                {
+                    return i;
+                }
+            }
+            return -1;
+        }
     }
+
+
 }
