@@ -1346,7 +1346,7 @@ namespace Proyecto_IA
 
                 if (hijo == generarNombre(coordenada_FinalXY.X, coordenada_FinalXY.Y))
                 {
-                    if (listaCerrada.Exists(nodo_x => nodo_x.nombre == hijo))
+                    if (listaCerrada.Exists(nodo_x => nodo_x.nombre == hijo))//AQUI PUEDO CORREGIR EL PROBLEMA
                     {
                         if (listaAbierta.Exists(nodo_x => nodo_x.nombre == hijo))
                         {
