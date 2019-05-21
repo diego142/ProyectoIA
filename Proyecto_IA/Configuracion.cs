@@ -250,16 +250,6 @@ namespace Proyecto_IA
             }
         } //Boton para buscar el archivo
 
-        private void btnColor_Click(object sender, EventArgs e)
-        {
-            ColorDialog colorDialog = new ColorDialog();
-
-            if(colorDialog.ShowDialog() == DialogResult.OK)
-            {
-                btnColor.BackColor = colorDialog.Color;
-            }
-        } //Boton para el color (beta)
-
         private void btnAsignar_Click(object sender, EventArgs e)
         {
 
@@ -267,15 +257,11 @@ namespace Proyecto_IA
             {
                 MessageBox.Show("Agregar un nombre de terreno.");
 
-            } else if (btnColor.BackColor == Color.Transparent && picBox.Image == null)
-            {
-                MessageBox.Show("Escoge un color o una imagen.");
             }
             else
             {
  
                 terrenos[cmbCodigo.SelectedIndex].Nombre = cmbNombre.SelectedItem.ToString();
-                terrenos[cmbCodigo.SelectedIndex].Color = btnColor.BackColor;
                 terrenos[cmbCodigo.SelectedIndex].Imagen = picBox.Image;
 
                 if (cmbNombre.SelectedIndex + 1 < cmbNombre.Items.Count)
@@ -309,7 +295,6 @@ namespace Proyecto_IA
                 cmbNombre.SelectedItem = terrenos[cmbCodigo.SelectedIndex].Nombre;
             }
 
-            btnColor.BackColor = terrenos[cmbCodigo.SelectedIndex].Color;
             picBox.Image = terrenos[cmbCodigo.SelectedIndex].Imagen;
 
             if ( terrenosListos() )

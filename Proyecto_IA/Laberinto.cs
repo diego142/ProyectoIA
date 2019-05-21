@@ -46,7 +46,9 @@ namespace Proyecto_IA
         string rutaYoshi = "";
         List<string> ordenDeExp = new List<string>();
         List<Nodo> nodosCerrados = new List<Nodo>();
+
         List<Nodo> listaAbierta = new List<Nodo>();
+        List<Nodo> listaCerrada = new List<Nodo>();
 
 
         Point coordenadaActual;
@@ -294,6 +296,8 @@ namespace Proyecto_IA
                             jugando = false;
                             ordenDeExp.Clear();
                             nodosCerrados.Clear();
+                            listaAbierta.Clear();
+                            listaCerrada.Clear();
                             panelMapa.Refresh();
 
                         }
@@ -648,7 +652,7 @@ namespace Proyecto_IA
             {
                 reproductor("final");
                 MessageBox.Show("Llegaste a la meta");
-                Arbol arbol = new Arbol(nodos, nodosCerrados);
+                Arbol arbol = new Arbol(nodos, nodosCerrados, false);
                 arbol.ShowDialog();
                 DialogResult opc = MessageBox.Show("¿Quieres volver a jugar?", "Juego terminado.", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
                 if (opc == DialogResult.Yes)
@@ -813,6 +817,20 @@ namespace Proyecto_IA
             }
         }
 
+        private void agregarVisitasAS()
+        {
+            string nombre = listaCerrada.Last().nombre;
+
+            foreach (Nodo nodo in listaCerrada)
+            {
+                if (nodo.nombre == nombre)
+                {
+                    nodo.visitas.Add(numero_pasos);
+                    return;
+                }
+            }
+        }
+
         private void agregarNodo(string padreNombre)
         {
             Personaje personaje = personajes.Find(personaje_x => personaje_x.Nombre == cmbPersonaje.Text);
@@ -934,7 +952,7 @@ namespace Proyecto_IA
                 finalAlg = true;
                 reproductor("final");
                 MessageBox.Show("Llegaste a la meta");
-                Arbol arbol = new Arbol(nodos, nodosCerrados);
+                Arbol arbol = new Arbol(nodos, nodosCerrados, false);
                 arbol.ShowDialog();
                 DialogResult opc = MessageBox.Show("¿Quieres volver a jugar?", "Juego terminado.", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
                 arbol.Close();
@@ -1112,7 +1130,7 @@ namespace Proyecto_IA
             }
             else
             {
-                //A estrella
+                Astar();
             }
 
         }
@@ -1166,29 +1184,120 @@ namespace Proyecto_IA
             return distancia;
         }
 
-        private string selectBestFn ()
+        private Nodo selectBestFn ()
         {
-            decimal fn = 0;
+            Personaje personaje = personajes.Find(personaje_x => personaje_x.Nombre == cmbPersonaje.Text);
+            Nodo nodo;
+            decimal best = 99;
+            decimal aux = 0;
+            string padre;
+
+            int hn = 0;
             decimal gn = 0;
-            decimal hn = 0;
+            decimal fn = 0;
+            int pos = 0;
 
+            for(int i = 0; i < listaAbierta.Count; i++)
+            {
+                nodo = listaAbierta[i];
+                
+                hn = distanciaManhatan(nodo.cX, coordenada_FinalXY.X, nodo.cY, coordenada_FinalXY.Y);
 
-            
+                if (nodo.padre == "")
+                {
+                    gn = 0;
+                }
+                else
+                {
+                    gn = nodo.costo;
+                    padre = nodo.padre;
+
+                    for (int j = 0; j < listaCerrada.Count; j++)
+                    {
+                        if (padre == listaCerrada[j].nombre)
+                        {
+                            padre = listaCerrada[j].padre;
+                            gn += listaCerrada[j].costo;
+                            j = -1;
+                        }
+                    }
+                }
+
+                fn = gn + hn;
+                aux = fn;
+                if (aux < best)
+                {
+                    best = aux;
+                    pos = i;
+                }
+
+            }
+            return listaAbierta[pos];
         }
-        
 
         private void Astar()
         {
-            Nodo nodoActual = nodos.First();
+            Thread.Sleep(500);
+
+            Nodo nodoActual = nodos.Last();
 
             if (nodoActual.final == true)
             {
-                return;
+                reproductor("final");
+                MessageBox.Show("Llegaste a la meta");
+                Arbol arbol = new Arbol(nodos, listaCerrada, true);
+                arbol.ShowDialog();
+                DialogResult opc = MessageBox.Show("¿Quieres volver a jugar?", "Juego terminado.", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
+                if (opc == DialogResult.Yes)
+                {
+                    reiniciar(0);
+                }
+                else
+                {
+                    reiniciar(1);
+                }
             }
-            else
+
+            listaAbierta.Add(nodoActual);
+
+            while (listaAbierta.Count != 0)
             {
+                nodoActual = selectBestFn();
+
+                if (nodoActual.nombre == generarNombre(coordenada_FinalXY.X, coordenada_FinalXY.Y))
+                {
+
+                    listaCerrada.Add(nodoActual);
+                    moverEstandar(nodoActual.cX, nodoActual.cY);
+
+                    reproductor("final");
+                    MessageBox.Show("Llegaste a la meta");
+                    Arbol arbol = new Arbol(nodos, listaCerrada, true);
+                    arbol.ShowDialog();
+                    DialogResult opc = MessageBox.Show("¿Quieres volver a jugar?", "Juego terminado.", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
+                    if (opc == DialogResult.Yes)
+                    {
+                        reiniciar(0);
+                    }
+                    else
+                    {
+                        reiniciar(1);
+                    }
+                    return;
+                }
+
+                listaAbierta.Remove(nodoActual); // posible error (sobrecarga de operadores)
+                listaCerrada.Add(nodoActual);
+                agregarNodosAdy(nodoActual);
+
+                if (nodoActual.inicial == false)
+                {
+                    moverEstandar(nodoActual.cX, nodoActual.cY);
+                }
+                Thread.Sleep(500);
 
             }
+
         }
 
         private int charToInt(string coor)
@@ -1204,7 +1313,364 @@ namespace Proyecto_IA
             }
             return -1;
         }
+
+        private void agregarNodosAdy(Nodo nodoActual)
+        {
+            Personaje personaje = personajes.Find(personaje_x => personaje_x.Nombre == cmbPersonaje.Text);
+            string num;
+            int x = 0;
+            int y = 0;
+            decimal costo = 0;
+
+            foreach (string hijo in nodoActual.hijos)
+            {
+                num = "";
+                x = charToInt(hijo[0].ToString());
+                for (int k = 1; k < hijo.Count(); k++)
+                {
+                    num += hijo[k];
+                }
+                y = int.Parse(num)-1;
+                costo = personaje.Costos[obtenerCosto(int.Parse(datos[y][x]))];
+
+                if (hijo == generarNombre(coordenada_FinalXY.X, coordenada_FinalXY.Y))
+                {
+                    if (listaCerrada.Exists(nodo_x => nodo_x.nombre == hijo))
+                    {
+                        if (listaAbierta.Exists(nodo_x => nodo_x.nombre == hijo))
+                        {
+                            Nodo nodoRepetido = listaAbierta.Find(nodo_x => nodo_x.nombre == hijo);
+                            if (costo < nodoRepetido.costo)
+                            {
+                                listaAbierta.Remove(nodoRepetido);//si da error verificar si es un puntero el nodoActual
+                                listaAbierta.Add(new Nodo(nodoActual.nombre, x, y, costo, false, true));
+
+                            }
+
+                            if (costo == nodoRepetido.costo)
+                            {
+                                int nodoR = obtenerNivel(nodoRepetido.padre);
+                                int hijoI = obtenerNivel(nodoActual.nombre);
+
+                                if (hijoI < nodoR)
+                                {
+                                    listaAbierta.Remove(nodoRepetido);//si da error verificar si es un puntero el nodoActual
+                                    listaAbierta.Add(new Nodo(nodoActual.nombre, x, y, costo, false, true));
+                                }
+
+                                if (hijoI == nodoR)
+                                {
+                                    string opc;
+                                    bool bandH = false;
+                                    bool bandNR = false;
+
+                                    for (int i = 0; i < ordenDeExp.Count; i++)
+                                    {
+                                        opc = ordenDeExp[i];
+                                        switch (opc)
+                                        {
+                                            case "Arriba":
+                                                if (y != nodoRepetido.cY)
+                                                {
+                                                    if (y < nodoRepetido.cY)
+                                                    {
+                                                        bandH = true;
+                                                    }
+                                                    else
+                                                    {
+                                                        bandNR = true;
+                                                    }
+                                                }
+                                                break;
+                                            case "Derecha":
+                                                if (x != nodoRepetido.cX)
+                                                {
+                                                    if (x > nodoRepetido.cX)
+                                                    {
+                                                        bandH = true;
+                                                    }
+                                                    else
+                                                    {
+                                                        bandNR = true;
+                                                    }
+                                                }
+                                                break;
+                                            case "Abajo":
+                                                if (y != nodoRepetido.cY)
+                                                {
+                                                    if (y > nodoRepetido.cY)
+                                                    {
+                                                        bandH = true;
+                                                    }
+                                                    else
+                                                    {
+                                                        bandNR = true;
+                                                    }
+                                                }
+                                                break;
+                                            case "Izquierda":
+                                                if (x != nodoRepetido.cX)
+                                                {
+                                                    if (x < nodoRepetido.cX)
+                                                    {
+                                                        bandH = true;
+                                                    }
+                                                    else
+                                                    {
+                                                        bandNR = true;
+                                                    }
+                                                }
+                                                break;
+
+                                        }
+
+                                        if (bandH == true || bandNR == true)
+                                        {
+                                            i = ordenDeExp.Count;
+                                        }
+                                    }
+
+                                    if (bandH == true)
+                                    {
+                                        listaAbierta.Remove(nodoRepetido);//si da error verificar si es un puntero el nodoActual
+                                        listaAbierta.Add(new Nodo(nodoActual.nombre, x, y, costo, false, true));
+                                    }
+
+                                }
+
+                            }
+                        }
+                    }
+                    else
+                    {
+                        listaAbierta.Add(new Nodo(nodoActual.nombre, x, y, costo, false, true));
+                        agregarVisitasAS();
+                    }
+                }
+                else
+                {
+                    if (listaCerrada.Exists(nodo_x => nodo_x.nombre == hijo))
+                    {
+                        if (listaAbierta.Exists(nodo_x => nodo_x.nombre == hijo))
+                        {
+                            Nodo nodoRepetido = listaAbierta.Find(nodo_x => nodo_x.nombre == hijo);
+                            if (costo < nodoRepetido.costo)
+                            {
+                                listaAbierta.Add(new Nodo(nodoActual.nombre, x, y, costo, false, false));
+                                agregarHijosAady(hijo);
+                            }
+
+                            if (costo == nodoRepetido.costo)
+                            {
+                                int nodoR = obtenerNivel(nodoRepetido.padre);
+                                int hijoI = obtenerNivel(nodoActual.nombre);
+
+                                if (hijoI < nodoR)
+                                {
+                                    listaAbierta.Add(new Nodo(nodoActual.nombre, x, y, costo, false, false));
+                                    agregarHijosAady(hijo);
+                                }
+
+                                if (hijoI == nodoR)
+                                {
+                                    string opc;
+                                    bool bandH = false;
+                                    bool bandNR = false;
+
+                                    for (int i = 0; i < ordenDeExp.Count; i++)
+                                    {
+                                        opc = ordenDeExp[i];
+                                        switch (opc)
+                                        {
+                                            case "Arriba":
+                                                if (y != nodoRepetido.cY)
+                                                {
+                                                    if (y < nodoRepetido.cY)
+                                                    {
+                                                        bandH = true;
+                                                    }
+                                                    else
+                                                    {
+                                                        bandNR = true;
+                                                    }
+                                                }
+                                                break;
+                                            case "Derecha":
+                                                if (x != nodoRepetido.cX)
+                                                {
+                                                    if (x > nodoRepetido.cX)
+                                                    {
+                                                        bandH = true;
+                                                    }
+                                                    else
+                                                    {
+                                                        bandNR = true;
+                                                    }
+                                                }
+                                                break;
+                                            case "Abajo":
+                                                if (y != nodoRepetido.cY)
+                                                {
+                                                    if (y > nodoRepetido.cY)
+                                                    {
+                                                        bandH = true;
+                                                    }
+                                                    else
+                                                    {
+                                                        bandNR = true;
+                                                    }
+                                                }
+                                                break;
+                                            case "Izquierda":
+                                                if (x != nodoRepetido.cX)
+                                                {
+                                                    if (x < nodoRepetido.cX)
+                                                    {
+                                                        bandH = true;
+                                                    }
+                                                    else
+                                                    {
+                                                        bandNR = true;
+                                                    }
+                                                }
+                                                break;
+
+                                        }
+
+                                        if (bandH == true || bandNR == true)
+                                        {
+                                            i = ordenDeExp.Count;
+                                        }
+                                    }
+
+                                    if (bandH == true)
+                                    {
+                                        listaAbierta.Add(new Nodo(nodoActual.nombre, x, y, costo, false, false));
+                                        agregarHijosAady(hijo);
+                                    }
+
+                                }
+
+                            }
+                        }
+                    }
+                    else
+                    {
+                        listaAbierta.Add(new Nodo(nodoActual.nombre, x, y, costo, false, false));
+                        agregarHijosAady(hijo);
+                        agregarVisitasAS();
+
+                    }
+
+                }
+            }
+
+        }
+
+        private void agregarHijosAady(string padre)
+        {
+            Personaje personaje = personajes.Find(personaje_x => personaje_x.Nombre == cmbPersonaje.Text);
+
+            Nodo nodoActual = listaAbierta.Last();
+            int cX = nodoActual.cX;
+            int cY = nodoActual.cY;
+
+            for (int i = 0; i < ordenDeExp.Count; i++)
+            {
+                string opc = ordenDeExp[i];
+                switch (opc)
+                {
+                    case "Arriba":
+                        if (cY - 1 >= 0) //arriba
+                        {
+                            if (personaje.Costos[obtenerCosto(int.Parse(datos[cY - 1][cX]))] != -1)
+                            {
+                                if (generarNombre(cX, (cY - 1)) != padre)
+                                {
+                                    listaAbierta.Last().hijos.Add(generarNombre(cX, (cY - 1)));
+                                    listaAbierta.Last().hijosVisitados.Add(false);
+                                }
+                            }
+                        }
+                        break;
+                    case "Derecha":
+                        if (cX + 1 < datos[0].Length)//derecha
+                        {
+                            if (personaje.Costos[obtenerCosto(int.Parse(datos[cY][cX + 1]))] != -1)
+                            {
+                                if (generarNombre((cX + 1), cY) != padre)
+                                {
+                                    listaAbierta.Last().hijos.Add(generarNombre((cX + 1), cY));
+                                    listaAbierta.Last().hijosVisitados.Add(false);
+                                }
+                            }
+                        }
+                        break;
+                    case "Abajo":
+                        if (cY + 1 < datos.Length)//abajo
+                        {
+                            if (personaje.Costos[obtenerCosto(int.Parse(datos[cY + 1][cX]))] != -1)
+                            {
+                                if (generarNombre(cX, (cY + 1)) != padre)
+                                {
+                                    listaAbierta.Last().hijos.Add(generarNombre(cX, (cY + 1)));
+                                    listaAbierta.Last().hijosVisitados.Add(false);
+                                }
+                            }
+                        }
+                        break;
+                    case "Izquierda":
+
+                        if (cX - 1 >= 0) //izquierda
+                        {
+                            if (personaje.Costos[obtenerCosto(int.Parse(datos[cY][cX - 1]))] != -1)
+                            {
+                                if (generarNombre((cX - 1), cY) != padre)
+                                {
+                                    listaAbierta.Last().hijos.Add(generarNombre((cX - 1), cY));
+                                    listaAbierta.Last().hijosVisitados.Add(false);
+                                }
+                            }
+                        }
+                        break;
+                }
+            }
+
+        }
+
+        private int obtenerNivel(string padreNodoA)
+        {
+            int nivel = 0;
+            string padre = padreNodoA;
+
+            for (int i = 0; i < listaAbierta.Count; i++)
+            {
+                
+                if (padre == listaAbierta[i].nombre)
+                {
+                    padre = listaAbierta[i].padre;
+                    nivel++;
+                    i = 0;
+                }
+            }
+
+            return nivel;
+        }
+
+        private void moverEstandar(int x, int y)
+        {
+            string personajeNombre = cmbPersonaje.Text;
+            Personaje personaje = personajes.Find(personaje_x => personaje_x.Nombre == personajeNombre);
+
+            string padre = generarNombre(personaje.CoordenadaX, personaje.CoordenadaY);
+            personaje.CoordenadaX = x;
+            personaje.CoordenadaY = y;
+
+            numero_pasos++;
+            agregarNodo(padre);
+            agrearPasos(personaje);
+            panelMapa.Refresh();
+        }
     }
-
-
 }
+//añadir los nodos a lista de nodos :9

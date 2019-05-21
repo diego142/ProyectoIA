@@ -36,11 +36,9 @@
             this.label2 = new System.Windows.Forms.Label();
             this.cmbNombre = new System.Windows.Forms.ComboBox();
             this.label3 = new System.Windows.Forms.Label();
-            this.label4 = new System.Windows.Forms.Label();
             this.panel1 = new System.Windows.Forms.Panel();
             this.lblListo = new System.Windows.Forms.Label();
             this.picBox = new System.Windows.Forms.PictureBox();
-            this.btnColor = new System.Windows.Forms.Button();
             this.btnAsignar = new System.Windows.Forms.Button();
             this.label5 = new System.Windows.Forms.Label();
             this.panel2 = new System.Windows.Forms.Panel();
@@ -96,7 +94,7 @@
             this.cmbCodigo.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.cmbCodigo.Font = new System.Drawing.Font("Consolas", 21.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.cmbCodigo.FormattingEnabled = true;
-            this.cmbCodigo.Location = new System.Drawing.Point(17, 69);
+            this.cmbCodigo.Location = new System.Drawing.Point(36, 61);
             this.cmbCodigo.Name = "cmbCodigo";
             this.cmbCodigo.Size = new System.Drawing.Size(184, 42);
             this.cmbCodigo.TabIndex = 2;
@@ -106,7 +104,7 @@
             // 
             this.label2.AutoSize = true;
             this.label2.Font = new System.Drawing.Font("Consolas", 15.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label2.Location = new System.Drawing.Point(14, 35);
+            this.label2.Location = new System.Drawing.Point(33, 27);
             this.label2.Name = "label2";
             this.label2.Size = new System.Drawing.Size(82, 24);
             this.label2.TabIndex = 3;
@@ -126,7 +124,7 @@
             "Bosque",
             "Lava",
             "Nieve"});
-            this.cmbNombre.Location = new System.Drawing.Point(252, 69);
+            this.cmbNombre.Location = new System.Drawing.Point(300, 61);
             this.cmbNombre.Name = "cmbNombre";
             this.cmbNombre.Size = new System.Drawing.Size(184, 42);
             this.cmbNombre.TabIndex = 2;
@@ -135,21 +133,11 @@
             // 
             this.label3.AutoSize = true;
             this.label3.Font = new System.Drawing.Font("Consolas", 15.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label3.Location = new System.Drawing.Point(249, 35);
+            this.label3.Location = new System.Drawing.Point(296, 27);
             this.label3.Name = "label3";
             this.label3.Size = new System.Drawing.Size(226, 24);
             this.label3.TabIndex = 3;
             this.label3.Text = "Nombre del terreno";
-            // 
-            // label4
-            // 
-            this.label4.AutoSize = true;
-            this.label4.Font = new System.Drawing.Font("Consolas", 15.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label4.Location = new System.Drawing.Point(532, 35);
-            this.label4.Name = "label4";
-            this.label4.Size = new System.Drawing.Size(70, 24);
-            this.label4.TabIndex = 3;
-            this.label4.Text = "Color";
             // 
             // panel1
             // 
@@ -157,10 +145,8 @@
             this.panel1.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.panel1.Controls.Add(this.lblListo);
             this.panel1.Controls.Add(this.picBox);
-            this.panel1.Controls.Add(this.btnColor);
             this.panel1.Controls.Add(this.btnAsignar);
             this.panel1.Controls.Add(this.label5);
-            this.panel1.Controls.Add(this.label4);
             this.panel1.Controls.Add(this.label3);
             this.panel1.Controls.Add(this.label2);
             this.panel1.Controls.Add(this.cmbNombre);
@@ -175,7 +161,7 @@
             this.lblListo.AutoSize = true;
             this.lblListo.Font = new System.Drawing.Font("Consolas", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.lblListo.ForeColor = System.Drawing.Color.Silver;
-            this.lblListo.Location = new System.Drawing.Point(797, 113);
+            this.lblListo.Location = new System.Drawing.Point(705, 107);
             this.lblListo.Name = "lblListo";
             this.lblListo.Size = new System.Drawing.Size(126, 15);
             this.lblListo.TabIndex = 6;
@@ -185,7 +171,7 @@
             // picBox
             // 
             this.picBox.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.picBox.Location = new System.Drawing.Point(718, 69);
+            this.picBox.Location = new System.Drawing.Point(586, 64);
             this.picBox.Name = "picBox";
             this.picBox.Size = new System.Drawing.Size(40, 40);
             this.picBox.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
@@ -193,26 +179,12 @@
             this.picBox.TabStop = false;
             this.picBox.Click += new System.EventHandler(this.picBox_Click);
             // 
-            // btnColor
-            // 
-            this.btnColor.BackColor = System.Drawing.Color.Transparent;
-            this.btnColor.Cursor = System.Windows.Forms.Cursors.Hand;
-            this.btnColor.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.btnColor.Font = new System.Drawing.Font("Consolas", 18F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.btnColor.Location = new System.Drawing.Point(480, 69);
-            this.btnColor.Name = "btnColor";
-            this.btnColor.Size = new System.Drawing.Size(184, 42);
-            this.btnColor.TabIndex = 4;
-            this.btnColor.Text = "Seleccionar";
-            this.btnColor.UseVisualStyleBackColor = false;
-            this.btnColor.Click += new System.EventHandler(this.btnColor_Click);
-            // 
             // btnAsignar
             // 
             this.btnAsignar.BackColor = System.Drawing.Color.PaleTurquoise;
             this.btnAsignar.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.btnAsignar.Font = new System.Drawing.Font("Consolas", 18F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.btnAsignar.Location = new System.Drawing.Point(799, 69);
+            this.btnAsignar.Location = new System.Drawing.Point(707, 63);
             this.btnAsignar.Name = "btnAsignar";
             this.btnAsignar.Size = new System.Drawing.Size(123, 41);
             this.btnAsignar.TabIndex = 4;
@@ -224,7 +196,7 @@
             // 
             this.label5.AutoSize = true;
             this.label5.Font = new System.Drawing.Font("Consolas", 15.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label5.Location = new System.Drawing.Point(698, 35);
+            this.label5.Location = new System.Drawing.Point(566, 30);
             this.label5.Name = "label5";
             this.label5.Size = new System.Drawing.Size(82, 24);
             this.label5.TabIndex = 3;
@@ -452,10 +424,8 @@
         private System.Windows.Forms.Label label2;
         private System.Windows.Forms.ComboBox cmbNombre;
         private System.Windows.Forms.Label label3;
-        private System.Windows.Forms.Label label4;
         private System.Windows.Forms.Panel panel1;
         private System.Windows.Forms.Button btnAsignar;
-        private System.Windows.Forms.Button btnColor;
         private System.Windows.Forms.PictureBox picBox;
         private System.Windows.Forms.Label label5;
         private System.Windows.Forms.Panel panel2;

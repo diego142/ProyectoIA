@@ -14,21 +14,34 @@ namespace Proyecto_IA
     {
         List<Nodo> nodos;
         List<Nodo> nodosCerrados;
+        bool astar = false;
 
-        public Arbol(List<Nodo> _nodos, List<Nodo> _nodosCerrados)
+        public Arbol(List<Nodo> _nodos, List<Nodo> _nodosCerrados, bool _astar)
         {
             InitializeComponent();
 
             nodos = _nodos;
             nodosCerrados = _nodosCerrados;
+            astar = _astar;
         }
 
         private void Arbol_Load(object sender, EventArgs e)
         {
-            depurarLista();
-            marcarVisitados();
-            trazarRuta();
-            generarArbol();
+
+            if (astar)
+            {
+                trazarRutaAS();
+                depurarListaAS();
+                marcarVisitadosAS();
+                generarArbolAS();
+            }
+            else
+            {
+                depurarLista();
+                marcarVisitados();
+                trazarRuta();
+                generarArbol();
+            }
             VistaArbol.Nodes[0].ExpandAll();
         }
 
@@ -37,6 +50,26 @@ namespace Proyecto_IA
             foreach (Nodo nodoActual in nodos)
             {
                 foreach (Nodo padre in nodos)
+                {
+                    if (nodoActual.padre == padre.nombre)
+                    {
+                        for (int i = 0; i < padre.hijos.Count; i++)
+                        {
+                            if (nodoActual.nombre == padre.hijos[i])
+                            {
+                                padre.hijosVisitados[i] = true;
+                            }
+                        }
+                    }
+                }
+            }
+        }
+
+        private void marcarVisitadosAS()
+        {
+            foreach (Nodo nodoActual in nodosCerrados)
+            {
+                foreach (Nodo padre in nodosCerrados)
                 {
                     if (nodoActual.padre == padre.nombre)
                     {
@@ -64,6 +97,17 @@ namespace Proyecto_IA
                 if (nodos[i].visitas.Count == 0)
                 {
                     nodos.Remove(nodos[i]);
+                }
+            }
+        }
+
+        private void depurarListaAS()
+        {
+            for (int i = 0; i < nodosCerrados.Count; i++)
+            {
+                if (nodosCerrados[i].visitas.Count == 0)
+                {
+                    nodosCerrados.Remove(nodosCerrados[i]);
                 }
             }
         }
@@ -98,9 +142,36 @@ namespace Proyecto_IA
                     posAux = obtenerPos(nodos[pos].hijos[i]);
                     generarArbol(nodoAux, posAux);
                 }
-                /*else
+                else
                 {
                     nodoActual.Nodes.Add(nodos[pos].hijos[i] + " | No visitado");
+                }
+            }
+            return;
+
+        }
+
+        private void generarArbolAS()
+        {
+            TreeNode nodoActual = VistaArbol.Nodes.Add(nodosCerrados[0].infoNodo());
+            generarArbolAS(nodoActual, 0);
+        }
+
+        private void generarArbolAS(TreeNode nodoActual, int pos)
+        {
+            int posAux;
+            TreeNode nodoAux;
+            for (int i = 0; i < nodosCerrados[pos].hijos.Count; i++)
+            {
+                if (nodosCerrados[pos].hijosVisitados[i])
+                {
+                    nodoAux = nodoActual.Nodes.Add(nodosCerrados[obtenerPos(nodosCerrados[pos].hijos[i])].infoNodo());
+                    posAux = obtenerPos(nodosCerrados[pos].hijos[i]);
+                    generarArbolAS(nodoAux, posAux);
+                }
+                /*else
+                {
+                    nodoActual.Nodes.Add(nodosCerrados[pos].hijos[i] + " | No visitado");
                 }*/
             }
             return;
@@ -124,6 +195,34 @@ namespace Proyecto_IA
                             lblRuta.Text += "->";
                         }
                     }
+                }
+            }
+        }
+
+        private void trazarRutaAS()
+        {
+            List<Nodo> ruta = new List<Nodo>();
+
+            ruta.Add(nodosCerrados.Last());
+            string padre = nodosCerrados.Last().padre;
+
+            for (int i = 0; i < nodosCerrados.Count; i++)
+            {
+
+                if (padre == nodosCerrados[i].nombre)
+                {
+                    padre = nodosCerrados[i].padre;
+                    ruta.Insert(0, nodosCerrados[i]);
+                    i = -1;
+                }
+            }
+
+            foreach (Nodo n in ruta)
+            {
+                lblRuta.Text += n.nombre;
+                if (!n.final)
+                {
+                    lblRuta.Text += "->";
                 }
             }
         }
