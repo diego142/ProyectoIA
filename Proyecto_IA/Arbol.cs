@@ -174,7 +174,7 @@ namespace Proyecto_IA
 
         private void generarArbolAS()
         {
-            TreeNode nodoActual = VistaArbol.Nodes.Add(nodosCerrados[0].infoNodoAS(fX, fY, gn));
+            TreeNode nodoActual = VistaArbol.Nodes.Add(nodosCerrados[0].infoNodoAS(fX, fY, 0));
             gn = nodosCerrados[0].costo;
             generarArbolAS(nodoActual, 0);
         }
