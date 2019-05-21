@@ -819,6 +819,7 @@ namespace Proyecto_IA
 
         private void agregarVisitasAS()
         {
+            //numero_pasos++;
             string nombre = listaCerrada.Last().nombre;
 
             foreach (Nodo nodo in listaCerrada)
@@ -1110,9 +1111,12 @@ namespace Proyecto_IA
 
             string nombre = cmbPersonaje.Text;
             Personaje personaje = personajes.Find(personaje_x => personaje_x.Nombre == nombre);
+            int cordx = personaje.CoordenadaX;
+            int cordy = personaje.CoordenadaY;
 
             lista_pasos.Add(new Coordenada(personaje.CoordenadaX, personaje.CoordenadaY, numero_pasos));
-            nodos.Add(new Nodo("", personaje.CoordenadaX, personaje.CoordenadaY, 0, true, false));
+            nodos.Add(new Nodo("", personaje.CoordenadaX, personaje.CoordenadaY, personaje.Costos[obtenerCosto(int.Parse(datos[cordy][cordx]))], true, false));
+            
             agregarHijos("");
 
             nodos.Last().visitas.Add(numero_pasos);
@@ -1237,6 +1241,7 @@ namespace Proyecto_IA
 
         private void Astar()
         {
+            int num_vist_aux = 1;
             Thread.Sleep(500);
 
             Nodo nodoActual = nodos.Last();
@@ -1259,6 +1264,7 @@ namespace Proyecto_IA
             }
 
             listaAbierta.Add(nodoActual);
+            //meter el primer nodo al comenzar el juego en donde se añande nodos
 
             while (listaAbierta.Count != 0)
             {
@@ -1266,7 +1272,9 @@ namespace Proyecto_IA
 
                 if (nodoActual.nombre == generarNombre(coordenada_FinalXY.X, coordenada_FinalXY.Y))
                 {
-
+                    nodoActual.visitas.Clear();
+                    nodoActual.visitas.Add(num_vist_aux);
+                    num_vist_aux++;
                     listaCerrada.Add(nodoActual);
                     moverEstandar(nodoActual.cX, nodoActual.cY);
 
@@ -1287,6 +1295,9 @@ namespace Proyecto_IA
                 }
 
                 listaAbierta.Remove(nodoActual); // posible error (sobrecarga de operadores)
+                nodoActual.visitas.Clear();
+                nodoActual.visitas.Add(num_vist_aux);
+                num_vist_aux++;
                 listaCerrada.Add(nodoActual);
                 agregarNodosAdy(nodoActual);
 
@@ -1444,7 +1455,7 @@ namespace Proyecto_IA
                     else
                     {
                         listaAbierta.Add(new Nodo(nodoActual.nombre, x, y, costo, false, true));
-                        agregarVisitasAS();
+                        //agregarVisitasAS();
                     }
                 }
                 else
@@ -1557,8 +1568,8 @@ namespace Proyecto_IA
                     else
                     {
                         listaAbierta.Add(new Nodo(nodoActual.nombre, x, y, costo, false, false));
-                        agregarHijosAady(hijo);
-                        agregarVisitasAS();
+                        agregarHijosAady(nodoActual.nombre);
+                        //agregarVisitasAS();
 
                     }
 
@@ -1666,7 +1677,7 @@ namespace Proyecto_IA
             personaje.CoordenadaX = x;
             personaje.CoordenadaY = y;
 
-            numero_pasos++;
+            numero_pasos++; //lo puse en  agregar visiitasAS
             agregarNodo(padre);
             agrearPasos(personaje);
             panelMapa.Refresh();

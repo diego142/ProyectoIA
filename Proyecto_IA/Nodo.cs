@@ -73,6 +73,42 @@ namespace Proyecto_IA
             info += nombre + " | " + "Visitas: " + vis2str() + " | " + "Costo: " + costo + " | ";
             if (inicial)
             {
+                info = nombre + " | " + "Visitas: " + vis2str() + " | " + "Costo: " + 0 + " | ";
+                info += "Estado: Inicial" + " | ";
+            }
+            else if (final)
+            {
+                info += "Estado: Final" + " | ";
+            }
+
+            if (esAbierto())
+            {
+                info += "Abierto";
+            }
+            else
+            {
+                info += "Cerrado";
+            }
+
+            return info;
+        }
+
+        private int Manhattan(int x1, int x2, int y1, int y2)
+        {
+            int distancia = 0;
+
+            distancia = Math.Abs(x1 - x2) + Math.Abs(y1 - y2);
+            return distancia;
+        }
+
+        public string infoNodoAS(int x2, int y2, decimal gn)
+        {
+            string info = "";
+            int hn = Manhattan(cX, x2, cY, y2);
+
+            info += nombre + " | " + "Visitas: " + vis2str() + " | " + "Costo: " + costo + " | H(n):" + hn + " | G(n):" + gn + " | ";
+            if (inicial)
+            {
                 info += "Estado: Inicial" + " | ";
             }
             else if (final)

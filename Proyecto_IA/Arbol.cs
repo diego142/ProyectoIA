@@ -14,7 +14,11 @@ namespace Proyecto_IA
     {
         List<Nodo> nodos;
         List<Nodo> nodosCerrados;
+        int fX;
+        int fY;
+        decimal gn;
         bool astar = false;
+        
 
         public Arbol(List<Nodo> _nodos, List<Nodo> _nodosCerrados, bool _astar)
         {
@@ -27,6 +31,8 @@ namespace Proyecto_IA
 
         private void Arbol_Load(object sender, EventArgs e)
         {
+            obtenerFinal();
+            gn = 0;
 
             if (astar)
             {
@@ -124,6 +130,21 @@ namespace Proyecto_IA
             return -1;
         }
 
+        private void obtenerFinal()
+        {
+            foreach (Nodo n in nodosCerrados)
+            {
+                if (n.final)
+                {
+                    fX = n.cX;
+                    fY = n.cY;
+
+                    Console.WriteLine("fX: " + fX + ", fY: " + fY);
+
+                }
+            }
+        }
+
         private void generarArbol()
         {
             TreeNode nodoActual = VistaArbol.Nodes.Add(nodos[0].infoNodo());
@@ -153,26 +174,31 @@ namespace Proyecto_IA
 
         private void generarArbolAS()
         {
-            TreeNode nodoActual = VistaArbol.Nodes.Add(nodosCerrados[0].infoNodo());
+            TreeNode nodoActual = VistaArbol.Nodes.Add(nodosCerrados[0].infoNodoAS(fX, fY, gn));
+            gn = nodosCerrados[0].costo;
             generarArbolAS(nodoActual, 0);
         }
 
         private void generarArbolAS(TreeNode nodoActual, int pos)
         {
             int posAux;
+            decimal gn_aux;
             TreeNode nodoAux;
             for (int i = 0; i < nodosCerrados[pos].hijos.Count; i++)
             {
                 if (nodosCerrados[pos].hijosVisitados[i])
                 {
-                    nodoAux = nodoActual.Nodes.Add(nodosCerrados[obtenerPos(nodosCerrados[pos].hijos[i])].infoNodo());
+                    nodoAux = nodoActual.Nodes.Add(nodosCerrados[obtenerPos(nodosCerrados[pos].hijos[i])].infoNodoAS(fX, fY, gn)); //truncar gn a 4
+                    gn_aux = gn;
+                    gn += nodosCerrados[pos].costo;
                     posAux = obtenerPos(nodosCerrados[pos].hijos[i]);
                     generarArbolAS(nodoAux, posAux);
+                    gn = gn_aux;
                 }
-                /*else
+                else
                 {
                     nodoActual.Nodes.Add(nodosCerrados[pos].hijos[i] + " | No visitado");
-                }*/
+                }
             }
             return;
 
@@ -256,3 +282,19 @@ namespace Proyecto_IA
 
     }
 }
+/*
+                 foreach (Nodo n in nodosCerrados)
+                {
+                    Console.WriteLine("Nodo: " + n.nombre);
+
+                    foreach (int v in n.visitas)
+                    {
+                        Console.WriteLine(" Visita: " + v);
+                    }
+
+                    foreach (string h in n.hijos)
+                    {
+                        Console.WriteLine("\t Hijo: " + h);
+                    }
+                }
+     */
