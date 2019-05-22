@@ -45,10 +45,6 @@
             this.txtNombre = new System.Windows.Forms.TextBox();
             this.pbPersonaje = new System.Windows.Forms.PictureBox();
             this.dgvPersonaje = new System.Windows.Forms.DataGridView();
-            this.terreno = new System.Windows.Forms.DataGridViewImageColumn();
-            this.color = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.nombre = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.costo = new System.Windows.Forms.DataGridViewComboBoxColumn();
             this.btnSelPersonaje = new System.Windows.Forms.Button();
             this.label6 = new System.Windows.Forms.Label();
             this.label9 = new System.Windows.Forms.Label();
@@ -56,6 +52,10 @@
             this.btnRegresar = new System.Windows.Forms.Button();
             this.btnSiguiente = new System.Windows.Forms.Button();
             this.lblListo2 = new System.Windows.Forms.Label();
+            this.terreno = new System.Windows.Forms.DataGridViewImageColumn();
+            this.color = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.nombre = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.costo = new System.Windows.Forms.DataGridViewComboBoxColumn();
             this.panel1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.picBox)).BeginInit();
             this.panel2.SuspendLayout();
@@ -271,36 +271,6 @@
             this.dgvPersonaje.Size = new System.Drawing.Size(456, 166);
             this.dgvPersonaje.TabIndex = 8;
             // 
-            // terreno
-            // 
-            this.terreno.FillWeight = 40F;
-            this.terreno.HeaderText = "Imagen";
-            this.terreno.Name = "terreno";
-            this.terreno.ReadOnly = true;
-            // 
-            // color
-            // 
-            this.color.FillWeight = 30F;
-            this.color.HeaderText = "Color";
-            this.color.Name = "color";
-            this.color.ReadOnly = true;
-            this.color.Resizable = System.Windows.Forms.DataGridViewTriState.False;
-            // 
-            // nombre
-            // 
-            this.nombre.FillWeight = 40F;
-            this.nombre.HeaderText = "Nombre";
-            this.nombre.Name = "nombre";
-            // 
-            // costo
-            // 
-            this.costo.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.Fill;
-            this.costo.FillWeight = 30F;
-            this.costo.HeaderText = "Costo";
-            this.costo.Name = "costo";
-            this.costo.Resizable = System.Windows.Forms.DataGridViewTriState.False;
-            this.costo.ToolTipText = "<Selecionar>";
-            // 
             // btnSelPersonaje
             // 
             this.btnSelPersonaje.BackColor = System.Drawing.Color.PaleTurquoise;
@@ -332,7 +302,7 @@
             this.label9.Name = "label9";
             this.label9.Size = new System.Drawing.Size(130, 48);
             this.label9.TabIndex = 3;
-            this.label9.Text = "Escoje un \r\npersonaje:";
+            this.label9.Text = "Escoge un \r\npersonaje:";
             // 
             // btnAgregarPersonaje
             // 
@@ -385,6 +355,36 @@
             this.lblListo2.TabIndex = 6;
             this.lblListo2.Text = "<- Listo";
             this.lblListo2.Visible = false;
+            // 
+            // terreno
+            // 
+            this.terreno.FillWeight = 49.61698F;
+            this.terreno.HeaderText = "Imagen";
+            this.terreno.Name = "terreno";
+            this.terreno.ReadOnly = true;
+            // 
+            // color
+            // 
+            this.color.FillWeight = 3.553299F;
+            this.color.HeaderText = "Color";
+            this.color.Name = "color";
+            this.color.ReadOnly = true;
+            this.color.Resizable = System.Windows.Forms.DataGridViewTriState.False;
+            // 
+            // nombre
+            // 
+            this.nombre.FillWeight = 49.61698F;
+            this.nombre.HeaderText = "Nombre";
+            this.nombre.Name = "nombre";
+            // 
+            // costo
+            // 
+            this.costo.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.Fill;
+            this.costo.FillWeight = 37.21274F;
+            this.costo.HeaderText = "Costo";
+            this.costo.Name = "costo";
+            this.costo.Resizable = System.Windows.Forms.DataGridViewTriState.False;
+            this.costo.ToolTipText = "<Selecionar>";
             // 
             // Configuracion
             // 

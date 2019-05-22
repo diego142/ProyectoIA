@@ -174,7 +174,7 @@ namespace Proyecto_IA
                         }
                     }
                 }
-
+                cmbCodigo.Sorted = true;
                 foreach (Terreno terreno in terrenos) { //Se agregan terrenos al combobox
                     cmbCodigo.Items.Add(terreno.Codigo);
                 }

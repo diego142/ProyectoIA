@@ -47,8 +47,8 @@ namespace Proyecto_IA
                 marcarVisitados();
                 trazarRuta();
                 generarArbol();
+                VistaArbol.Nodes[0].ExpandAll();
             }
-            VistaArbol.Nodes[0].ExpandAll();
         }
 
         private void marcarVisitados()
@@ -138,9 +138,6 @@ namespace Proyecto_IA
                 {
                     fX = n.cX;
                     fY = n.cY;
-
-                    Console.WriteLine("fX: " + fX + ", fY: " + fY);
-
                 }
             }
         }
@@ -282,19 +279,3 @@ namespace Proyecto_IA
 
     }
 }
-/*
-                 foreach (Nodo n in nodosCerrados)
-                {
-                    Console.WriteLine("Nodo: " + n.nombre);
-
-                    foreach (int v in n.visitas)
-                    {
-                        Console.WriteLine(" Visita: " + v);
-                    }
-
-                    foreach (string h in n.hijos)
-                    {
-                        Console.WriteLine("\t Hijo: " + h);
-                    }
-                }
-     */

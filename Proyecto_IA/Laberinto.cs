@@ -1264,7 +1264,6 @@ namespace Proyecto_IA
             }
 
             listaAbierta.Add(nodoActual);
-            //meter el primer nodo al comenzar el juego en donde se añande nodos
 
             while (listaAbierta.Count != 0)
             {
@@ -1344,9 +1343,9 @@ namespace Proyecto_IA
                 y = int.Parse(num)-1;
                 costo = personaje.Costos[obtenerCosto(int.Parse(datos[y][x]))];
 
-                if (hijo == generarNombre(coordenada_FinalXY.X, coordenada_FinalXY.Y))
+                if (!enListaCerrada(hijo))
                 {
-                    if (listaCerrada.Exists(nodo_x => nodo_x.nombre == hijo))//AQUI PUEDO CORREGIR EL PROBLEMA
+                    if (hijo == generarNombre(coordenada_FinalXY.X, coordenada_FinalXY.Y))
                     {
                         if (listaAbierta.Exists(nodo_x => nodo_x.nombre == hijo))
                         {
@@ -1451,16 +1450,12 @@ namespace Proyecto_IA
 
                             }
                         }
+                        else
+                        {
+                            listaAbierta.Add(new Nodo(nodoActual.nombre, x, y, costo, false, true));
+                        } 
                     }
                     else
-                    {
-                        listaAbierta.Add(new Nodo(nodoActual.nombre, x, y, costo, false, true));
-                        //agregarVisitasAS();
-                    }
-                }
-                else
-                {
-                    if (listaCerrada.Exists(nodo_x => nodo_x.nombre == hijo))
                     {
                         if (listaAbierta.Exists(nodo_x => nodo_x.nombre == hijo))
                         {
@@ -1564,18 +1559,14 @@ namespace Proyecto_IA
 
                             }
                         }
+                        else
+                        {
+                            listaAbierta.Add(new Nodo(nodoActual.nombre, x, y, costo, false, false));
+                            agregarHijosAady(nodoActual.nombre);
+                        }
                     }
-                    else
-                    {
-                        listaAbierta.Add(new Nodo(nodoActual.nombre, x, y, costo, false, false));
-                        agregarHijosAady(nodoActual.nombre);
-                        //agregarVisitasAS();
-
-                    }
-
                 }
             }
-
         }
 
         private void agregarHijosAady(string padre)
@@ -1681,6 +1672,19 @@ namespace Proyecto_IA
             agregarNodo(padre);
             agrearPasos(personaje);
             panelMapa.Refresh();
+        }
+
+        private bool enListaCerrada(string hijo)
+        {
+            foreach (Nodo nodo in listaCerrada)
+            {
+                if (hijo == nodo.nombre)
+                {
+                    return true;
+                }
+            }
+
+            return false;
         }
     }
 }
